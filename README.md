@@ -21,7 +21,7 @@ analysis, interconnection studies all require detailed distribution models.
 
 So what are you waiting for. We can't wait to see how you will use this tool for your as wells your organizations's benefit.
 
-Feel free to reach out to us or send us a comment using Github issue. We don't mind if you smash that start icon motivating our developers and contributors.
+Feel free to reach out to us or send us a comment using Github issue. We don't mind if you smash that starred icon motivating our developers and contributors.
 
 
 ### :star: Installation 
