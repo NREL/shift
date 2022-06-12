@@ -1,7 +1,7 @@
 name: Conitnous integration issue
 description: Report issue associated with continous integration
 title: "[CI]: "
-labels: "ci_isse"
+labels: "ci_issue"
 body: 
   - type: markdown
     attributes: 
