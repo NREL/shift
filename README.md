@@ -1,4 +1,4 @@
-## Simple Synthetic Distribution Feeder Generation Tool (SHIFT)
+## [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/shift/4-feature-add-a-binder-notebook-to-allow-user-to-run-the-code) Simple Synthetic Distribution Feeder Generation Tool (SHIFT)
 
 ![GitHub all releases](https://img.shields.io/github/downloads/NREL/shift/total?logo=Github&logoColor=%2300ff00&style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/nrel/shift?style=flat-square)
