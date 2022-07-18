@@ -344,3 +344,7 @@ class MissingConfigurationAttribute(SeedBaseException):
 
 class UnsupportedFeatureError(SeedBaseException):
     """Exceptions raised because feature being requested is not yet supported or invalid type is passed"""
+
+
+class CatalogNotFoundError(SeedBaseException):
+    """Exceptions raised because catalog requested is not found!"""
