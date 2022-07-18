@@ -1,0 +1,10 @@
+osmnx
+cerberus
+geopy
+pyshp
+shapely
+plotly
+numpy
+networkx
+pandas
+sklearn
