@@ -8,7 +8,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/nrel/shift?style=flat-square)
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/nrel/shift?style=flat-square)
 
-### :wave:  <span style="color:blue">Welcome to SHIFT repository! </span>
+### :wave:  Welcome to SHIFT repository!
 
 Getting free distribution feeder models for your reasearch has never been easier.
 SHIFT helps you build synthetic distribution feeders models using just the OpenStreet data e.g. buildings and road network. You can configure lots of
@@ -24,14 +24,8 @@ So what are you waiting for. We can't wait to see how you will use this tool for
 Feel free to reach out to us or send us a comment using Github issue. We don't mind if you smash that starred icon motivating our developers and contributors.
 
 
-### :star: Installation 
-
-_Under development ..._
-
-### :dolphin: Usage
-
-_Under development ..._
-
-### :seedling: More resources
-
-_Under development ..._
+* [Intallation Instructions](docs/installation.md)
+* [How to Use ?](docs/usage.md)
+* [Developer Instructions](docs/contributing.md)
+* [Submitting Issue](docs/issues.md)
+* [Learn more about how we generate synthetic feeders](docs/learn_more)

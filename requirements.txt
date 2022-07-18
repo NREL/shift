@@ -4,3 +4,7 @@ geopy
 pyshp
 shapely
 plotly
+numpy
+networkx
+pandas
+sklearn
