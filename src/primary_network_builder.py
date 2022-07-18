@@ -34,6 +34,7 @@ from exceptions import (
     OperationYearNotInRange,
     EmptyCatalog,
     ConductorNotFoundForKdrop,
+    CatalogNotFoundError,
 )
 import math
 from enums import ConductorType, NumPhase, Phase
@@ -67,10 +68,14 @@ def choose_conductor(
 
     # First thing is to find catalog for higher amps than required
     conductors_above_ampacity = catalog[catalog["ampacity"] > ampacity]
+    if conductors_above_ampacity.empty:
+        raise CatalogNotFoundError(
+            f"No conductor exists for ampacity {ampacity}A in the filtered set!"
+        )
+
     conductors_above_ampacity = conductors_above_ampacity.sort_values(
         by=["ampacity"]
     )
-
     for record in conductors_above_ampacity.to_dict(orient="records"):
 
         # Get configuration array for conductors
