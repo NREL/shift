@@ -175,7 +175,8 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
 
                 self.network = nx.Graph()
                 self.network.add_node(
-                    f"{load_locations[0][0]}_{load_locations[0][1]}_{node_append_str}_node"
+                    f"{load_locations[0][0]}_{load_locations[0][1]}_{node_append_str}_node",
+                    pos=(load_locations[0][0], load_locations[0][1]),
                 )
                 self.customer_to_node_mapping = {
                     load_list[
