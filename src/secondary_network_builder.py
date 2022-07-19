@@ -179,9 +179,7 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
                     pos=(load_locations[0][0], load_locations[0][1]),
                 )
                 self.customer_to_node_mapping = {
-                    load_list[
-                        0
-                    ].name: f"{load_locations[0][0]}_{load_locations[0][1]}_{node_append_str}_node"
+                    f"{load_locations[0][0]}_{load_locations[0][1]}_customer": f"{load_locations[0][0]}_{load_locations[0][1]}_{node_append_str}_node"
                 }
                 self.points = {
                     key: val["pos"]
