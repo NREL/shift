@@ -1,3 +1,5 @@
+![logo](images/shift_logo_bigger.svg)
+
 ## Simple Synthetic Distribution Feeder Generation Tool (SHIFT)
 
 ![GitHub all releases](https://img.shields.io/github/downloads/NREL/shift/total?logo=Github&logoColor=%2300ff00&style=flat-square)
