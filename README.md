@@ -1,6 +1,6 @@
 
  
-<img src="images/shift.svg" width="400" style="display:block;margin:0 auto;">
+<img src="images/shift.svg" width="400" style="display:block;margin:auto;">
 
 
 ## Simple Synthetic Distribution Feeder Generation Tool (SHIFT)
