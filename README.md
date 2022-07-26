@@ -1,4 +1,7 @@
-![logo](images/shift_logo_bigger.svg)
+
+ 
+<img src="images/shift.svg" width="400" style="display:block;margin:0 auto;">
+
 
 ## Simple Synthetic Distribution Feeder Generation Tool (SHIFT)
 
