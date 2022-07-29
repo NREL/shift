@@ -10,6 +10,8 @@
 
 ### :wave:  Welcome to SHIFT repository!
 
+[Goto full documentation](https://nrel.github.io/shift/)
+
 Getting free distribution feeder models for your reasearch has never been easier.
 SHIFT helps you build synthetic distribution feeders models using just the OpenStreet data e.g. buildings and road network. You can configure lots of
 parameters and design choices when building these models and even create multiple versions of them and choose the one that fits your needs. If you are utility no worries we 
@@ -24,8 +26,3 @@ So what are you waiting for. We can't wait to see how you will use this tool for
 Feel free to reach out to us or send us a comment using Github issue. We don't mind if you smash that starred icon motivating our developers and contributors.
 
 
-* [Intallation Instructions](docs/installation.md)
-* [How to Use ?](docs/usage.md)
-* [Developer Instructions](docs/contributing.md)
-* [Submitting Issue](docs/issues.md)
-* [Learn more about how we generate synthetic feeders](docs/learn_more)

@@ -8,18 +8,19 @@ with open(os.path.join(os.path.dirname(__file__), 'requirements.txt')) as f:
     requirements = f.read().splitlines()
 
 setup(
-    name='SHIFT',
+    name='shift',
     long_description=long_description,
     long_description_content_type="text/markdown",
     version='v0.0.0',
     description='Generate synthetic feeders using open street map data',
     author='Kapil Duwadi',
     author_email='kapil.duwadi@nrel.gov',
-    packages=find_packages("SHIFT"),
+    packages=find_packages("."),
     url="https://github.com/nrel/shift",
     keywords="Synthetic feeder, Open steet data, OpenDSS",
     install_requires=requirements,
-    package_dir={"": "src"}, 
+    python_requires=">=3.9",
+    package_dir={"shift": "shift"}, 
     # entry_points={
     #     "console_scripts": [
     #         "seeds=cli.cli:run"
