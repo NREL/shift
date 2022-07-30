@@ -522,8 +522,10 @@ class UnsupportedFeatureError(SeedBaseException):
 class CatalogNotFoundError(SeedBaseException):
     """Exceptions raised because catalog requested is not found."""
 
+
 class InvalidInputError(SeedBaseException):
-    """Exceptions raised because the input provided is not valid. """
+    """Exceptions raised because the input provided is not valid."""
+
 
 class NotImplementedError(SeedBaseException):
-    """ Feature not implmeneted error."""
+    """Feature not implmeneted error."""

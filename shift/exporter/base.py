@@ -32,10 +32,11 @@
 
 from abc import ABC, abstractmethod
 
+
 class BaseExporter(ABC):
-    """ Abstract interface for distribution model exporter. """
-    
+    """Abstract interface for distribution model exporter."""
+
     @abstractmethod
     def export(self):
-        """ Abstract method for exporting model."""
+        """Abstract method for exporting model."""
         pass

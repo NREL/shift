@@ -111,11 +111,12 @@ class TwoLayerDistributionNetworkBuilder(ABC):
 
 
 class TwoLayerNetworkBuilderDirector:
-    """ Builder for creating two layer distribution network.
+    """Builder for creating two layer distribution network.
 
     Attributes:
         builder (TwoLayerDistributionNetworkBuilder): Instance of `TwoLayerDistributionNetworkBuilder` class
     """
+
     def __init__(
         self,
         loads: List[Load],
@@ -123,17 +124,17 @@ class TwoLayerNetworkBuilderDirector:
         primary_edges: List[Line],
         secondary_edges: List[Line],
         builder: TwoLayerDistributionNetworkBuilder,
-    )-> None:
-        """ Constructor method for TwoLayerNetworkBuilderDirector class.
+    ) -> None:
+        """Constructor method for TwoLayerNetworkBuilderDirector class.
 
         Args:
             loads (List[Load]): List of `Load` objects
             transformers (List[Transformer]): List of `Transformer` objects
             primary_edges (List[Line]): List of `Line` objects representing primary
                 sections
-            secondary_edges (List[Line]): List of `Line` objects representing 
+            secondary_edges (List[Line]): List of `Line` objects representing
                 secondary sections
-            builder (TwoLayerDistributionNetworkBuilder): Instance of builder 
+            builder (TwoLayerDistributionNetworkBuilder): Instance of builder
                 type `TwoLayerDistributionNetworkBuilder`
         """
 
@@ -151,24 +152,25 @@ class TwoLayerNetworkBuilderDirector:
 class SimpleTwoLayerDistributionNetworkBuilder(
     TwoLayerDistributionNetworkBuilder
 ):
-    """ Class for creating distribution assets for developing two layer distribution network.
+    """Class for creating distribution assets for developing two layer distribution network.
 
     Attributes:
         feeder (nx.Graph): Instance of networkx graph
     """
+
     def __init__(self) -> None:
-        """ Constructor for SimpleTwoLayerDistributionNetworkBuilder class"""
+        """Constructor for SimpleTwoLayerDistributionNetworkBuilder class"""
 
         self.feeder = nx.Graph()
 
     def add_load_nodes(self, loads: List[Load]) -> None:
-        """ Add load nodes to the network.
-        
+        """Add load nodes to the network.
+
         Args:
             loads (List[Load]): List of `Load` objects
         """
 
-        #Loop over all the load and add to the network
+        # Loop over all the load and add to the network
         for load in loads:
 
             self.feeder.add_node(
@@ -179,9 +181,11 @@ class SimpleTwoLayerDistributionNetworkBuilder(
                 object=load,
             )
 
-    def add_distribution_transformers(self, transformers: List[Transformer]) -> None:
-        """ Add transformer nodes to the network.
-        
+    def add_distribution_transformers(
+        self, transformers: List[Transformer]
+    ) -> None:
+        """Add transformer nodes to the network.
+
         Args:
             transformers (List[Transformer]): List of `Transformer` objects
         """
@@ -196,8 +200,8 @@ class SimpleTwoLayerDistributionNetworkBuilder(
             )
 
     def add_low_tension_network(self, edges: List[Line]) -> None:
-        """ Add low tension line segments to the network.
-        
+        """Add low tension line segments to the network.
+
         Args:
             edges (List[Line]): List of `Line` objects representing
                 secondary line segments
@@ -234,8 +238,8 @@ class SimpleTwoLayerDistributionNetworkBuilder(
             )
 
     def add_high_tension_network(self, edges: List[Line]) -> None:
-        """ Add high tension line segments to the network.
-        
+        """Add high tension line segments to the network.
+
         Args:
             edges (List[Line]): List of `Line` objects representing
                 primary line segments
@@ -271,7 +275,5 @@ class SimpleTwoLayerDistributionNetworkBuilder(
         # Pull the transformer node to network node and convert to edge
 
     def add_substation(self):
-        """ Add substation """
+        """Add substation"""
         pass
-
-
