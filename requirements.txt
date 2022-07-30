@@ -8,3 +8,6 @@ numpy
 networkx
 pandas
 sklearn
+mkdocs
+mkdocstrings[python]
+mkdocs-material

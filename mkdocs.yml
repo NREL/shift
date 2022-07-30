@@ -1,0 +1,60 @@
+site_name: Shift
+
+theme:
+  name: "material"
+  features:
+    - search.suggest
+    - sarch.highlight
+    - content.tabs.link
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/git-alt
+plugins:
+  - mkdocstrings
+  - search
+
+repo_url: https://github.com/nrel/shift
+repo_name: nrel/shift
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true 
+
+
+nav:
+  - Welcome: index.md
+  - Tutorials: tutorials.md
+  - How to Guides: how-to-guides.md
+  - References:
+    - geometry: geometry.md
+    - clustering: clustering.md
+    - exceptions: exceptions.md
+    - facade: facade.md
+    - feeder_network: feeder_network.md
+    - graph: graph.md
+    - line_section: line_section.md
+    - load_builder: load_builder.md
+    - load: load.md
+    - network_plots: network_plots.md
+    - primary_network_builder: primary_network_builder.md
+    - secondary_network_builder: secondary_network_builder.md
+    - transformer_builder: transformer_builder.md
+    - transformer: transformer.md
+    - utils: utils.md
+    - exporter.opendss: opendss.md
+  - Theoritical Explanation: explanation.md
+  - Guide to Developers: developers-guide.md
