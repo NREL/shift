@@ -45,7 +45,7 @@ from shift.utils import (
 )
 from shift.primary_network_builder import BaseNetworkBuilder
 from shift.enums import ConductorType, NumPhase, Phase
-from shift.line_section import LineGeometryConfiguration, Line
+from shift.line_section import Line
 from shift.exceptions import (
     CustomerInvalidPhase,
     PhaseMismatchError,
@@ -322,7 +322,7 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
 
             self.network = set_node_edge_type(self.network)
         else:
-            raise NotImplementedError(f"Transformers can not have 0 loads")
+            raise NotImplementedError("Transformers can not have 0 loads")
 
     def get_load_to_node_mapping(self) -> dict:
         """Returns load to node mapping."""
@@ -369,7 +369,7 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
                     num_of_customers += 1
                     noncoincident_kws += subgraph.nodes[node]["object"].kw
 
-            self.network[edge[0]][edge[1]]["ampacity"] = self.compute_ampacity(
+            self.network[edge[0]][edge[1]]["ampacity"] = self._compute_ampacity(
                 noncoincident_kws, num_of_customers
             )
             x.append(distance)
