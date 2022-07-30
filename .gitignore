@@ -1,13 +1,12 @@
 # Editors
 .vscode/
 .idea/
-shift/cache/**
-
 # Vagrant
 .vagrant/
 
 # Mac/OSX
 .DS_Store
+
 
 # Windows
 Thumbs.db
@@ -119,6 +118,9 @@ venv.bak/
 
 # mkdocs documentation
 /site
+
+# OSMNX cache
+shift/cache/**
 
 # mypy
 .mypy_cache/
