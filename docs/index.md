@@ -5,9 +5,7 @@
 Generate distribution feeder model from OpenStreet data.
 
 Getting free distribution feeder models for your reasearch has never been easier.
-SHIFT helps you build synthetic distribution feeders models using just the OpenStreet data e.g. buildings and road network. You can configure lots of
-parameters and design choices when building these models and even create multiple versions of them and choose the one that fits your needs. If you are utility no worries we 
-have you covered as well. As a utility you can also integrate your data when building these models. 
+
 
 
 ## Installation Instruction

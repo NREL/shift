@@ -1,4 +1,36 @@
-from shift.enums import NumPhase, Phase
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
+
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+""" This module all the exceptions raised by this package. """
+
+from typing import List
 from shift.constants import (
     MIN_LATITUDE,
     MAX_LATITUDE,
@@ -21,14 +53,19 @@ from shift.constants import (
     VALID_LENGTH_UNITS,
     VALID_FREQUENCIES,
 )
+from shift.enums import NumPhase, Phase
 
 
 class SeedBaseException(Exception):
-    """All exception should derive from this"""
+    """All exception should derive from this."""
 
 
 class LatitudeNotInRangeError(SeedBaseException):
-    """Exception raised because latitude not in range"""
+    """Exception raised because latitude not in range.
+
+    Args:
+        latitude (float): Latitude property
+    """
 
     def __init__(self, latitude: float):
         self.message = f"Latitude {latitude} not in ({MIN_LATITUDE}, {MAX_LATITUDE}) range!"
@@ -36,7 +73,11 @@ class LatitudeNotInRangeError(SeedBaseException):
 
 
 class LongitudeNotInRangeError(SeedBaseException):
-    """Exception raised because longitude not in range"""
+    """Exception raised because longitude not in range.
+
+    Args:
+        longitude (float): Longitude property
+    """
 
     def __init__(self, longitude: float):
         self.message = f"Longitude {longitude} not in ({MIN_LONGITUDE}, {MAX_LONGITUDE}) range!"
@@ -44,8 +85,11 @@ class LongitudeNotInRangeError(SeedBaseException):
 
 
 class NegativeKVError(SeedBaseException):
+    """Exception raised because kV is negative.
 
-    """Exception raised because kV is negative"""
+    Args:
+        kv (float): Voltage in KV property
+    """
 
     def __init__(self, kv: float):
         self.message = f"KV = {kv} can not be negative"
@@ -53,11 +97,15 @@ class NegativeKVError(SeedBaseException):
 
 
 class ZeroKVError(SeedBaseException):
-    """Exception raused because the kV is zero"""
+    """Exception raused because the kV is zero."""
 
 
 class NegativeAreaError(SeedBaseException):
-    """Exception raused because area of the geometry is negative"""
+    """Exception raused because area of the geometry is negative.
+
+    Args:
+        area (float): Area property
+    """
 
     def __init__(self, area: float):
         self.message = f"Area = {area} can not be negative"
@@ -65,7 +113,11 @@ class NegativeAreaError(SeedBaseException):
 
 
 class PowerFactorNotInRangeError(SeedBaseException):
-    """Exception raised because power factor not in range"""
+    """Exception raised because power factor not in range.
+
+    Args:
+        pf (float): Power factor property
+    """
 
     def __init__(self, pf: float):
         self.message = f"Power factor {pf} not in ({MIN_POWER_FACTOR}, {MAX_POWER_FACTOR}) range!"
@@ -73,7 +125,11 @@ class PowerFactorNotInRangeError(SeedBaseException):
 
 
 class PercentageSumNotHundred(SeedBaseException):
-    """Exception raised because sum of pct values not equal to 100"""
+    """Exception raised because sum of pct values not equal to 100.
+
+    Args:
+        total_pct (float): Percentage property
+    """
 
     def __init__(self, total_pct: float):
         self.message = f"Total sum {total_pct} not equal to 100"
@@ -81,7 +137,11 @@ class PercentageSumNotHundred(SeedBaseException):
 
 
 class FileNotFoundError(SeedBaseException):
-    """Exception raised because file path does not exist"""
+    """Exception raised because file path does not exist.
+
+    Args:
+        file_path (str): File path property
+    """
 
     def __init__(self, file_path: str):
         self.message = f"File {file_path} does not exist!"
@@ -89,7 +149,12 @@ class FileNotFoundError(SeedBaseException):
 
 
 class NotCompatibleFileError(SeedBaseException):
-    """Exception raised because unexpected file type recieved"""
+    """Exception raised because unexpected file type recieved.
+
+    Args:
+        file_path (str): File path property
+        expected_type (str): Expected file type property
+    """
 
     def __init__(self, file_path: str, expected_type: str):
         self.message = f"Unexpected file type received, expected {expected_type} but got {file_path}"
@@ -97,7 +162,11 @@ class NotCompatibleFileError(SeedBaseException):
 
 
 class ValidationError(SeedBaseException):
-    """Exception raised bbecause content can not be validated"""
+    """Exception raised bbecause content can not be validated.
+
+    Args:
+        errors (list): List of error messages.
+    """
 
     def __init__(self, errors: list):
         self.message = f"Could not validate the content: {errors}"
@@ -105,7 +174,11 @@ class ValidationError(SeedBaseException):
 
 
 class ZoomLevelNotInRangeError(SeedBaseException):
-    """Exception raised because zoom level defined is not in range"""
+    """Exception raised because zoom level defined is not in range.
+
+    Args:
+        zoom (int): Zoom level property
+    """
 
     def __init__(self, zoom: int):
         self.message = f"Zoom level {zoom} not in ({MIN_ZOOM_LEVEL}, {MAX_ZOOM_LEVEL}) range!"
@@ -113,7 +186,11 @@ class ZoomLevelNotInRangeError(SeedBaseException):
 
 
 class InvalidMapboxStyle(SeedBaseException):
-    """Exception raised because specified style is not accepted"""
+    """Exception raised because specified style is not accepted.
+
+    Args:
+        style (str): Style property used for mapbox
+    """
 
     def __init__(self, style: str):
         self.message = f"Style {style} is not a valid style. Please one of these styles {MAP_STYLES}"
@@ -121,7 +198,7 @@ class InvalidMapboxStyle(SeedBaseException):
 
 
 class EmptyAssetStyleDict(SeedBaseException):
-    """Exception raised for empty style dict"""
+    """Exception raised for empty style dict."""
 
     def __init__(self):
         self.message = "Asset specific style can not be empty in PLotlyGISNetworkPlot object"
@@ -129,7 +206,11 @@ class EmptyAssetStyleDict(SeedBaseException):
 
 
 class MissingKeyDataForNetworkNode(SeedBaseException):
-    """Exception because type property is missing for a network node"""
+    """Exception because type property is missing for a network node.
+
+    Args:
+        type (str): type property for missing key
+    """
 
     def __init__(self, type: str):
         self.message = f"`{type}` field is missing in network node data"
@@ -137,7 +218,11 @@ class MissingKeyDataForNetworkNode(SeedBaseException):
 
 
 class InvalidNodeType(SeedBaseException):
-    """Exception because invalid node type is used"""
+    """Exception because invalid node type is used.
+
+    Args:
+        node (str): Node type property
+    """
 
     def __init__(self, node: str):
         self.message = f"Invalid node type: {node}, please make sure to use valid node types"
@@ -145,7 +230,11 @@ class InvalidNodeType(SeedBaseException):
 
 
 class FolderNotFoundError(SeedBaseException):
-    """Exception raised because folder not found!"""
+    """Exception raised because folder not found.
+
+    Args:
+        folder_path (str): Path to a invalid folder
+    """
 
     def __init__(self, folder_path: str):
         self.message = f"Folder {folder_path} does not exist!"
@@ -153,7 +242,11 @@ class FolderNotFoundError(SeedBaseException):
 
 
 class PercentageNotInRangeError(SeedBaseException):
-    """Exception raised because percentage set is not within range"""
+    """Exception raised because percentage set is not within range.
+
+    Args:
+        pct (float): Percentage property
+    """
 
     def __init__(self, pct: float):
         self.message = f"Percentage {pct} not in ({MIN_PERCENTAGE}, {MAX_PERCENTAGE}) range!"
@@ -161,7 +254,11 @@ class PercentageNotInRangeError(SeedBaseException):
 
 
 class NegativekVAError(SeedBaseException):
-    """Exception raised because negative kva is used !"""
+    """Exception raised because negative kva is used.
+
+    Args:
+        kva (float): kva property
+    """
 
     def __init__(self, kva: float):
         self.message = f"kVA = {kva} can not be negative"
@@ -169,31 +266,39 @@ class NegativekVAError(SeedBaseException):
 
 
 class MaxLoopReachedForKmeans(SeedBaseException):
-    """Exception raised because max number of iterations reached for computing optimal cluster number"""
+    """Exception raised because max number of iterations reached for computing optimal cluster number."""
 
 
 class WrongInputUsed(SeedBaseException):
-    """Exeption raised becaue wrong input is used"""
+    """Exeption raised becaue wrong input is used."""
 
 
 class NumberOfClusterNotInRangeError(SeedBaseException):
-    """Exception raised because number of clusters used is not within range"""
+    """Exception raised because number of clusters used is not within range.
 
-    def __init__(self, num_of_clus: str):
+    Args:
+        num_of_clus (int): Number of clusters property
+    """
+
+    def __init__(self, num_of_clus: int):
         self.message = f"Number of clusters {num_of_clus} must be less than {MIN_NUM_CLUSTER}!"
         super().__init__(self.message)
 
 
 class EarlyMethodCallError(SeedBaseException):
-    """Method is called to early"""
+    """Method is called to early."""
 
 
 class AttributeDoesNotExistError(SeedBaseException):
-    """Method is called to early"""
+    """Method is called to early."""
 
 
 class AdjustmentFactorNotInRangeError(SeedBaseException):
-    """Exception raised because adjustment factor not in range"""
+    """Exception raised because adjustment factor not in range.
+
+    Args:
+        af (float): Adjustment factor property
+    """
 
     def __init__(self, af: float):
         self.message = f"Adjustement factor {af} not in ({MIN_ADJUSTMENT_FACTOR}, {MAX_ADJUSTMENT_FACTOR}) range!"
@@ -201,7 +306,12 @@ class AdjustmentFactorNotInRangeError(SeedBaseException):
 
 
 class HTkVlowerthanLTkVError(SeedBaseException):
-    """Exceptions raised because HT kV used is lower than LT kv used"""
+    """Exceptions raised because HT kV used is lower than LT kv used.
+
+    Args:
+        ht_kv (float): High tension kv property
+        lt_kv (float): Low tension kv property
+    """
 
     def __init__(self, ht_kv: float, lt_kv: float):
         self.message = f"HT kV {ht_kv} must be higher than LT kV {lt_kv} !"
@@ -209,19 +319,27 @@ class HTkVlowerthanLTkVError(SeedBaseException):
 
 
 class EmptyCatalog(SeedBaseException):
-    """Exceptions raised because no catalog found"""
+    """Exceptions raised because no catalog found."""
 
 
 class MultipleCatalogFoundError(SeedBaseException):
-    """Exceptions raised because multiple records found in the catalog"""
+    """Exceptions raised because multiple records found in the catalog.
 
-    def __init__(self, records):
+    Args:
+        records (List[dict]): List of records
+    """
+
+    def __init__(self, records: List[dict]):
         self.message = f"Multiple records found {records}!"
         super().__init__(self.message)
 
 
 class OperationYearNotInRange(SeedBaseException):
-    """Exceptions raised because year in operation is not within range"""
+    """Exceptions raised because year in operation is not within range.
+
+    Args:
+        year (float): Year property
+    """
 
     def __init__(self, year: float):
         self.message = f"Year in operation must be in range {(MIN_YEAR_OPERATION, MAX_YEAR_OPERATION)}, but found {year}"
@@ -229,7 +347,11 @@ class OperationYearNotInRange(SeedBaseException):
 
 
 class PoleToPoleDistanceNotInRange(SeedBaseException):
-    """Exceptions raised because pole to pole distance is not within range"""
+    """Exceptions raised because pole to pole distance is not within range.
+
+    Args:
+        distance (float): Pole to pole distance property
+    """
 
     def __init__(self, distance: float):
         self.message = f"Pole to pole distance must be in range {(MIN_POLE_TO_POLE_DISTANCE, MAX_POLE_TO_POLE_DISTANCE)}, but found {distance}"
@@ -237,7 +359,11 @@ class PoleToPoleDistanceNotInRange(SeedBaseException):
 
 
 class NegativeLineLengthError(SeedBaseException):
-    """Exceptions raised because line length is negative"""
+    """Exceptions raised because line length is negative.
+
+    Args:
+        length (float): Line segment's length property
+    """
 
     def __init__(self, length: float):
         self.message = f"Line length can not be negative but found {length}"
@@ -245,7 +371,11 @@ class NegativeLineLengthError(SeedBaseException):
 
 
 class InvalidLengthUnitError(SeedBaseException):
-    """Exceptions raised because length unit is invalid"""
+    """Exceptions raised because length unit is invalid.
+
+    Args:
+        unit (str): Line length unit used
+    """
 
     def __init__(self, unit: str):
         self.message = f"Invalid length unit used {unit} please choose one of these units {VALID_LENGTH_UNITS}"
@@ -253,7 +383,11 @@ class InvalidLengthUnitError(SeedBaseException):
 
 
 class NegativeDiameterError(SeedBaseException):
-    """Exceptions raised because diameter is negative"""
+    """Exceptions raised because diameter is negative.
+
+    Args:
+        diameter (float): Conductor diameter property
+    """
 
     def __init__(self, diameter: float):
         self.message = f"Diamater can not be negative but found {diameter}"
@@ -261,7 +395,11 @@ class NegativeDiameterError(SeedBaseException):
 
 
 class NegativeGMRError(SeedBaseException):
-    """Exceptions raised because GMR is negative"""
+    """Exceptions raised because GMR is negative.
+
+    Args:
+        gmr (float): Geometric mean radius property
+    """
 
     def __init__(self, gmr: float):
         self.message = f"GMR can not be negative but found {gmr}"
@@ -269,7 +407,11 @@ class NegativeGMRError(SeedBaseException):
 
 
 class NegativeResistanceError(SeedBaseException):
-    """Exceptions raised because AC resistance is negative"""
+    """Exceptions raised because AC resistance is negative.
+
+    Args:
+        r (float): AC resistance property
+    """
 
     def __init__(self, r: float):
         self.message = f"AC resistance can not be negative but found {r}"
@@ -277,7 +419,11 @@ class NegativeResistanceError(SeedBaseException):
 
 
 class NegativeAmpacityError(SeedBaseException):
-    """Exceptions raised because Ampacity is negative"""
+    """Exceptions raised because Ampacity is negative.
+
+    Args:
+        ampacity (float): Ampacity property
+    """
 
     def __init__(self, ampacity: float):
         self.message = f"Ampacity can not be negative but found {ampacity}"
@@ -285,7 +431,11 @@ class NegativeAmpacityError(SeedBaseException):
 
 
 class NegativeStrandsError(SeedBaseException):
-    """Exceptions raised because Number of strands is negative"""
+    """Exceptions raised because Number of strands is negative.
+
+    Args:
+        num_of_strands (float): Number of strands property
+    """
 
     def __init__(self, num_of_strands: float):
         self.message = (
@@ -295,7 +445,12 @@ class NegativeStrandsError(SeedBaseException):
 
 
 class CustomerInvalidPhase(SeedBaseException):
-    """Exceptions raised because number of phase for customer is greater than number of phase used in secondary"""
+    """Exceptions raised because number of phase for customer is greater than number of phase used in secondary.
+
+    Args:
+        customer_num_phase (NumPhase): Number of phase property for customer
+        secondary_num_phase (NumPhase): Number of phase for secondary lateral
+    """
 
     def __init__(
         self, customer_num_phase: NumPhase, secondary_num_phase: NumPhase
@@ -305,15 +460,24 @@ class CustomerInvalidPhase(SeedBaseException):
 
 
 class UnsupportedFrequencyError(SeedBaseException):
-    """Exceptions raised because unsupported frequency is in use"""
+    """Exceptions raised because unsupported frequency is in use.
+
+    Args:
+        freq (float): Frequency in hz
+    """
 
     def __init__(self, freq: float):
-        self.message = f"Unsupported frequency is used {float} please choose one of these frequency {VALID_FREQUENCIES}"
+        self.message = f"Unsupported frequency is used {freq} please choose one of these frequency {VALID_FREQUENCIES}"
         super().__init__(self.message)
 
 
 class PhaseMismatchError(SeedBaseException):
-    """Exceptions raised because phase misatch is encountered"""
+    """Exceptions raised because phase misatch is encountered.
+
+    Args:
+        phase1 (Phase): Phase property for one end
+        phase2 (Phase): Phase property for other end
+    """
 
     def __init__(self, phase1: Phase, phase2: Phase):
         self.message = f"Attempt to connect phase {phase1} to phase {phase2} is encountered!"
@@ -321,7 +485,12 @@ class PhaseMismatchError(SeedBaseException):
 
 
 class IncompleteGeometryConfigurationDict(SeedBaseException):
-    """Exceptions raised because of incomplete geometry configuration dict"""
+    """Exceptions raised because of incomplete geometry configuration dict.
+
+    Args:
+        num_phase (NumPhase): Number of phase property
+        geometry_dict (dict): Geometry metadata
+    """
 
     def __init__(self, num_phase: NumPhase, geometry_dict: dict):
         self.message = f"{num_phase} key does not exist in {geometry_dict}"
@@ -329,7 +498,11 @@ class IncompleteGeometryConfigurationDict(SeedBaseException):
 
 
 class ConductorNotFoundForKdrop(SeedBaseException):
-    """Exceptions raised because no conductor is found that satisfies the kdrop"""
+    """Exceptions raised because no conductor is found that satisfies the kdrop.
+
+    Args:
+        kdrop (float): Voltage drop property
+    """
 
     def __init__(self, kdrop: float):
         self.message = (
@@ -339,12 +512,18 @@ class ConductorNotFoundForKdrop(SeedBaseException):
 
 
 class MissingConfigurationAttribute(SeedBaseException):
-    """Exceptions raised because attribute is missing in configuration yaml file"""
+    """Exceptions raised because attribute is missing in configuration yaml file."""
 
 
 class UnsupportedFeatureError(SeedBaseException):
-    """Exceptions raised because feature being requested is not yet supported or invalid type is passed"""
+    """Exceptions raised because feature being requested is not yet supported or invalid type is passed."""
 
 
 class CatalogNotFoundError(SeedBaseException):
-    """Exceptions raised because catalog requested is not found!"""
+    """Exceptions raised because catalog requested is not found."""
+
+class InvalidInputError(SeedBaseException):
+    """Exceptions raised because the input provided is not valid. """
+
+class NotImplementedError(SeedBaseException):
+    """ Feature not implmeneted error."""

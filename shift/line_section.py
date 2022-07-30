@@ -1,5 +1,37 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
+
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+""" This module contains classes for representing different parts of distribution line segment. """
 from abc import ABC, abstractmethod
-from exceptions import (
+
+from shift.exceptions import (
     NegativeLineLengthError,
     InvalidLengthUnitError,
     NegativeDiameterError,
@@ -8,11 +40,13 @@ from exceptions import (
     NegativeAmpacityError,
     NegativeStrandsError,
 )
-from constants import VALID_LENGTH_UNITS
-from enums import NumPhase, Phase
+from shift.constants import VALID_LENGTH_UNITS
+from shift.enums import NumPhase, Phase
 
 
 class Wire:
+    """Class for storing wire data."""
+
     @property
     def name(self) -> str:
         """Name property of a wire"""
@@ -131,7 +165,7 @@ class Wire:
 
 
 class Cable(Wire):
-    """Interface for cable data"""
+    """Interface for cable data."""
 
     @property
     def inslayer(self) -> float:
@@ -243,7 +277,7 @@ class Cable(Wire):
 
 
 class LineGeometryConfiguration(ABC):
-    """Interface for line"""
+    """Interface for line geometry configuration data."""
 
     @property
     def unit(self) -> str:
@@ -259,10 +293,20 @@ class LineGeometryConfiguration(ABC):
 
     @abstractmethod
     def get_x_array(self) -> list:
+        """Abstract method for getting x array to model line geometry.
+
+        Returns:
+            list: e.g [-0.4, 0, 0.4]
+        """
         pass
 
     @abstractmethod
     def get_h_array(self) -> list:
+        """Abstract method for getting h array to model line geometry.
+
+        Returns:
+            list: e.g. [9.0, 9.0, 9.0]
+        """
         pass
 
     def __eq__(self, other):
@@ -278,43 +322,94 @@ class LineGeometryConfiguration(ABC):
 
 
 class HorizontalSinglePhaseConfiguration(LineGeometryConfiguration):
-    def __init__(self, height_of_conductor, unit):
+    """Concrete implementation for single phase horizontal configuration.
 
+    Attributes:
+        unit (str): Unit of height
+        height_of_conductor (float): Height of conductor from ground
+    """
+
+    def __init__(self, height_of_conductor: float, unit: str) -> None:
+        """Constructor class for `HorizontalSinglePhaseConfiguration` class.
+
+        Args:
+            height_of_conductor (float): Height of conductor from ground
+            unit (str): Unit of height
+        """
         self.unit = unit
         self.height_of_conductor = height_of_conductor
 
-    def get_x_array(self):
+    def get_x_array(self) -> list:
+        """Refer to base class for details."""
         return [0]
 
     def get_h_array(self) -> list:
+        """Refer to base class for details."""
         return [self.height_of_conductor]
 
 
 class HorizontalSinglePhaseNeutralConfiguration(LineGeometryConfiguration):
-    def __init__(self, height_of_conductor, separation_between_conductor, unit):
+    """Concrete implementation for single phase horizontal configuration with neutral wire.
+
+    Attributes:
+        unit (str): Unit of height
+        height_of_conductor (float): Height of conductor from ground
+        separation_between_conductor (float): Distance between phase and neutral wire
+    """
+
+    def __init__(
+        self,
+        height_of_conductor: float,
+        separation_between_conductor: float,
+        unit: str,
+    ) -> None:
+        """Constructor for `HorizontalSinglePhaseNeutralConfiguration` class.
+
+        Args:
+            height_of_conductor (float): Height of conductor from ground
+            separation_between_conductor (float): Distance between phase and neutral wire
+            unit (str): Unit of height
+        """
 
         self.unit = unit
         self.height_of_conductor = height_of_conductor
         self.separation_between_conductor = separation_between_conductor
 
-    def get_x_array(self):
+    def get_x_array(self) -> list:
+        """Refer to base class for details."""
         return [
             -self.separation_between_conductor / 2,
             self.separation_between_conductor / 2,
         ]
 
     def get_h_array(self) -> list:
+        """Refer to base class for details."""
         return [self.height_of_conductor, self.height_of_conductor]
 
 
 class HorizontalThreePhaseConfiguration(LineGeometryConfiguration):
-    def __init__(self, height_of_conductor, separation_between_conductor, unit):
+    """Concrete implementation for three phase horizontal configuration.
 
+    Attributes:
+        unit (str): Unit of height
+        height_of_conductor (float): Height of conductor from ground
+        separation_between_conductor (float): Distance between phase and neutral wire
+    """
+
+    def __init__(self, height_of_conductor, separation_between_conductor, unit):
+        """Constructor for `HorizontalThreePhaseConfiguration` class.
+
+        Args:
+            height_of_conductor (float): Height of conductor from ground
+            separation_between_conductor (float): Distance between phase and neutral wire
+            unit (str): Unit of height
+        """
         self.unit = unit
         self.height_of_conductor = height_of_conductor
         self.separation_between_conductor = separation_between_conductor
 
-    def get_x_array(self):
+    def get_x_array(self) -> list:
+        """Refer to base class for details."""
         return [
             -self.separation_between_conductor,
             0,
@@ -322,6 +417,7 @@ class HorizontalThreePhaseConfiguration(LineGeometryConfiguration):
         ]
 
     def get_h_array(self) -> list:
+        """Refer to base class for details."""
         return [
             self.height_of_conductor,
             self.height_of_conductor,
@@ -330,13 +426,30 @@ class HorizontalThreePhaseConfiguration(LineGeometryConfiguration):
 
 
 class HorizontalThreePhaseNeutralConfiguration(LineGeometryConfiguration):
+    """Concrete implementation for three phase horizontal configuration with neutral.
+
+    Attributes:
+        unit (str): Unit of height
+        height_of_conductor (float): Height of conductor from ground
+        separation_between_conductor (float): Distance between phase and neutral wire
+        height_of_neutral_conductor (float): Height of neutral conductor
+    """
+
     def __init__(
         self,
-        height_of_conductor,
-        separation_between_conductor,
-        height_of_neutral_conductor,
-        unit,
-    ):
+        height_of_conductor: float,
+        separation_between_conductor: float,
+        height_of_neutral_conductor: float,
+        unit: str,
+    ) -> None:
+        """Constructor for `HorizontalThreePhaseNeutralConfiguration` class.
+
+        Args:
+            height_of_conductor (float): Height of conductor from ground
+            separation_between_conductor (float): Distance between phase and neutral wire
+            height_of_neutral_conductor (float): Height of neutral conductor
+            unit (str): Unit of height
+        """
 
         self.unit = unit
         self.height_of_conductor = height_of_conductor
@@ -344,6 +457,7 @@ class HorizontalThreePhaseNeutralConfiguration(LineGeometryConfiguration):
         self.height_of_neutral_conductor = height_of_neutral_conductor
 
     def get_x_array(self):
+        """Refer to base class for details."""
         return [
             -self.separation_between_conductor,
             0,
@@ -352,6 +466,7 @@ class HorizontalThreePhaseNeutralConfiguration(LineGeometryConfiguration):
         ]
 
     def get_h_array(self) -> list:
+        """Refer to base class for details."""
         return [
             self.height_of_conductor,
             self.height_of_conductor,
@@ -361,7 +476,7 @@ class HorizontalThreePhaseNeutralConfiguration(LineGeometryConfiguration):
 
 
 class LineGeometry(ABC):
-    """Interface for line geometry"""
+    """Interface for line geometry."""
 
     @property
     def name(self) -> str:
@@ -415,11 +530,12 @@ class LineGeometry(ABC):
             False
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(Name = {self._name}, NumPhase = {self._num_phase}, Number of conductors = {self._num_conds}, Configuration = {self._configuration})"
+        return f"{self.__class__.__name__}(Name = {self._name}, NumPhase = {self._num_phase}, \
+        Number of conductors = {self._num_conds}, Configuration = {self._configuration})"
 
 
 class OverheadLineGeometry(LineGeometry):
-    """Interface for overhead three phase line geometry"""
+    """Interface for overhead line geometry."""
 
     @property
     def phase_wire(self) -> Wire:
@@ -444,6 +560,8 @@ class OverheadLineGeometry(LineGeometry):
 
 
 class OverheadLinewithNeutralGeometry(OverheadLineGeometry):
+    """Interface for overhead line with neutral geometry."""
+
     @property
     def neutral_wire(self) -> str:
         """Neutral wire property of a line geometry"""
@@ -467,7 +585,7 @@ class OverheadLinewithNeutralGeometry(OverheadLineGeometry):
 
 
 class UndergroundLineGeometry(LineGeometry):
-    """Interface for underground three phase line geometry"""
+    """Interface for underground line geometry"""
 
     @property
     def phase_cable(self) -> Cable:
@@ -491,10 +609,9 @@ class UndergroundLineGeometry(LineGeometry):
         return f"{self.__class__.__name__}({repr.split('(')[1].split(')')[0]}, Phase cable = {self._phase_cable})"
 
 
-""" Interface for line section representation"""
-
-
 class Line(ABC):
+    """Interface for line section representation"""
+
     @property
     def name(self) -> str:
         """Name property of a line element"""
@@ -581,6 +698,8 @@ class Line(ABC):
 
 
 class GeometryBasedLine(Line):
+    """Interface for geometry based line."""
+
     @property
     def geometry(self) -> LineGeometry:
         """Geometry of the line element"""

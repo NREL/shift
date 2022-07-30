@@ -1,15 +1,57 @@
-""" Let's generate primary network from RoadNetwork """
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
 
-from graph import OpenStreetRoadNetwork
-from constants import MIN_POLE_TO_POLE_DISTANCE, MAX_POLE_TO_POLE_DISTANCE
-from exceptions import (
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+""" This module contains classes for managing creation of primary network sections. """
+import math
+import copy
+from abc import ABC, abstractmethod
+import itertools
+import uuid
+from typing import List, Union, Callable
+
+import numpy as np
+import pandas as pd
+from networkx.algorithms import approximation as ax
+import networkx as nx
+
+from shift.graph import OpenStreetRoadNetwork
+from shift.constants import MIN_POLE_TO_POLE_DISTANCE, MAX_POLE_TO_POLE_DISTANCE
+from shift.exceptions import (
     PoleToPoleDistanceNotInRange,
     IncompleteGeometryConfigurationDict,
 )
-from utils import slice_up_network_edges, get_nearest_points_in_the_network
-from networkx.algorithms import approximation as ax
-import networkx as nx
-from constants import (
+from shift.utils import (
+    slice_up_network_edges,
+    get_nearest_points_in_the_network,
+)
+from shift.constants import (
     MIN_ADJUSTMENT_FACTOR,
     MAX_ADJUSTMENT_FACTOR,
     MIN_POWER_FACTOR,
@@ -24,7 +66,7 @@ from constants import (
     UG_CONCENTRIC_CABLE_CATALOG_FILE,
     LENGTH_CONVERTER_TO_CM,
 )
-from exceptions import (
+from shift.exceptions import (
     AdjustmentFactorNotInRangeError,
     PowerFactorNotInRangeError,
     NegativeKVError,
@@ -36,11 +78,9 @@ from exceptions import (
     ConductorNotFoundForKdrop,
     CatalogNotFoundError,
 )
-import math
-from enums import ConductorType, NumPhase, Phase
-import pandas as pd
-from utils import df_validator, get_distance
-from line_section import (
+from shift.enums import ConductorType, NumPhase, Phase
+from shift.utils import df_validator, get_distance
+from shift.line_section import (
     GeometryBasedLine,
     OverheadLineGeometry,
     OverheadLinewithNeutralGeometry,
@@ -48,23 +88,36 @@ from line_section import (
     UndergroundLineGeometry,
     Wire,
     Cable,
+    Line,
 )
-import uuid
-import numpy as np
-import copy
-from abc import ABC, abstractmethod
-import itertools
 
 
 def choose_conductor(
-    catalog,
-    ampacity,
-    k_drop,
-    geometry_configuration,
-    num_of_phase,
-    kv_base,
-    pf=0.9,
-):
+    catalog: pd.DataFrame,
+    ampacity: float,
+    k_drop: float,
+    geometry_configuration: LineGeometryConfiguration,
+    num_of_phase: NumPhase,
+    kv_base: float,
+    pf: float = 0.9,
+) -> dict:
+    """Handles selection of conductor from the catalog.
+
+    Args:
+        catalog (pd.DataFrame): Dataframe containing all the catalogs
+        ampacity (float): Minimum ampacity required
+        k_drop (float): Percentage drop per kva per miles expected
+        geometry_configuration (LineGeometryConfiguration): LineGeometryConfiguration instance
+        num_of_phase (NumPhase): NumPhase Instance
+        kv_base (float): Line to line kv base to be used to compute kva
+        pf (float): Power factor to be used to compute kva
+
+    Raises:
+        CatalogNotFoundError: If the catalog record is not found for given ampacity
+
+    Returns:
+        dict: Catalog record in dict format
+    """
 
     # First thing is to find catalog for higher amps than required
     conductors_above_ampacity = catalog[catalog["ampacity"] > ampacity]
@@ -145,7 +198,15 @@ def choose_conductor(
     return record
 
 
-def convert_oh_cond_info_to_wire(data):
+def convert_oh_cond_info_to_wire(data: dict) -> Wire:
+    """Converts catalog record into wire object.
+
+    Args:
+        data (dict): Catalog record
+
+    Returns:
+        Wire: Wire object instance
+    """
 
     data = copy.deepcopy(data)
 
@@ -162,7 +223,15 @@ def convert_oh_cond_info_to_wire(data):
     return wire
 
 
-def convert_ug_cond_info_to_cable(data):
+def convert_ug_cond_info_to_cable(data: dict) -> Cable:
+    """Converts catalog record into cable object.
+
+    Args:
+        data (dict): Catalog record
+
+    Returns:
+        Cable: Cable object instance
+    """
 
     data = copy.deepcopy(data)
 
@@ -201,7 +270,32 @@ def geometry_based_line_section_builder(
     k_drop: float,
     kv_base: float,
     material: str = "all",
-):
+) -> Line:
+    """Builds a line section.
+
+    Args:
+        from_node (str): From node
+        to_node (str): To node
+        num_phase (NumPhase): NumPhase Instance
+        from_phase (Phase): Phase instance for from node
+        to_phase (Phase): Phase instance for to node
+        length (float): Length of line segment
+        length_unit (str): Unit for line length
+        ampacity (float): Ampacity for the conductor
+        catalog (pd.DataFrame): DataFrame containing all the catalaogs
+        neutral_present (bool): Indicates whether neutral is present or not
+        conductor_type (ConductorType): ConductorType instance
+        geometry_configuration (LineGeometryConfiguration): LineGeometryConfiguration instance
+        k_drop (float): Expected percentage voltage drop per kva per mile
+        kv_base (float): kV base for computing kVA
+        material (str): Material for choosing conductor
+
+    Raises:
+        EmptyCatalog: If the material is not found in catalog
+
+    Returns:
+        Line: Line instance
+    """
 
     if material != "all":
         catalog = catalog.loc[catalog["material"] == material]
@@ -297,16 +391,44 @@ def geometry_based_line_section_builder(
 
 
 class BaseSectionsBuilder:
+    """Interface for sections builder.
+
+    Attributes:
+        network (nx.Graph): Graph instance
+        conductor_type (ConductorType): ConductorType instance
+        geometry_configuration (dict): Line configuration data
+        num_phase (NumPhase): NumPhase instance
+        phase (Phase): Phase instance
+        neutral_present (bool): Indicates whether neutral is present or not
+        material (str): Conductor material
+        overhead_conductor_catalog (pd.DataFrame): DataFrame containing catalogs for
+            overhead conductors
+        concentric_cable_catalog (pd.DataFrame): DataFrame containing catalogs for
+            concentric cables
+        catalog_dict (dict): Mapping between conductor type and conductor catalogs
+    """
+
     def __init__(
         self,
-        network,
+        network: nx.Graph,
         conductor_type: ConductorType,
         configuration: dict,
         num_phase: NumPhase,
         phase: Phase,
-        neutral_present: False,
+        neutral_present: bool = False,
         material: str = "all",
-    ):
+    ) -> None:
+        """Constructor for `BaseSectionsBuilder` class.
+
+        Args:
+            network (nx.Graph): Graph instance
+            conductor_type (ConductorType): ConductorType instance
+            configuration (dict): Line configuration data
+            num_phase (NumPhase): NumPhase instance
+            phase (Phase): Phase instance
+            neutral_present (bool): Indicates whether neutral is present or not
+            material (str): Conductor material
+        """
 
         self.network = network
         self.conductor_type = conductor_type
@@ -338,7 +460,20 @@ class BaseSectionsBuilder:
 
 
 class PrimarySectionsBuilder(BaseSectionsBuilder):
-    def generate_primary_line_sections(self, k_drop, kv_base):
+    """Class handling generation of primary line sections."""
+
+    def generate_primary_line_sections(
+        self, k_drop: float, kv_base: float
+    ) -> List[Line]:
+        """Method for creating primary line sections.
+
+        Args:
+            k_drop (float): Expected percentage voltage drop per mile per kva
+            kv_base (float): KV base used for computing kVA
+
+        Returns:
+            List[Line]: List of `Line` instances
+        """
 
         line_sections = []
         node_data_dict = {
@@ -379,9 +514,23 @@ class PrimarySectionsBuilder(BaseSectionsBuilder):
 
 
 class BaseNetworkBuilder(ABC):
+    """Interface for building distribution network.
+
+    Attributes:
+        div_func (Callable[[float], float]): Diversity factor function coefficients
+        kv_ll (float): Line to line voltage in KV
+        max_pole_to_pole_distance (float): Maximum pole to pole distance in meter
+        power_factor (float): Power factor used to compute kva
+        adjustment_factor (float): Adjustment factor for adjusting kva
+        planned_avg_annual_growth (float): Planned average annual load growth rate in percentage
+        actual_avg_annual_growth (float): Actual average annual load growth rate in percentage
+        actual_years_in_operation (float): Actual years in operation
+        planned_years_in_operation (float): Planned years in operation
+    """
+
     def __init__(
         self,
-        div_func,
+        div_func: Callable[[float], float],
         kv_ll: float,
         max_pole_to_pole_distance: float = 100,
         power_factor: float = 0.9,
@@ -390,7 +539,29 @@ class BaseNetworkBuilder(ABC):
         actual_avg_annual_growth: float = 4,
         actual_years_in_operation: float = 15,
         planned_years_in_operation: float = 10,
-    ):
+    ) -> None:
+        """Constructor for `BaseNetworkBuilder` class.
+
+        Args:
+            div_func (Callable[[float], float]): Diversity factor function coefficients
+            kv_ll (float): Line to line voltage in KV
+            max_pole_to_pole_distance (float): Maximum pole to pole distance in meter
+            power_factor (float): Power factor used to compute kva
+            adjustment_factor (float): Adjustment factor for adjusting kva
+            planned_avg_annual_growth (float): Planned average annual load growth rate in percentage
+            actual_avg_annual_growth (float): Actual average annual load growth rate in percentage
+            actual_years_in_operation (float): Actual years in operation
+            planned_years_in_operation (float): Planned years in operation
+
+        Raises:
+            NegativeKVError: If `kv_ll` is negative
+            ZeroKVError: If `kv_ll` is zero
+            AdjustmentFactorNotInRangeError: If invalid adjustement factor is passed
+            PowerFactorNotInRangeError: If power factor is not in valid range
+            PoleToPoleDistanceNotInRange: If pole to pole distance passed in invalid
+            PercentageNotInRangeError: If percentages passed are not valid
+            OperationYearNotInRange: If operation year passed is invalid
+        """
 
         self.max_pole_to_pole_distance = max_pole_to_pole_distance
         self.div_func = div_func
@@ -451,11 +622,20 @@ class BaseNetworkBuilder(ABC):
         ):
             raise OperationYearNotInRange(self.planned_years_in_operation)
 
-    def compute_ampacity(
+    def _compute_ampacity(
         self, non_coincident_peak: float, num_of_customers: int
-    ):
+    ) -> float:
+        """Private method to compute ampacity.
 
-        """Initial step is to compute maximum diversified demand"""
+        Args:
+            non_coincident_peak (float): Non coincident peak consumption
+            num_of_customers (int): Number of customers
+
+        Returns:
+            float: conductor ampacity
+        """
+
+        # Initial step is to compute maximum diversified demand
         div_factor = (
             self.div_func(num_of_customers) if num_of_customers > 1 else 1
         )
@@ -477,16 +657,31 @@ class BaseNetworkBuilder(ABC):
 
     @abstractmethod
     def update_network_with_ampacity(self):
+        """Abstract method for updating ampacity for all line sections."""
         pass
 
 
 class PrimaryNetworkFromRoad(BaseNetworkBuilder):
+    """Builds primary network from OpenStreet road data.
+
+    Refer to base class for base attributes.
+
+    Attributes:
+        road_network (OpenStreetRoadNetwork): OpenStreetRoadNetwork instance
+        trans_cust_mapper (dict): Mapping between `Transformer` object and list of `Load` objects
+        node_append_str (Union[str, None]): Unique string to be appended to all primary nodes
+        sliced_graph (nx.Graph): Sliced road network
+        substation_node (str): Node representing substation
+        substation_coords (Sequence): Actual substation coordinate
+        retain_nodes (List[str]): List of primary nodes to be retained
+    """
+
     def __init__(
         self,
         road_network: OpenStreetRoadNetwork,
         trans_cust_mapper: dict,
         substation_loc: tuple,
-        div_func,
+        div_func: Callable[[float], float],
         kv_ll: float,
         max_pole_to_pole_distance: float = 100,
         power_factor: float = 0.9,
@@ -495,8 +690,18 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
         actual_avg_annual_growth: float = 4,
         actual_years_in_operation: float = 15,
         planned_years_in_operation: float = 10,
-        node_append_str: str = None,
-    ):
+        node_append_str: Union[str, None] = None,
+    ) -> None:
+        """Constructor for `PrimaryNetworkFromRoad` class.
+
+        Refer to base class for base class arguments.
+
+        Args:
+            road_network (OpenStreetRoadNetwork): OpenStreetRoadNetwork instance
+            trans_cust_mapper (dict): Mapping between `Transformer` object and list of `Load` objects
+            substation_loc (tuple): Tentative location for siting substation (longitude, latitude) pair
+            node_append_str (Union[str, None]): Unique string to be appended to all primary nodes
+        """
 
         super().__init__(
             div_func,
@@ -510,18 +715,18 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
             planned_years_in_operation,
         )
 
-        """ Get the road network from openstreet data"""
+        # Get the road network from openstreet data
         self.node_append_str = node_append_str
         self.road_network = road_network
         self.road_network.get_network(node_append_str)
         self.trans_cust_mapper = trans_cust_mapper
 
-        """ Get sliced graph"""
+        # Get sliced graph
         self.sliced_graph = slice_up_network_edges(
             self.road_network.updated_network, self.max_pole_to_pole_distance
         )
 
-        """ Get substation node """
+        # Get substation node
         self.substation_node = [
             n
             for n in get_nearest_points_in_the_network(
@@ -539,20 +744,26 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
             self.sliced_graph, trans_location_to_retain + [substation_loc]
         )
 
-    def get_primary_network(self):
-
-        """Alogorithm to convert road network into distribution system primary network"""
+    def get_primary_network(self) -> nx.Graph:
+        """Algorithm to convert road network into distribution system primary network"""
         return ax.steinertree.steiner_tree(
             self.sliced_graph, list(self.retain_nodes.keys())
         )
 
-    def get_sliced_graph(self):
-
+    def get_sliced_graph(self) -> nx.Graph:
         """Return sliced graph"""
         return self.sliced_graph
 
-    def get_network(self):
-        """Returns a primary network with ampacity data"""
+    def get_network(self) -> nx.Graph:
+        """Returns a primary network with ampacity data.
+
+        Raises:
+            AttributeDoesNotExistError: If `update_network_with_ampacity` is not called
+                first, absence of `network` attribute
+
+        Returns:
+            nx.Graph: primary network with ampacity data
+        """
 
         if hasattr(self, "network"):
             mapping_dict, relabel_rnodes = {}, {}
@@ -578,21 +789,24 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
                  method first before trying to access primary"
             )
 
-    def get_trans_node_mapping(self):
+    def get_trans_node_mapping(self) -> dict:
+        """Returns transformer to primary node mapping"""
         return self.retain_nodes
 
-    def get_longest_length_in_kvameter(self):
+    def get_longest_length_in_kvameter(self) -> float:
+        """Returns longest length in kva meter"""
         return self.longest_length
 
-    def update_network_with_ampacity(self):
+    def update_network_with_ampacity(self) -> None:
+        """Method to update all line sections with ampacity"""
 
-        """Get primary network tree"""
+        # Get primary network tree
         self.network = self.get_primary_network()
 
-        """ Create a directed graph by providing source node """
+        # Create a directed graph by providing source node """
         dfs_tree = nx.dfs_tree(self.network, source=self.substation_node)
 
-        """ Mapping for transformer nodes """
+        # Mapping for transformer nodes """
         transformer_nodes = {}
         for node, node_dict in self.retain_nodes.items():
             for trans, cust_list in self.trans_cust_mapper.items():
@@ -604,22 +818,22 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
 
         for edge in dfs_tree.edges():
 
-            """Compute distance from the source"""
+            # Compute distance from the source"""
             distance = nx.resistance_distance(
                 self.network, self.substation_node, edge[1]
             )
             self.network[edge[0]][edge[1]]["distance"] = distance
 
-            """ Perform a depth first traversal to find all successor nodes"""
+            # Perform a depth first traversal to find all successor nodes"""
             dfs_successors = nx.dfs_successors(dfs_tree, source=edge[1])
 
-            """ Create a subgraph"""
+            # Create a subgraph"""
             nodes_to_retain = [edge[1]]
             for k, v in dfs_successors.items():
                 nodes_to_retain.extend(v)
             subgraph = self.network.subgraph(nodes_to_retain)
 
-            """ Let's compute maximum diversified kva demand downward of this edge"""
+            # Let's compute maximum diversified kva demand downward of this edge"""
             noncoincident_kws = 0
             num_of_customers = 0
             for node in subgraph.nodes():
@@ -629,7 +843,7 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
                         [l.kw for l in transformer_nodes[node]]
                     )
 
-            self.network[edge[0]][edge[1]]["ampacity"] = self.compute_ampacity(
+            self.network[edge[0]][edge[1]]["ampacity"] = self._compute_ampacity(
                 noncoincident_kws, num_of_customers
             )
 

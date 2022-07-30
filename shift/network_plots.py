@@ -1,7 +1,43 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
+
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+""" This module contains classes for managing network plots. """
+
 from abc import ABC, abstractmethod
+import os
+from typing import Union, List
+
 import networkx as nx
 import plotly.graph_objects as go
-from exceptions import (
+
+from shift.exceptions import (
     ZoomLevelNotInRangeError,
     InvalidMapboxStyle,
     EmptyAssetStyleDict,
@@ -9,29 +45,62 @@ from exceptions import (
     InvalidNodeType,
     FolderNotFoundError,
 )
-from constants import MIN_ZOOM_LEVEL, MAX_ZOOM_LEVEL, MAP_STYLES
-import os
+from shift.constants import MIN_ZOOM_LEVEL, MAX_ZOOM_LEVEL, MAP_STYLES
 
 
 class NetworkPlot(ABC):
+    """Interface for plotting a network."""
+
     @abstractmethod
-    def show(self):
+    def show(self) -> None:
+        """Abstract method for showing the plot."""
         pass
 
     @abstractmethod
     def html_export(self, html_file_path: str):
+        """Abstract method for exporting network plot in html format.
+
+        Args:
+           html_file_path (str): Valid html file path
+        """
         pass
 
 
 class PlotlyGISNetworkPlot(NetworkPlot):
+    """ " Class for plotting network along with GIS layer using plotly.
+
+    Attributes:
+        network (nx.Graph): Graph to plot
+        access_token (str): MapBox token
+        style (str): Valid MapBox style
+        zoom_level (int): Initial Zoom level for the plot
+        asset_specific_style (Union[None, dict]): Asset specific style dict
+        data (dict): Plot data managed internally
+        fig (go.Figure): go.Figure instance managed internally
+    """
+
     def __init__(
         self,
         network: nx.Graph,
         access_token: str,
         style: str = "satellite",
         zoom_level: int = 13,
-        asset_specific_style: dict = {},
-    ):
+        asset_specific_style: Union[None, dict] = None,
+    ) -> None:
+        """Constructor for `PlotlyGISNetworkPlot` class.
+
+        Args:
+            network (nx.Graph): Graph to plot
+            access_token (str): MapBox token
+            style (str): Valid MapBox style
+            zoom_level (int): Initial Zoom level for the plot
+            asset_specific_style (Union[None, dict]): Asset specific style dict
+
+        Raises:
+            InvalidMapboxStyle: If invalid mapbox style is passed
+            ZoomLevelNotInRangeError: If invalid zoom level is passed
+            EmptyAssetStyleDict: If `asset_specific_style` is empty
+        """
 
         self.access_token = access_token
         self.network = network
@@ -43,15 +112,18 @@ class PlotlyGISNetworkPlot(NetworkPlot):
         if self.zoom_level < MIN_ZOOM_LEVEL or self.zoom_level > MAX_ZOOM_LEVEL:
             raise ZoomLevelNotInRangeError(self.zoom_level)
 
-        self.asset_specific_style = asset_specific_style
+        self.asset_specific_style = (
+            asset_specific_style if asset_specific_style is not None else {}
+        )
         if not self.asset_specific_style:
             raise EmptyAssetStyleDict()
 
         self.data = []
-        self.add_data()
-        self.prepare_plot()
+        self._add_data()
+        self._prepare_plot()
 
-    def add_data(self):
+    def _add_data(self):
+        """Private method to add data for generating plot."""
 
         scatter_data = {}
         for node in self.network.nodes.data():
@@ -134,7 +206,23 @@ class PlotlyGISNetworkPlot(NetworkPlot):
             else:
                 raise InvalidNodeType(key)
 
-    def add_scatter_data(self, lons, lats, texts, color="blue", size=5):
+    def add_scatter_data(
+        self,
+        lons: List[float],
+        lats: List[float],
+        texts: List[str],
+        color: str = "blue",
+        size: int = 5,
+    ) -> None:
+        """Add scatter data to the map.
+
+        Args:
+            lons (List[float]): List of longitudes
+            lats (List[float]): List of latitudes
+            texts (List[str]): List of hover texts
+            color (str): Color for scatter plot
+            size (int): Size for scatter plot
+        """
 
         self.data.append(
             go.Scattermapbox(
@@ -146,7 +234,21 @@ class PlotlyGISNetworkPlot(NetworkPlot):
             )
         )
 
-    def add_line_data(self, lats, lons, line_color="red", size=10):
+    def add_line_data(
+        self,
+        lats: List[float],
+        lons: List[float],
+        line_color: str = "red",
+        size: int = 10,
+    ) -> None:
+        """Method for adding line data.
+
+        Args:
+            lats (List[float]): List of latitudes
+            lons (List[float]): List of longitudes
+            line_color (str): Color for line plot
+            size (int): Size for line plot
+        """
 
         self.data.append(
             go.Scattermapbox(
@@ -158,7 +260,8 @@ class PlotlyGISNetworkPlot(NetworkPlot):
             )
         )
 
-    def get_map_centre(self):
+    def _get_map_centre(self) -> dict:
+        """Private method to get map center."""
 
         longitudes = [node[1]["pos"][0] for node in self.network.nodes.data()]
         latitudes = [node[1]["pos"][1] for node in self.network.nodes.data()]
@@ -167,7 +270,8 @@ class PlotlyGISNetworkPlot(NetworkPlot):
             "lat": sum(latitudes) / len(latitudes),
         }
 
-    def prepare_plot(self):
+    def _prepare_plot(self) -> None:
+        """Private method to prepare the plot"""
 
         self.fig = go.Figure(data=self.data)
         self.fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
@@ -175,16 +279,17 @@ class PlotlyGISNetworkPlot(NetworkPlot):
             {
                 "accesstoken": self.access_token,
                 "style": self.style,
-                "center": self.get_map_centre(),
+                "center": self._get_map_centre(),
                 "zoom": self.zoom_level,
             }
         )
 
-    def show(self):
+    def show(self) -> None:
+        """Refer to base class for more details."""
         self.fig.show()
 
-    def html_export(self, html_file_path: str):
-
+    def html_export(self, html_file_path: str) -> None:
+        """Refer to base class for more details."""
         if not os.path.exists(os.path.dirname(html_file_path)):
             raise FolderNotFoundError(os.path.dirname(html_file_path))
         self.fig.write_html(html_file_path)

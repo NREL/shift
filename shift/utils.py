@@ -1,20 +1,71 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
+
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+""" This module contains utility functions used through out the package. """
+
+from typing import List, Union, Sequence
+
 import numpy as np
 import networkx as nx
 import geopy.distance
 from cerberus import Validator
-from shift.exceptions import ValidationError
-from shift.graph import RoadNetworkFromPolygon
 import shapefile
 import shapely.geometry
 import shapely
+import pandas as pd
 from networkx.algorithms import approximation as ax
 
+from shift.exceptions import ValidationError
+from shift.graph import RoadNetworkFromPolygon
 
-def df_validator(scehma, df):
+
+def df_validator(schema: dict, df: pd.DataFrame) -> bool:
+    """Validates the content of pandas dataframe.
+
+    Uses cerberus for validation. So refer to cerberus
+    documentation for scheme.
+
+    Args:
+        schema (dict): Schema for validating the content of pandas dataframe
+        df (pd.DataFrame): Pandas dataframe to be validated
+
+    Raises:
+        ValidationError: If error is found
+
+    Returns
+        bool: True if validation passes.
+    """
 
     errors = []
     csv_validator = Validator()
-    csv_validator.schema = scehma
+    csv_validator.schema = schema
     csv_validator.require_all = True
 
     for idx, record in enumerate(df.to_dict(orient="records")):
@@ -27,8 +78,16 @@ def df_validator(scehma, df):
     return True
 
 
-def get_point_from_curve(curve, x):
+def get_point_from_curve(curve: List[List[float]], x: float) -> float:
+    """Returns a y coordinate for a given x coordinate by following piecewise linear function.
 
+    Args:
+        curve (List[List[float]]): List of list containing two floats
+        x (float): x coordinate
+
+    Returns:
+        float: y coordinate
+    """
     x_ = np.array([el[0] for el in curve])
     y_ = np.array([el[1] for el in curve])
 
@@ -49,9 +108,19 @@ def get_point_from_curve(curve, x):
     return y
 
 
-def get_distance(point1, point2, latlon=False):
+def get_distance(
+    point1: List[float], point2: List[float], latlon=False
+) -> float:
+    """Returns distance between two geopoints in meter assuming eliposoidal earth model.
 
-    """Returns distance between two geopoints in meter assuming eliposoidal earth model"""
+    Args:
+        point1 (List[float]): location coordinate for point 1
+        point2 (List[float]): location coordinate for point 2
+        latlon (bool): Specfies that latitude is first and longitude is second if true
+
+    Returns:
+        float: distance in meter
+    """
 
     # Assuming point1 and point2 are tuples with first element representing longitude and
     # second element representing latitude
@@ -68,7 +137,23 @@ def get_distance(point1, point2, latlon=False):
         return geopy.distance.distance(point1, point2).km * 1000
 
 
-def get_nearest_points_in_the_network(graph, points):
+def get_nearest_points_in_the_network(
+    graph: nx.Graph, points: List[List[float]]
+) -> dict:
+    """Retrieve nearest node from the graph for given points
+
+    Args:
+        graph (nx.Graph): Networkx graph instance
+        points (List[List[float]]): List of points for which nearest
+            nodes are to be found
+
+    Todo:
+        * Fix the issue if returned nodes are same for two points.
+
+    Returns:
+        dict: mapping between nearest node and point
+
+    """
 
     nearest_points = {}
     graph_node_data = {
@@ -98,7 +183,16 @@ def get_nearest_points_in_the_network(graph, points):
 
 def slice_up_network_edges(graph: nx.Graph, slice_in_meter: float) -> nx.Graph:
 
-    # Creates a new graph with edges sliced by given distance in meter
+    """Creates a new graph with edges sliced by given distance in meter.
+
+    Args:
+        graph (nx.Graph): Networkx graph instance
+        slice_in_meter (float): Maximum length of edge in meter for
+            use in slicing
+
+    Returns:
+        nx.Graph: Sliced network
+    """
 
     sliced_graph = nx.Graph()
     graph_nodes = {
@@ -138,10 +232,14 @@ def slice_up_network_edges(graph: nx.Graph, slice_in_meter: float) -> nx.Graph:
     return sliced_graph
 
 
-def get_forbidden_polygons(shp_file):
+def get_forbidden_polygons(shp_file: str) -> List[shapely.geometry.Polygon]:
+    """Get all the polygons from a shape file.
 
-    """
-    Get all the polygons for a forbidden area
+    Args:
+        shp_file (str): Path to .shp file
+
+    Returns:
+        List[shapely.geometry.Polygon]: List of shapely polygons
     """
     shape = shapefile.Reader(shp_file)
     forbidden_polygons = []
@@ -156,8 +254,8 @@ def get_forbidden_polygons(shp_file):
     return forbidden_polygons
 
 
-def get_slices(start, end, num_steps):
-
+def get_slices(start: float, end: float, num_steps: int) -> List[float]:
+    """Get slices between two numbers"""
     return [
         start + i * (end - start) / (num_steps) for i in range(num_steps + 1)
     ]
@@ -168,9 +266,22 @@ def create_rectangular_mesh_network(
     upper_right: tuple,
     vertical_space_meter: float = 32,
     horizontal_space_meter: float = 32,
-    forbidden_areas=None,
-    node_append_str=None,
-):
+    forbidden_areas: Union[str, None] = None,
+    node_append_str: Union[str, None] = None,
+) -> Sequence[nx.Graph, dict]:
+    """Creates a rectangular mesh network from a given set of points.
+
+    Args:
+        lower_left (tuple): (longitude, latitude) representing lower left point
+        upper_right (tuple): (longitude, latitude) representing upper right point
+        vertical_space_meter (float): Vertical spacing in meter
+        horizontal_space_meter (float): Horizontal spacing in meter
+        forbidden_areas (Union[str, None]): Shp file representing forbidden polygons
+        node_append_str (Union[str, None]): String to be appended at the end of node name
+
+    Returns:
+        Sequence[nx.Graph, dict]: Graph and mapping between nodes and coordinates
+    """
 
     # Assuming tuples first element is longitude and second element is latitude
     # 50m is a common distance between low tension pole
@@ -345,8 +456,19 @@ def create_rectangular_mesh_network(
     return graph, points
 
 
-def mesh_pruning(mesh_graph, customers):
+def mesh_pruning(
+    mesh_graph: nx.Graph, customers: List[List[float]]
+) -> Sequence[nx.Graph, dict]:
+    """Prunes the mesh graph by keeping the nodes specified.
 
+    Args:
+        mesh_graph (nx.Graph): Graph to be pruned
+        customers: List[List[float]]: List of points to be used for pruning
+
+    Returns:
+        Sequence[nx.Graph, dict]: Pruned network and mapping between customer and node
+
+    """
     # Let's find the nodes we absolutey need to keep
     points = {
         key: val["pos"]
@@ -381,8 +503,21 @@ def mesh_pruning(mesh_graph, customers):
 
 
 def triangulate_using_mesh(
-    customers, forbidden_areas=None, node_append_str=None
-):
+    customers: List[List[float]],
+    forbidden_areas: Union[str, None] = None,
+    node_append_str: Union[str, None] = None,
+) -> Sequence[nx.Graph, dict, dict]:
+    """Creates a minimum spanning graph connecting customers by avoiding forbidden region.
+
+    Args:
+        customers (List[List[float]]): List of points to be used to create graph
+        forbidden_areas (Union[str, None]): Path to .shp file
+        node_append_str (Union[str, None]): String to be appended to node name
+
+    Returns:
+        Sequence[nx.Graph, dict, dict]: Minimum spannnig tree, mapping between point and coordinates
+            and customer to node mapping.
+    """
 
     # find the edge coordinates
 
@@ -401,8 +536,15 @@ def triangulate_using_mesh(
     return graph_mst, points, customer_to_node_mapper
 
 
-def set_node_edge_type(network):
+def set_node_edge_type(network: nx.Graph) -> nx.Graph:
+    """Sets the type to node and edge.
 
+    Args:
+        network (nx.Graph): Networkx graph instance
+
+    Returns:
+        nx.Graph: Updated graph
+    """
     nx.set_node_attributes(network, "node", name="type")
     nx.set_node_attributes(network, {"type": "node"}, name="data")
     nx.set_edge_attributes(network, "edge", name="type")

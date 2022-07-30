@@ -41,5 +41,19 @@ nav:
   - How to Guides: how-to-guides.md
   - References:
     - geometry: geometry.md
+    - clustering: clustering.md
+    - exceptions: exceptions.md
+    - facade: facade.md
+    - feeder_network: feeder_network.md
+    - graph: graph.md
+    - line_section: line_section.md
+    - load_builder: load_builder.md
+    - load: load.md
+    - network_plots: network_plots.md
+    - primary_network_builder: primary_network_builder.md
+    - secondary_network_builder: secondary_network_builder.md
+    - transformer_builder: transformer_builder.md
+    - transformer: transformer.md
+    - utils: utils.md
   - Theoritical Explanation: explanation.md
   - Guide to Developers: developers-guide.md

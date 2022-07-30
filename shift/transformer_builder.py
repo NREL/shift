@@ -1,16 +1,47 @@
-"""
-Abstract class to get the transformers and mapping between transformers and loads
-"""
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
+
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+""" This module contains classes for building transformers. """
+
 from abc import ABC, abstractmethod
-from typing import List
-from load import Load
-import numpy as np
-from clustering import Clustering
-from utils import df_validator
-import pandas as pd
+from typing import List, Callable
 import math
-from transformer import Transformer
-from constants import (
+
+import numpy as np
+import pandas as pd
+
+from shift.load import Load
+from shift.clustering import Clustering
+from shift.utils import df_validator
+from shift.transformer import Transformer
+from shift.constants import (
     MIN_POWER_FACTOR,
     MAX_POWER_FACTOR,
     MIN_ADJUSTMENT_FACTOR,
@@ -22,8 +53,8 @@ from constants import (
     MAX_YEAR_OPERATION,
     TRANSFORMER_CATALOG_FILE,
 )
-from enums import NumPhase, TransformerConnection, Phase
-from exceptions import (
+from shift.enums import NumPhase, TransformerConnection, Phase
+from shift.exceptions import (
     PowerFactorNotInRangeError,
     AdjustmentFactorNotInRangeError,
     ZeroKVError,
@@ -36,14 +67,26 @@ from exceptions import (
 )
 
 
-""" Interface for getting transformer load mapping """
-
-
 class TransformerLoadMapper(ABC):
+    """Interface for getting transformer load mapping.
+
+    Attributes:
+        loads (List[Load]): List of loads
+        diversity_factor_func (Callable): Callable to compute diversity factor
+        adjustment_factor (float): Adjustment factor for adjusting kva
+        planned_avg_annual_growth (float): Planned average annual load growth rate in percentage
+        actual_avg_annual_growth (float): Actual average annual load growth rate in percentage
+        actual_years_in_operation (float): Actual years in operation
+        planned_years_in_operation (float): Planned years in operation
+        power_factor (float): Power factor used to compute kva
+        catalog_type (str): Catalog type used for choosing transformer
+        trans_catalog (pd.DataFrame): Dataframe containing transformer catalogs
+    """
+
     def __init__(
         self,
         loads: List[Load],
-        diversity_factor_func,
+        diversity_factor_func: Callable[[float], float],
         adjustment_factor: float = 1.25,
         planned_avg_annual_growth: float = 2,
         actual_avg_annual_growth: float = 4,
@@ -51,7 +94,27 @@ class TransformerLoadMapper(ABC):
         planned_years_in_operation: float = 10,
         power_factor: float = 0.9,
         catalog_type: str = "all",
-    ):
+    ) -> None:
+        """Constructor for `TransformerLoadMapper` class.
+
+        Args:
+            loads (List[Load]): List of loads
+            diversity_factor_func (Callable[[float], float]): Callable to compute diversity factor
+            adjustment_factor (float): Adjustment factor for adjusting kva
+            planned_avg_annual_growth (float): Planned average annual load growth rate in percentage
+            actual_avg_annual_growth (float): Actual average annual load growth rate in percentage
+            actual_years_in_operation (float): Actual years in operation
+            planned_years_in_operation (float): Planned years in operation
+            power_factor (float): Power factor used to compute kva
+            catalog_type (str): Catalog type used for choosing transformer
+
+        Raises:
+            PercentageNotInRangeError: If invalid percentage is used
+            OperationYearNotInRange: If invalid operation year is used
+            AdjustmentFactorNotInRangeError: If invalid adjustment factor is used
+            PowerFactorNotInRangeError: If invalid power factor is used
+            EmptyCatalog: If catalog is empty for given type
+        """
 
         self.loads = loads
         self.diversity_factor_func = diversity_factor_func
@@ -112,9 +175,18 @@ class TransformerLoadMapper(ABC):
 
     def compute_transformer_kva_capacity(
         self, non_coincident_peak: float, num_of_customers: int
-    ):
+    ) -> float:
+        """Method for computing transformer capacity.
 
-        """Initial step is to compute maximum diversified demand"""
+        Args:
+            non_coincident_peak (float): Non coincident peak
+            num_of_customers (int): Number of customers
+
+        Returns:
+            float: Transformer size
+        """
+
+        # Initial step is to compute maximum diversified demand
         div_factor = (
             self.diversity_factor_func(num_of_customers)
             if num_of_customers > 1
@@ -137,9 +209,25 @@ class TransformerLoadMapper(ABC):
 
     @abstractmethod
     def get_transformer_load_mapping(self) -> dict:
+        """Abstract method for returning transformer to loads mapping."""
         pass
 
-    def get_catalog_object(self, t_loads: List[Load], ht_kv, lt_kv):
+    def get_catalog_object(
+        self, t_loads: List[Load], ht_kv: float, lt_kv: float
+    ) -> dict:
+        """Method for getting transformet catalog.
+
+        Args:
+            t_loads (List[Load]): List of `Load` instances
+            ht_kv (float): High tension kV
+            lt_kv (float): Low tension kv
+
+        Raises:
+            EmptyCatalog: If transformer catalog is not found
+
+        Returns:
+            dict: Transformer record
+        """
 
         # Get maximum diversified demand (kW) and adjusted kW
         sum_of_noncoincident_peaks = sum([l.kw for l in t_loads])
@@ -184,12 +272,28 @@ class TransformerLoadMapper(ABC):
 
 
 class SingleTransformerBuilder(TransformerLoadMapper):
+    """Class for managing building of single transformer used to build substation transformer.
+
+    Refer to base class for attributes passed to base class.
+
+    Attributes:
+        ht_kv (float): High tension side kV
+        lt_kv (float): Low tension side kV
+        num_phase (NumPhase): NumPhase instance
+        ht_conn (TransformerConnection): TransformerConnection instance for high tension side
+        lt_conn (TransformerConnection): TransformerConnection instance for low tension side
+        ht_phase (Phase): Phase instance for high tension side
+        lt_phase (Phase): Phase instance for low tension side
+        longitude (float): Longitude property of transformer
+        latitude (float): Latitude property of transformer
+    """
+
     def __init__(
         self,
         loads: List[Load],
         longitude: float,
         latitude: float,
-        diversity_factor_func,
+        diversity_factor_func: Callable[[float], float],
         ht_kv: float,
         lt_kv: float,
         ht_conn: TransformerConnection,
@@ -204,7 +308,25 @@ class SingleTransformerBuilder(TransformerLoadMapper):
         actual_avg_annual_growth: float = 4,
         actual_years_in_operation: float = 15,
         planned_years_in_operation: float = 10,
-    ):
+    ) -> None:
+        """Constructor for `SingleTransformerBuilder` class.
+
+        Args:
+            ht_kv (float): High tension side kV
+            lt_kv (float): Low tension side kV
+            num_phase (NumPhase): NumPhase instance
+            ht_conn (TransformerConnection): TransformerConnection instance for high tension side
+            lt_conn (TransformerConnection): TransformerConnection instance for low tension side
+            ht_phase (Phase): Phase instance for high tension side
+            lt_phase (Phase): Phase instance for low tension side
+            longitude (float): Longitude property of transformer
+            latitude (float): Latitude property of transformer
+
+        Raises:
+            ZeroKVError: If kv specified is zero
+            NegativeKVError: If kv specified is negative
+            HTkVlowerthanLTkVError: If high tension kv used is less than low tension kv
+        """
 
         super().__init__(
             loads,
@@ -238,6 +360,7 @@ class SingleTransformerBuilder(TransformerLoadMapper):
             raise HTkVlowerthanLTkVError(self.ht_kv, self.lt_kv)
 
     def get_transformer_load_mapping(self) -> dict:
+        """Refer to base class for more details."""
 
         self.transformers = {}
         catalog_used = self.get_catalog_object(
@@ -263,15 +386,27 @@ class SingleTransformerBuilder(TransformerLoadMapper):
         return self.transformers
 
 
-""" Uses clustering algorithms to figure out transformer location """
-
-
 class ClusteringBasedTransformerLoadMapper(TransformerLoadMapper):
+    """Uses clustering algorithms to figure out transformer location.
+
+    Refer to base class for attributes passed to base class.
+
+    Attributes:
+        ht_kv (float): High tension side kV
+        lt_kv (float): Low tension side kV
+        num_phase (NumPhase): NumPhase instance
+        ht_conn (TransformerConnection): TransformerConnection instance for high tension side
+        lt_conn (TransformerConnection): TransformerConnection instance for low tension side
+        ht_phase (Phase): Phase instance for high tension side
+        lt_phase (Phase): Phase instance for low tension side
+        clustering_object (Clustering): Clustering instance
+    """
+
     def __init__(
         self,
         loads: List[Load],
         clustering_object: Clustering,
-        diversity_factor_func,
+        diversity_factor_func: Callable[[float], float],
         ht_kv: float,
         lt_kv: float,
         ht_conn: TransformerConnection,
@@ -287,6 +422,24 @@ class ClusteringBasedTransformerLoadMapper(TransformerLoadMapper):
         actual_years_in_operation: float = 15,
         planned_years_in_operation: float = 10,
     ):
+
+        """Constructor for `ClusteringBasedTransformerLoadMapper` class.
+
+        Args:
+            ht_kv (float): High tension side kV
+            lt_kv (float): Low tension side kV
+            num_phase (NumPhase): NumPhase instance
+            ht_conn (TransformerConnection): TransformerConnection instance for high tension side
+            lt_conn (TransformerConnection): TransformerConnection instance for low tension side
+            ht_phase (Phase): Phase instance for high tension side
+            lt_phase (Phase): Phase instance for low tension side
+            clustering_object (Clustering): Clustering instance
+
+        Raises:
+            ZeroKVError: If kv specified is zero
+            NegativeKVError: If kv specified is negative
+            HTkVlowerthanLTkVError: If high tension kv used is less than low tension kv
+        """
 
         super().__init__(
             loads,
@@ -319,26 +472,27 @@ class ClusteringBasedTransformerLoadMapper(TransformerLoadMapper):
             raise HTkVlowerthanLTkVError(self.ht_kv, self.lt_kv)
 
     def get_transformer_load_mapping(self) -> dict:
+        """Refer to base class for more details."""
 
-        """Prepare the data for clustering"""
+        # Prepare the data for clustering
         x_array = np.array(
             [[load.longitude, load.latitude] for load in self.loads]
         )
 
-        """ Perform clustering operation based on x_data"""
+        # Perform clustering operation based on x_data
         clusters = self.clustering_object.get_clusters(x_array)
 
-        """ Mapping cluster centre to loads """
+        # Mapping cluster centre to loads """
         cluster_to_customers = {tuple(c): [] for c in clusters["centre"]}
         for label, load in zip(clusters["labels"], self.loads):
             centre = tuple(clusters["centre"][label])
             cluster_to_customers[centre].append(load)
 
-        """ Container to store all the transformers with all the mapping """
+        # Container to store all the transformers with all the mapping
         self.transformers = {}
         for xfmr, t_loads in cluster_to_customers.items():
 
-            """Now let's initialize the transformer with it's proper values"""
+            # Now let's initialize the transformer with it's proper values
             catalog_used = self.get_catalog_object(
                 t_loads, self.ht_kv, self.lt_kv
             )
@@ -359,8 +513,3 @@ class ClusteringBasedTransformerLoadMapper(TransformerLoadMapper):
             trans.secondary_phase = self.lt_phase
             self.transformers[trans] = t_loads
         return self.transformers
-
-
-if __name__ == "__main__":
-
-    pass

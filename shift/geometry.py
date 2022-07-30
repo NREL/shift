@@ -1,5 +1,5 @@
-# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
 # -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
 
 # All rights reserved.
 

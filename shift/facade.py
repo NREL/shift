@@ -1,6 +1,37 @@
-"""
-Attempting to use Yaml file to generate feeder model
-"""
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
+
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+""" This module is used to consume yaml file to produce synthetic feeeder. """
+
+from typing import Union, List
 
 # third-party imports
 import numpy as np
@@ -10,56 +41,56 @@ import os
 from multiprocessing import Pool
 
 # internal imports
-from transformer import Transformer
-from geometry import (
+from shift.transformer import Transformer
+from shift.geometry import (
     BuildingsFromPlace,
     BuildingsFromPolygon,
     BuildingsFromPoint,
     SimpleLoadGeometriesFromCSV,
 )
-from load_builder import (
+from shift.load_builder import (
     RandomPhaseAllocator,
     SimpleVoltageSetter,
     DefaultConnSetter,
     ConstantPowerFactorBuildingGeometryLoadBuilder,
     LoadBuilderEngineer,
 )
-from load_builder import PiecewiseBuildingAreaToConsumptionConverter
+from shift.load_builder import PiecewiseBuildingAreaToConsumptionConverter
 from graph import (
     RoadNetworkFromPlace,
     RoadNetworkFromPoint,
     RoadNetworkFromPolygon,
 )
-from clustering import KmeansClustering
-from transformer_builder import (
+from shift.clustering import KmeansClustering
+from shift.transformer_builder import (
     ClusteringBasedTransformerLoadMapper,
     SingleTransformerBuilder,
 )
-from enums import TransformerConnection, NumPhase, Phase
-from secondary_network_builder import (
+from shift.enums import TransformerConnection, NumPhase, Phase, ConductorType
+from shift.secondary_network_builder import (
     SecondaryNetworkBuilder,
     SecondarySectionsBuilder,
 )
-from enums import ConductorType
-from feeder_network import update_transformer_locations
-from line_section import (
+from shift.feeder_network import update_transformer_locations
+from shift.line_section import (
     HorizontalSinglePhaseNeutralConfiguration,
     HorizontalThreePhaseConfiguration,
     HorizontalThreePhaseNeutralConfiguration,
     HorizontalSinglePhaseConfiguration,
 )
-from primary_network_builder import (
+from shift.primary_network_builder import (
     PrimaryNetworkFromRoad,
     PrimarySectionsBuilder,
 )
-from graph import RoadNetworkFromPlace
-from exporter.opendss import (
+from shift.graph import RoadNetworkFromPlace
+from shift.exporter.opendss import (
     ConstantPowerFactorLoadWriter,
     TwoWindingSimpleTransformerWriter,
     GeometryBasedLineWriter,
     OpenDSSExporter,
 )
-from exceptions import UnsupportedFeatureError
+from shift.exceptions import UnsupportedFeatureError
+from shift.load import Load
 
 
 TRANSFORMER_CONNECTION_MAPPER = {
@@ -76,19 +107,41 @@ CONDUCTOR_MAPPING = {
 }
 
 
-def _get_phase(num_phase, neutral_present, phase_type=None):
+def _get_phase(
+    num_phase: int, neutral_present: bool, phase_type: Union[None, str] = None
+) -> Phase:
+    """Get phase representation.
+
+    Args:
+        num_phase (int): Number of phase
+        neutral_present (bool): Indicates whether neutral is present or not
+        phase_type (Union[None, str]) : Phase type used of number of phase is 1
+
+    Returns:
+        Phase: phase object
+    """
+
     if num_phase == 3 and neutral_present:
         return Phase.ABCN
     elif num_phase == 3 and not neutral_present:
         return Phase.ABC
     elif num_phase == 1:
         if neutral_present:
-            return {"A": Phase.AN, "B": Phase.BN, "C": Phase.CN}["phase_type"]
+            return {"A": Phase.AN, "B": Phase.BN, "C": Phase.CN}[phase_type]
         else:
-            return {"A": Phase.A, "B": Phase.B, "C": Phase.C}["phase_type"]
+            return {"A": Phase.A, "B": Phase.B, "C": Phase.C}[phase_type]
 
 
-def _get_configuration(config, neutral_present):
+def _get_configuration(config: dict, neutral_present: bool) -> dict:
+    """Returns geometry configuration.
+
+    Args:
+        config (dict): Initial geometry configuration
+        neutral_present (bool): Indicates whether neutral is present or not
+
+    Returns:
+        dict: Geometry configuration dictionary
+    """
 
     configuration_ = {}
     if "three_phase" in config:
@@ -134,10 +187,22 @@ def _get_configuration(config, neutral_present):
 def _develop_secondaries(
     id: str,
     transformer: Transformer,
-    customer_list: list,
-    div_coeff: list,
+    customer_list: List[Load],
+    div_coeff: List[float],
     config: dict,
-):
+) -> dict:
+    """Develops secondaries for a given transformer and list of customers.
+
+    Args:
+        id (str): Unique id for secondary network
+        transformer (Transformer): Transformer object
+        customer_list (List[Load]): List of load objects
+        div_coeff (List[float]): Coefficients for diversity factor function
+        config (dict): Configuration for creating secondaries
+
+    Returns:
+        dict: contains secondary sections and load to node mapping
+    """
 
     start_time = time.time()
     sn = SecondaryNetworkBuilder(
@@ -185,7 +250,17 @@ def _develop_secondaries(
     }
 
 
-def generate_feeder_from_yaml(yaml_file):
+def generate_feeder_from_yaml(yaml_file: str) -> None:
+    """Generates synthetic feeder model by taking in yamk file.
+
+    Args:
+        yaml_file (str): yaml file path containing user configurations.
+
+    Examples:
+
+        >>> from shift.facade import generate_feeder_from_yaml
+        >>> generate_feeder_from_yaml(r"sample-1.yaml")
+    """
 
     with open(yaml_file, "r") as f:
         config = yaml.safe_load(f)

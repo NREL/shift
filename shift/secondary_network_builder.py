@@ -1,28 +1,73 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
+
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+""" This module contains classes for managing creation of secondary network sections. """
+
 # Manage python imports
-from load import Load
-from transformer import Transformer
-from utils import (
+from typing import List, Union, Callable
+
+import networkx as nx
+
+from shift.load import Load
+from shift.transformer import Transformer
+from shift.utils import (
     triangulate_using_mesh,
     set_node_edge_type,
     get_nearest_points_in_the_network,
     get_distance,
 )
-import networkx as nx
-from primary_network_builder import BaseNetworkBuilder
-from enums import ConductorType, NumPhase, Phase
-from line_section import LineGeometryConfiguration
-from exceptions import (
+from shift.primary_network_builder import BaseNetworkBuilder
+from shift.enums import ConductorType, NumPhase, Phase
+from shift.line_section import LineGeometryConfiguration, Line
+from shift.exceptions import (
     CustomerInvalidPhase,
     PhaseMismatchError,
     IncompleteGeometryConfigurationDict,
+    NotImplementedError,
 )
-from primary_network_builder import (
+from shift.primary_network_builder import (
     BaseSectionsBuilder,
     geometry_based_line_section_builder,
 )
 
 
 class SecondarySectionsBuilder(BaseSectionsBuilder):
+    """Class handling generation of secondary line sections.
+
+    Refer to base class for attributes present in base class
+
+    Attributes:
+        lateral_configuration (dict): Drop line configuration data
+        lateral_material (str): Conductor material for drop line
+    """
+
     def __init__(
         self,
         secondary_network: nx.Graph,
@@ -34,7 +79,15 @@ class SecondarySectionsBuilder(BaseSectionsBuilder):
         neutral_present: True,
         material: str = "all",
         lateral_material: str = "all",
-    ):
+    ) -> None:
+        """Constructor for SecondarySectionsBuilder class.
+
+        Refer to base class arguments.
+
+        Args:
+            lateral_configuration (dict): Drop line configuration data
+            lateral_material (str): Conductor material for drop line
+        """
 
         super().__init__(
             secondary_network,
@@ -48,8 +101,18 @@ class SecondarySectionsBuilder(BaseSectionsBuilder):
         self.lateral_material = lateral_material
         self.lateral_configuration = lateral_configuration
 
-    def generate_secondary_line_sections(self, k_drop, kv_base):
+    def generate_secondary_line_sections(
+        self, k_drop: float, kv_base: float
+    ) -> List[Line]:
+        """Method for creating secondary line sections.
 
+        Args:
+            k_drop (float): Expected percentage voltage drop per mile per kva
+            kv_base (float): KV base used for computing kVA
+
+        Returns:
+            List[Line]: List of `Line` instances
+        """
         line_sections = []
         node_data_dict = {
             node[0]: node[1] for node in self.network.nodes.data()
@@ -136,14 +199,28 @@ class SecondarySectionsBuilder(BaseSectionsBuilder):
 
 
 class SecondaryNetworkBuilder(BaseNetworkBuilder):
+    """Builds secondary network.
+
+    Refer to base class for base attributes.
+
+    Attributes:
+        transformer (Transformer): `Transformer` instance
+        load_to_node_mapping (dict): Mapping between load object and  secondary node
+        customer_to_node_mapping (dict): Mapping between load name and secondary node
+        network (nx.Graph): Seondary network
+        points (dict): Mapping between load and coordinates
+        source_node (str): Source node for the secondary network
+        tr_lt_node (str): LT node of the transformer
+    """
+
     def __init__(
         self,
-        load_list: list[Load],
+        load_list: List[Load],
         transformer: Transformer,
-        div_func,
+        div_func: Callable[[float], float],
         kv_ll: float,
         node_append_str: str,
-        forbidden_areas: str = None,
+        forbidden_areas: Union[str, None] = None,
         max_pole_to_pole_distance: float = 100,
         power_factor: float = 0.9,
         adjustment_factor: float = 1.2,
@@ -152,6 +229,17 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
         actual_years_in_operation: float = 15,
         planned_years_in_operation: float = 10,
     ):
+        """Constructor for SecondaryNetworkBuilder class.
+
+        Args:
+            load_list (List[Load]): List of `Load` instances
+            transformer (Transformer): `Transformer` instance
+            node_append_str (str): Unique string to be appended to all primary nodes
+            forbidden_areas (Union[str, None]): Path to .shp file containing forbidden polygons
+
+        Raises:
+            NotImplementedError: If transformer has 0 loads
+        """
 
         super().__init__(
             div_func,
@@ -236,42 +324,46 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
 
             self.network = set_node_edge_type(self.network)
         else:
-            raise Exception(f"Transformers can not have 0 loads")
+            raise NotImplementedError(f"Transformers can not have 0 loads")
 
-    def get_load_to_node_mapping(self):
+    def get_load_to_node_mapping(self) -> dict:
+        """Returns load to node mapping."""
         return self.load_to_node_mapping
 
-    def get_network(self):
+    def get_network(self) -> nx.Graph:
+        """Returns secondary network."""
         return self.network
 
     def get_longest_length_in_kvameter(self):
+        """Returns longest length in kva meter"""
         return self.longest_length
 
     def update_network_with_ampacity(self):
+        """Method to update all line sections with ampacity"""
 
-        """Create a directed graph by providing source node"""
+        # Create a directed graph by providing source node
         dfs_tree = nx.dfs_tree(self.network, source=self.source_node)
 
-        """ Perform a depth first traversal to find all successor nodes"""
+        # Perform a depth first traversal to find all successor nodes"""
         x, y = [], []
         for edge in dfs_tree.edges():
 
-            """Compute distance from the source"""
+            # Compute distance from the source"""
             distance = nx.resistance_distance(
                 self.network, self.source_node, edge[1]
             )
             self.network[edge[0]][edge[1]]["distance"] = distance
 
-            """ Perform a depth first traversal to find all successor nodes"""
+            # Perform a depth first traversal to find all successor nodes"""
             dfs_successors = nx.dfs_successors(dfs_tree, source=edge[1])
 
-            """ Create a subgraph"""
+            # Create a subgraph"""
             nodes_to_retain = [edge[1]]
             for k, v in dfs_successors.items():
                 nodes_to_retain.extend(v)
             subgraph = self.network.subgraph(nodes_to_retain)
 
-            """ Let's compute maximum diversified kva demand downward of this edge"""
+            # Let's compute maximum diversified kva demand downward of this edge"""
             noncoincident_kws = 0
             num_of_customers = 0
             for node in subgraph.nodes():
