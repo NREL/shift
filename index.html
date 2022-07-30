@@ -549,6 +549,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="opendss/" class="md-nav__link">
+        exporter.opendss
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -649,13 +663,15 @@ Use the commands below to create environment and install the shift tool.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>conda create -n shift python==3.9
-conda install osmnx
+conda activate shift
+conda install -c conda-forge osmnx
 cd &lt;cloned_repo&gt;
 pip install -e.
 </code></pre></div>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>conda create -n shift python==3.9
+conda activate shift
 cd &lt;cloned_repo&gt;
 pip install -e.
 </code></pre></div>
