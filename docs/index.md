@@ -20,7 +20,8 @@ Use the commands below to create environment and install the shift tool.
 
     ``` cmd
     conda create -n shift python==3.9
-    conda install osmnx
+    conda activate shift
+    conda install -c conda-forge osmnx
     cd <cloned_repo>
     pip install -e.
     ```
@@ -29,6 +30,7 @@ Use the commands below to create environment and install the shift tool.
 
     ``` cmd
     conda create -n shift python==3.9
+    conda activate shift
     cd <cloned_repo>
     pip install -e.
     ```

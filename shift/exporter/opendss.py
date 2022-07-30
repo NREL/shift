@@ -1,20 +1,54 @@
-""" Exports a OpenDSS writer """
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022, Alliance for Sustainable Energy, LLC
 
-from exporter.base import BaseExporter
-from abc import ABC, abstractmethod
-from load import Load
-from transformer import Transformer
-from line_section import Line
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+""" This module consists of class and helper functions to export distribution model in 
+opendss format.
+"""
+
 from typing import List
-from exceptions import FolderNotFoundError
 import os
-from enums import Phase, NumPhase
-from constants import VALID_FREQUENCIES
-from exceptions import UnsupportedFrequencyError
+
+from abc import ABC, abstractmethod
+
+from shift.exporter.base import BaseExporter
+from shift.load import Load
+from shift.transformer import Transformer
+from shift.line_section import Line
+from shift.exceptions import FolderNotFoundError
+from shift.enums import Phase, NumPhase
+from shift.constants import VALID_FREQUENCIES
+from shift.exceptions import UnsupportedFrequencyError, NotImplementedError
 
 
-def remove_invalid_chars(name):
-    """Remove invalid OpenDSS charaters"""
+def remove_invalid_chars(name: str) -> str:
+    """Removes invalid OpenDSS charaters from a given string."""
 
     name = str(name)
     for char in [".", " ", "!"]:
@@ -23,39 +57,59 @@ def remove_invalid_chars(name):
 
 
 class DSSWriter(ABC):
-    """Writer for generaing load.dss"""
+    """Base class for OpenDSS writer.
 
-    def __init__(self):
-        """Initialize the dss files written by the class as empty"""
+    Attributes:
+        files (List[str]): List of opendss file names
+        coord_dict (dict): Mapping between busname and coordinates
+    """
+
+    def __init__(self) -> None:
+        """Constructor for `DSSWriter` class."""
 
         self.files = []
         self.coord_dict = {}
 
-    def get_filenames(self):
+    def get_filenames(self) -> List[str]:
         """Returns the dss files exported by the class
-        assuming subclass will update this attribute
+        assuming subclass will update this attribute.
         """
 
         return self.files
 
-    def write(self, folder_location: str):
+    def write(self, folder_location: str) -> None:
+        """Write models in the specified folder.
 
-        """Includes basic feature of testing whether the directory exists
-        or not is extended by subclass"""
+        Args:
+            folder_location (str): Valid folder path
+
+        Raises:
+            FolderNotFoundError: If folder path does not exist.
+        """
 
         if not os.path.exists(folder_location):
             raise FolderNotFoundError(folder_location)
 
-    def get_coords(self):
+    def get_coords(self) -> dict:
+        """Returns coordinate mapping for all buses."""
         return self.coord_dict
 
 
 class LoadWriter(DSSWriter):
-    """Base load writer inherits from DSS writer"""
+    """Base load writer inherits from DSS writer.
 
-    def __init__(self, loads: List[Load], file_name: str):
-        """Provide list of load names and file name for
-        exporting the content"""
+    Attributes:
+        loads (List[Load]): List of `Load` objects
+        file_name (str): OpenDSS file name to write all loads.
+    """
+
+    def __init__(self, loads: List[Load], file_name: str) -> None:
+        """Constructor for `LoadWriter` class.
+
+        Args:
+            loads (List[Load]): List of `Load` objects
+            file_name (str): OpenDSS file name to write all loads.
+        """
 
         super().__init__()
         self.loads = loads
@@ -63,13 +117,29 @@ class LoadWriter(DSSWriter):
 
 
 class ConstantPowerFactorLoadWriter(LoadWriter):
-    """Constant Power Factor load writer inherits from Load writer"""
+    """Constant Power Factor load writer inherits from Load writer.
 
-    def __init__(self, loads: List[Load], mapping_dict, file_name: str):
+    Refer to base class for base attributes.
+
+    Attributes:
+        mapping_dict(dict): Load name to bus name mapping
+    """
+
+    def __init__(
+        self, loads: List[Load], mapping_dict: dict, file_name: str
+    ) -> None:
+        """Constructor for `ConstantPowerFactorLoadWriter` class.
+
+        Refer to base class for base class arguments.
+
+        Args:
+            mapping_dict (dict): Load name to bus name mapping
+        """
         super().__init__(loads, file_name)
         self.mapping_dict = mapping_dict
 
-    def write(self, folder_location):
+    def write(self, folder_location: str) -> None:
+        """Refer to base class for more details."""
         super().write(folder_location)
 
         load_contents = []
@@ -87,17 +157,31 @@ class ConstantPowerFactorLoadWriter(LoadWriter):
             )
 
         if load_contents:
-            with open(os.path.join(folder_location, self.file_name), "w") as f:
-                f.writelines(load_contents)
+            with open(
+                os.path.join(folder_location, self.file_name),
+                "w",
+                encoding="utf-8",
+            ) as fpointer:
+                fpointer.writelines(load_contents)
 
             self.files.append(self.file_name)
 
 
 class TransformerWriter(DSSWriter):
-    """Transformer writer inherits from DSS writer"""
+    """Transformer writer inherits from DSS writer.
 
-    def __init__(self, transformers: List[Transformer], file_name: str):
-        """Provide list of transformer and file name"""
+    Attributes:
+        transformers (List[Transformer]): List of `Transformer` objects
+        file_name (str): OpenDSS filename to store the transformers
+    """
+
+    def __init__(self, transformers: List[Transformer], file_name: str) -> None:
+        """Constructor for `TransformerWriter` class.
+
+        Args:
+            transformers (List[Transformer]): List of `Transformer` objects
+            file_name (str): OpenDSS filename to store the transformers
+        """
 
         super().__init__()
         self.transformers = transformers
@@ -105,9 +189,10 @@ class TransformerWriter(DSSWriter):
 
 
 class TwoWindingSimpleTransformerWriter(TransformerWriter):
-    """Simple two winding trasformer writer"""
+    """Writer for two winding transformer."""
 
-    def write(self, folder_location):
+    def write(self, folder_location: str) -> None:
+        """Refer to base class for more details."""
         super().write(folder_location)
 
         trans_contents = []
@@ -137,16 +222,30 @@ class TwoWindingSimpleTransformerWriter(TransformerWriter):
             )
 
         if trans_contents:
-            with open(os.path.join(folder_location, self.file_name), "w") as f:
-                f.writelines(trans_contents)
+            with open(
+                os.path.join(folder_location, self.file_name),
+                "w",
+                encoding="utf-8",
+            ) as fpointer:
+                fpointer.writelines(trans_contents)
             self.files.append(self.file_name)
 
 
 class LineWriter(DSSWriter):
-    """Base line writer inherits from DSS writer"""
+    """Base line writer inherits from DSS writer.
 
-    def __init__(self, lines: List[Line], file_name):
-        """Proivide list of line objects and file name"""
+    Attributes:
+        lines (List[Line]): List of `Line` objects.
+        file_name (str): OpenDSS filename for writing line segments
+    """
+
+    def __init__(self, lines: List[Line], file_name: str) -> None:
+        """Constructor for `LineWriter` class.
+
+        Args:
+            lines (List[Line]): List of `Line` objects.
+            file_name (str): OpenDSS filename for writing line segments
+        """
 
         super().__init__()
         self.lines = lines
@@ -154,27 +253,48 @@ class LineWriter(DSSWriter):
 
 
 class GeometryBasedLineWriter(LineWriter):
-    """Geometry based line writer"""
+    """Writer for geometry based line segments.
+
+    Refer to base class for base class attributes.
+
+    Attributes:
+        geometry_file_name (str): OpenDSS file name for writing line geometries
+        wire_file_name (str): OpenDSS file name for writing wires
+        cable_file_name (str): OpenDSS file name for writing cables
+    """
 
     def __init__(
         self,
         lines: List[Line],
-        line_file_name,
-        geometry_file_name,
-        wire_file_name,
-        cable_file_name,
-    ):
-        """Provide list of line objects as well as some file names"""
+        line_file_name: str,
+        geometry_file_name: str,
+        wire_file_name: str,
+        cable_file_name: str,
+    ) -> None:
+        """Constructor for `GeometryBasedLineWriter` class.
+
+        Refer to base class for base class arguments.
+
+        Args:
+            geometry_file_name (str): OpenDSS file name for writing line geometries
+            wire_file_name (str): OpenDSS file name for writing wires
+            cable_file_name (str): OpenDSS file name for writing cables
+        """
 
         super().__init__(lines, line_file_name)
         self.geometry_file_name = geometry_file_name
         self.wire_file_name = wire_file_name
         self.cable_file_name = cable_file_name
 
-    def write(self, folder_location: str):
+    def write(self, folder_location: str) -> None:
+        """Refer to base class for more details.
+
+        Raises:
+            NotImplementedError: If conductor type passed is tap shielded cable.
+        """
         super().write(folder_location)
 
-        """ To keep the contents for parts of line segments """
+        # To keep the contents for parts of line segments
         line_contents, geometry_contents, wire_contents, cable_contents = (
             [],
             [],
@@ -182,12 +302,12 @@ class GeometryBasedLineWriter(LineWriter):
             [],
         )
 
-        """ To keep track of geometry objects """
+        # To keep track of geometry objects
         geom_objects_dict = {}
 
         for line in self.lines:
 
-            """Check if the geom already exists in the object list"""
+            # Check if the geom already exists in the object list
             geom = line.geometry
             gk = geom.__class__
 
@@ -223,14 +343,14 @@ class GeometryBasedLineWriter(LineWriter):
             obj for _, obj_arr in geom_objects_dict.items() for obj in obj_arr
         ]
 
-        """ Loop over all the geometries """
+        # Loop over all the geometries
 
-        """ To keep track of wire objects """
+        # To keep track of wire objects
         wire_object_list, cable_object_list = [], []
 
         for geom in geom_object_list:
 
-            """Check if the geom already exists in the object list"""
+            # Check if the geom already exists in the object list
 
             if hasattr(geom, "phase_wire"):
                 wire_attr = "wire"
@@ -266,7 +386,7 @@ class GeometryBasedLineWriter(LineWriter):
             geom_content = (
                 f"new linegeometry.{geom.name} "
                 + f"nconds={geom.num_conds} nphases={geom.num_phase.value} "
-                + f"reduce=no\n"
+                + "reduce=no\n"
             )
 
             for id, items in enumerate(zip(geom_x_array, geom_h_array)):
@@ -285,7 +405,7 @@ class GeometryBasedLineWriter(LineWriter):
             geom_content += "\n"
             geometry_contents.append(geom_content)
 
-        """ Let's create wire and cables """
+        # Let's create wire and cables
         for wire in wire_object_list:
 
             wire_contents.append(
@@ -298,7 +418,7 @@ class GeometryBasedLineWriter(LineWriter):
 
         for wire in cable_object_list:
 
-            """Define concentric cable"""
+            # Define concentric cable
             if not hasattr(wire, "taplayer"):
                 cable_contents.append(
                     f"new CNData.{remove_invalid_chars(wire.name)}\n"
@@ -309,8 +429,7 @@ class GeometryBasedLineWriter(LineWriter):
                 )
 
             else:
-                # TODO: Implement some thing for tap shielded cable
-                raise Exception(
+                raise NotImplementedError(
                     f"Writer for this type {wire} is not developed yet!"
                 )
 
@@ -324,15 +443,31 @@ class GeometryBasedLineWriter(LineWriter):
             [wire_contents, cable_contents, geometry_contents, line_contents],
         ):
             if contents:
-                with open(os.path.join(folder_location, file_), "w") as f:
-                    f.writelines(contents)
+                with open(
+                    os.path.join(folder_location, file_), "w", encoding="utf-8"
+                ) as fpointer:
+                    fpointer.writelines(contents)
                 self.files.append(file_)
 
 
-""" OpenDSS Exporter Class"""
-
-
 class OpenDSSExporter(BaseExporter):
+    """OpenDSS Exporter Class.
+
+    Attributes:
+        writers (List[DSSWriter]): List of `DSSWriter` Instances
+        folder_location (str): Path to a folder for writing OpenDSS files
+        master_file_name (str): OpenDSS file name for master file
+        circuit_name (str): OpenDSS circuit name
+        circuit_kv (float): OpenDSS circuit voltage in kV
+        circuit_freq (freq): OpenDSS circuit base frequency in Hz
+        kv_arrays (List[float]): List of base voltage levels
+        circuit_phase (Phase): Phase instance for OpenDSS circuit
+        circuit_bus (str): Bus name for OpenDSS circuit
+        circuit_num_phase (NumPhase): NumPhase instance for OpenDSS circuit
+        circuit_z1 (List[float]): List of positive sequence impedance values
+        circuit_z0 (List[float]): List of zero sequence impedance values
+    """
+
     def __init__(
         self,
         writers: List[DSSWriter],
@@ -347,7 +482,28 @@ class OpenDSSExporter(BaseExporter):
         circuit_z1: List[float],
         circuit_z0: List[float],
         kv_arrays: List[float],
-    ):
+    ) -> None:
+        """Constructor for `OpenDSSExporter` class.
+
+        Args:
+            writers (List[DSSWriter]): List of `DSSWriter` Instances
+            folder_location (str): Path to a folder for writing OpenDSS files
+            master_file_name (str): OpenDSS file name for master file
+            circuit_name (str): OpenDSS circuit name
+            circuit_kv (float): OpenDSS circuit voltage in kV
+            circuit_freq (freq): OpenDSS circuit base frequency in Hz
+            circuit_phase (Phase): Phase instance for OpenDSS circuit
+            circuit_num_phase (NumPhase): NumPhase instance for OpenDSS circuit
+            circuit_bus (str): Bus name for OpenDSS circuit
+            circuit_z1 (List[float]): List of positive sequence impedance values
+            circuit_z0 (List[float]): List of zero sequence impedance values
+            kv_arrays (List[float]): List of base voltage levels
+
+        Raises:
+            UnsupportedFrequencyError: If invalid frequency is passed.
+            FolderNotFoundError: If folder path is not found.
+
+        """
 
         if circuit_freq not in VALID_FREQUENCIES:
             raise UnsupportedFrequencyError(circuit_freq)
@@ -368,6 +524,7 @@ class OpenDSSExporter(BaseExporter):
             raise FolderNotFoundError(folder_location)
 
     def export(self):
+        """Refer to base class for more details."""
 
         files = []
         coord_dict = {}
@@ -381,12 +538,14 @@ class OpenDSSExporter(BaseExporter):
             coord_content += f"{key}, {vals[0]}, {vals[1]}\n"
 
         with open(
-            os.path.join(self.folder_location, "buscoords.dss"), "w"
-        ) as f:
-            f.writelines(coord_content)
+            os.path.join(self.folder_location, "buscoords.dss"),
+            "w",
+            encoding="utf-8",
+        ) as fpointer:
+            fpointer.writelines(coord_content)
 
         master_file_content = (
-            f"clear\n\n"
+            "clear\n\n"
             + f"new circuit.{self.circuit_name} basekv={self.circuit_kv} "
             + f"basefreq={self.circuit_freq} pu=1.0 phases={self.circuit_num_phase.value} "
             + f"Z1={self.circuit_z1} Z0={self.circuit_z0} "
@@ -399,9 +558,11 @@ class OpenDSSExporter(BaseExporter):
         master_file_content += (
             f"set voltagebases={self.kv_arrays}\n\nCalcvoltagebases\n\n"
         )
-        master_file_content += f"Buscoords buscoords.dss\n\nsolve"
+        master_file_content += "Buscoords buscoords.dss\n\nsolve"
 
         with open(
-            os.path.join(self.folder_location, self.master_file_name), "w"
-        ) as f:
-            f.writelines(master_file_content)
+            os.path.join(self.folder_location, self.master_file_name),
+            "w",
+            encoding="utf-8",
+        ) as fpointer:
+            fpointer.writelines(master_file_content)
