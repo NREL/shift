@@ -272,7 +272,7 @@ def create_rectangular_mesh_network(
     horizontal_space_meter: float = 32,
     forbidden_areas: Union[str, None] = None,
     node_append_str: Union[str, None] = None,
-) -> Sequence[nx.Graph, dict]:
+) -> Sequence[tuple[nx.Graph, dict]]:
     """Creates a rectangular mesh network from a given set of points.
 
     Args:
@@ -287,7 +287,7 @@ def create_rectangular_mesh_network(
             at the end of node name
 
     Returns:
-        Sequence[nx.Graph, dict]: Graph and mapping between
+        Sequence[tuple[nx.Graph, dict]]: Graph and mapping between
             nodes and coordinates
     """
 
@@ -470,7 +470,7 @@ def create_rectangular_mesh_network(
 
 def mesh_pruning(
     mesh_graph: nx.Graph, customers: List[List[float]]
-) -> Sequence[nx.Graph, dict]:
+) -> Sequence[tuple[nx.Graph, dict]]:
     """Prunes the mesh graph by keeping the nodes specified.
 
     Args:
@@ -478,7 +478,7 @@ def mesh_pruning(
         customers: List[List[float]]: List of points to be used for pruning
 
     Returns:
-        Sequence[nx.Graph, dict]: Pruned network and
+        Sequence[tuple[nx.Graph, dict]]: Pruned network and
             mapping between customer and node
 
     """
@@ -519,7 +519,7 @@ def triangulate_using_mesh(
     customers: List[List[float]],
     forbidden_areas: Union[str, None] = None,
     node_append_str: Union[str, None] = None,
-) -> Sequence[nx.Graph, dict, dict]:
+) -> Sequence[tuple[nx.Graph, dict, dict]]:
     """Creates a minimum spanning graph connecting
     customers by avoiding forbidden region.
 
@@ -531,7 +531,7 @@ def triangulate_using_mesh(
             to node name
 
     Returns:
-        Sequence[nx.Graph, dict, dict]: Minimum spannnig tree,
+        Sequence[tuple[nx.Graph, dict, dict]]: Minimum spannnig tree,
             mapping between point and coordinates
             and customer to node mapping.
     """

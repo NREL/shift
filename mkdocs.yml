@@ -6,6 +6,7 @@ theme:
     - search.suggest
     - sarch.highlight
     - content.tabs.link
+    - content.code.annotate
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -25,19 +26,36 @@ theme:
 plugins:
   - mkdocstrings
   - search
+  - mkdocs-jupyter:
+      theme: dark
+      include: ["*.ipynb"] 
 
 repo_url: https://github.com/nrel/shift
 repo_name: nrel/shift
+
+
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js
+
 
 markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true 
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - admonition
+  - codehilite
+  - pymdownx.details
 
 
 nav:
   - Welcome: index.md
-  - Tutorials: tutorials.md
+  - Tutorials: 
+    - synthetic_feeder_chennai: sample-1.ipynb
   - How to Guides: how-to-guides.md
   - References:
     - geometry: geometry.md

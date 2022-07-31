@@ -8,6 +8,9 @@ numpy
 networkx
 pandas
 sklearn
+openpyxl
 mkdocs
 mkdocstrings[python]
 mkdocs-material
+mkdocs-jupyter
+https://github.com/bmcorser/fontawesome-markdown/archive/master.zip

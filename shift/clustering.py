@@ -129,7 +129,7 @@ class KmeansClustering(Clustering):
         if (
             hasattr(self, "x_array")
             and hasattr(self, "labels")
-            and hasattr(self, "clsuter_centers")
+            and hasattr(self, "cluster_centers")
         ):
             plot_data = {"x": [], "y": [], "label": []}
             for d, label in zip(self.x_array, self.labels):
