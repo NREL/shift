@@ -247,10 +247,43 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../tutorials/" class="md-nav__link">
-        Tutorials
+      <a href="../sample-1/" class="md-nav__link">
+        Synthetic Feeder, Chennai
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -856,7 +889,7 @@
 <a id="shift.graph"></a>
   <div class="doc doc-contents first">
   
-      <p>This module manages graph network representing roads from openstreet data. </p>
+      <p>This module manages graph network representing roads from openstreet data.</p>
 
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">shift.graph</span> <span class="kn">import</span> <span class="n">RoadNetworkFromPlace</span>
@@ -981,7 +1014,8 @@
 <span class="normal">94</span>
 <span class="normal">95</span>
 <span class="normal">96</span>
-<span class="normal">97</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">OpenStreetRoadNetwork</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="normal">97</span>
+<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">OpenStreetRoadNetwork</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Interface for getting road network from OpenStreet data</span>
 
 <span class="sd">    Attributes:</span>
@@ -995,7 +1029,8 @@
         <span class="sd">&quot;&quot;&quot;Returns a minimum spanning tree with updated metadata.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            node_append_str (Union[str, None]): String to append in the name of all nodes</span>
+<span class="sd">            node_append_str (Union[str, None]): String to append in the</span>
+<span class="sd">                name of all nodes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;graph&quot;</span><span class="p">):</span>
@@ -1026,7 +1061,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated_network</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AttributeDoesNotExistError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;&#39;graph&#39; attribute does not exist yet </span><span class="se">\</span>
+                <span class="s2">&quot;&#39;graph&#39; attribute does not exist yet </span><span class="se">\</span>
 <span class="s2">                for OpenStreet type road netwwork!&quot;</span>
             <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1074,7 +1109,8 @@
           <td>
                 <code><span title="typing.Union">Union</span>[str, None]</code>
           </td>
-          <td><p>String to append in the name of all nodes</p></td>
+          <td><p>String to append in the
+name of all nodes</p></td>
           <td>
                 <code>Union[str, None]</code>
           </td>
@@ -1121,11 +1157,13 @@
 <span class="normal">94</span>
 <span class="normal">95</span>
 <span class="normal">96</span>
-<span class="normal">97</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_append_str</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="normal">97</span>
+<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_append_str</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns a minimum spanning tree with updated metadata.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        node_append_str (Union[str, None]): String to append in the name of all nodes</span>
+<span class="sd">        node_append_str (Union[str, None]): String to append in the</span>
+<span class="sd">            name of all nodes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;graph&quot;</span><span class="p">):</span>
@@ -1156,7 +1194,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated_network</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">AttributeDoesNotExistError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;&#39;graph&#39; attribute does not exist yet </span><span class="se">\</span>
+            <span class="s2">&quot;&#39;graph&#39; attribute does not exist yet </span><span class="se">\</span>
 <span class="s2">            for OpenStreet type road netwwork!&quot;</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1213,21 +1251,24 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Distance to be used to create bounding box around a point</p></td>
+          <td><p>Distance to be used to create
+bounding box around a point</p></td>
         </tr>
         <tr>
           <td><code>dist_type</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Type of region to be created around the point</p></td>
+          <td><p>Type of region to be
+created around the point</p></td>
         </tr>
         <tr>
           <td><code>network_type</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Type of network to be retrived from openstreet data</p></td>
+          <td><p>Type of network to be
+retrived from openstreet data</p></td>
         </tr>
     </tbody>
   </table>
@@ -1235,15 +1276,7 @@
 
         <details class="quote">
           <summary>Source code in <code>shift\graph.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">151</span>
 <span class="normal">152</span>
 <span class="normal">153</span>
 <span class="normal">154</span>
@@ -1274,14 +1307,30 @@
 <span class="normal">179</span>
 <span class="normal">180</span>
 <span class="normal">181</span>
-<span class="normal">182</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RoadNetworkFromPlace</span><span class="p">(</span><span class="n">OpenStreetRoadNetwork</span><span class="p">):</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RoadNetworkFromPlace</span><span class="p">(</span><span class="n">OpenStreetRoadNetwork</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Getting road network from a place address within bounding box.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        place (str): string representing location</span>
-<span class="sd">        max_dist (float): Distance to be used to create bounding box around a point</span>
-<span class="sd">        dist_type (str): Type of region to be created around the point</span>
-<span class="sd">        network_type (str): Type of network to be retrived from openstreet data</span>
+<span class="sd">        max_dist (float): Distance to be used to create</span>
+<span class="sd">            bounding box around a point</span>
+<span class="sd">        dist_type (str): Type of region to be</span>
+<span class="sd">            created around the point</span>
+<span class="sd">        network_type (str): Type of network to be</span>
+<span class="sd">            retrived from openstreet data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -1295,9 +1344,11 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            place (str): string representing location</span>
-<span class="sd">            max_dist (float): Distance to be used to create bounding box around a point</span>
+<span class="sd">            max_dist (float): Distance to be used to create</span>
+<span class="sd">                bounding box around a point</span>
 <span class="sd">            dist_type (str): Type of region to be created around the point</span>
-<span class="sd">            network_type (str): Type of network to be retrived from openstreet data</span>
+<span class="sd">            network_type (str): Type of network to be retrived</span>
+<span class="sd">                from openstreet data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># e.g. Chennai, India</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">place</span> <span class="o">=</span> <span class="n">place</span>
@@ -1369,7 +1420,8 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Distance to be used to create bounding box around a point</p></td>
+          <td><p>Distance to be used to create
+bounding box around a point</p></td>
           <td>
                 <code>1000</code>
           </td>
@@ -1389,7 +1441,8 @@
           <td>
                 <code>str</code>
           </td>
-          <td><p>Type of network to be retrived from openstreet data</p></td>
+          <td><p>Type of network to be retrived
+from openstreet data</p></td>
           <td>
                 <code>&#39;drive&#39;</code>
           </td>
@@ -1399,18 +1452,7 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\graph.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">164</span>
 <span class="normal">165</span>
 <span class="normal">166</span>
 <span class="normal">167</span>
@@ -1418,7 +1460,20 @@
 <span class="normal">169</span>
 <span class="normal">170</span>
 <span class="normal">171</span>
-<span class="normal">172</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">place</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">max_dist</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
@@ -1429,9 +1484,11 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        place (str): string representing location</span>
-<span class="sd">        max_dist (float): Distance to be used to create bounding box around a point</span>
+<span class="sd">        max_dist (float): Distance to be used to create</span>
+<span class="sd">            bounding box around a point</span>
 <span class="sd">        dist_type (str): Type of region to be created around the point</span>
-<span class="sd">        network_type (str): Type of network to be retrived from openstreet data</span>
+<span class="sd">        network_type (str): Type of network to be retrived</span>
+<span class="sd">            from openstreet data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># e.g. Chennai, India</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">place</span> <span class="o">=</span> <span class="n">place</span>
@@ -1460,15 +1517,15 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\graph.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span>
-<span class="normal">182</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_append_str</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_append_str</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Refer to base class for more details.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">ox</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">graph_from_address</span><span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="p">,</span>
@@ -1524,14 +1581,16 @@
           <td>
                 <code>tuple</code>
           </td>
-          <td><p>(longitude, latitude) pair representing point location</p></td>
+          <td><p>(longitude, latitude) pair representing
+point location</p></td>
         </tr>
         <tr>
           <td><code>max_dist</code></td>
           <td>
                 <code>float</code>
           </td>
-          <td><p>Distance to be used to create bounding box around a point</p></td>
+          <td><p>Distance to be used to create bounding
+box around a point</p></td>
         </tr>
         <tr>
           <td><code>dist_type</code></td>
@@ -1545,7 +1604,8 @@
           <td>
                 <code>str</code>
           </td>
-          <td><p>Type of network to be retrived from openstreet data</p></td>
+          <td><p>Type of network to be retrived from
+openstreet data</p></td>
         </tr>
     </tbody>
   </table>
@@ -1553,8 +1613,7 @@
 
         <details class="quote">
           <summary>Source code in <code>shift\graph.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
-<span class="normal">101</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
@@ -1593,14 +1652,25 @@
 <span class="normal">137</span>
 <span class="normal">138</span>
 <span class="normal">139</span>
-<span class="normal">140</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RoadNetworkFromPoint</span><span class="p">(</span><span class="n">OpenStreetRoadNetwork</span><span class="p">):</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RoadNetworkFromPoint</span><span class="p">(</span><span class="n">OpenStreetRoadNetwork</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Getting road network from single point within bounding box.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        point (tuple): (longitude, latitude) pair representing point location</span>
-<span class="sd">        max_dist (float): Distance to be used to create bounding box around a point</span>
+<span class="sd">        point (tuple): (longitude, latitude) pair representing</span>
+<span class="sd">            point location</span>
+<span class="sd">        max_dist (float): Distance to be used to create bounding</span>
+<span class="sd">            box around a point</span>
 <span class="sd">        dist_type (str): Type of region to be created around the point</span>
-<span class="sd">        network_type (str): Type of network to be retrived from openstreet data</span>
+<span class="sd">        network_type (str): Type of network to be retrived from</span>
+<span class="sd">            openstreet data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -1613,10 +1683,14 @@
         <span class="sd">&quot;&quot;&quot;Constructor for `RoadNetworkFromPoint` class.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            point (tuple): (longitude, latitude) pair representing point location</span>
-<span class="sd">            max_dist (float): Distance to be used to create bounding box around a point</span>
-<span class="sd">            dist_type (str): Type of region to be created around the point</span>
-<span class="sd">            network_type (str): Type of network to be retrived from openstreet data</span>
+<span class="sd">            point (tuple): (longitude, latitude) pair representing</span>
+<span class="sd">                point location</span>
+<span class="sd">            max_dist (float): Distance to be used to create</span>
+<span class="sd">                bounding box around a point</span>
+<span class="sd">            dist_type (str): Type of region to be created</span>
+<span class="sd">                around the point</span>
+<span class="sd">            network_type (str): Type of network to be retrived</span>
+<span class="sd">                from openstreet data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># e.g. (13.242134, 80.275948)</span>
@@ -1679,7 +1753,8 @@
           <td>
                 <code>tuple</code>
           </td>
-          <td><p>(longitude, latitude) pair representing point location</p></td>
+          <td><p>(longitude, latitude) pair representing
+point location</p></td>
           <td>
               <em>required</em>
           </td>
@@ -1689,7 +1764,8 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Distance to be used to create bounding box around a point</p></td>
+          <td><p>Distance to be used to create
+bounding box around a point</p></td>
           <td>
                 <code>1000</code>
           </td>
@@ -1699,7 +1775,8 @@
           <td>
                 <code>str</code>
           </td>
-          <td><p>Type of region to be created around the point</p></td>
+          <td><p>Type of region to be created
+around the point</p></td>
           <td>
                 <code>&#39;bbox&#39;</code>
           </td>
@@ -1709,7 +1786,8 @@
           <td>
                 <code>str</code>
           </td>
-          <td><p>Type of network to be retrived from openstreet data</p></td>
+          <td><p>Type of network to be retrived
+from openstreet data</p></td>
           <td>
                 <code>&#39;drive&#39;</code>
           </td>
@@ -1719,11 +1797,7 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\graph.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
 <span class="normal">117</span>
@@ -1739,7 +1813,15 @@
 <span class="normal">127</span>
 <span class="normal">128</span>
 <span class="normal">129</span>
-<span class="normal">130</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">point</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
     <span class="n">max_dist</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
@@ -1749,10 +1831,14 @@
     <span class="sd">&quot;&quot;&quot;Constructor for `RoadNetworkFromPoint` class.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        point (tuple): (longitude, latitude) pair representing point location</span>
-<span class="sd">        max_dist (float): Distance to be used to create bounding box around a point</span>
-<span class="sd">        dist_type (str): Type of region to be created around the point</span>
-<span class="sd">        network_type (str): Type of network to be retrived from openstreet data</span>
+<span class="sd">        point (tuple): (longitude, latitude) pair representing</span>
+<span class="sd">            point location</span>
+<span class="sd">        max_dist (float): Distance to be used to create</span>
+<span class="sd">            bounding box around a point</span>
+<span class="sd">        dist_type (str): Type of region to be created</span>
+<span class="sd">            around the point</span>
+<span class="sd">        network_type (str): Type of network to be retrived</span>
+<span class="sd">            from openstreet data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># e.g. (13.242134, 80.275948)</span>
@@ -1782,15 +1868,15 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\graph.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_append_str</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_append_str</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Refer to base class for more details.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">ox</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">graph_from_point</span><span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">point</span><span class="p">,</span>
@@ -1861,20 +1947,7 @@
 
         <details class="quote">
           <summary>Source code in <code>shift\graph.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">198</span>
 <span class="normal">199</span>
 <span class="normal">200</span>
 <span class="normal">201</span>
@@ -1890,7 +1963,20 @@
 <span class="normal">211</span>
 <span class="normal">212</span>
 <span class="normal">213</span>
-<span class="normal">214</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RoadNetworkFromPolygon</span><span class="p">(</span><span class="n">OpenStreetRoadNetwork</span><span class="p">):</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RoadNetworkFromPolygon</span><span class="p">(</span><span class="n">OpenStreetRoadNetwork</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Getting road network from a given polygon.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1985,19 +2071,19 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\graph.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">polygon</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">list</span><span class="p">],</span> <span class="n">custom_filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;[&quot;highway&quot;]&#39;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Constructor for `RoadNetworkFromPolygon` class.</span>
@@ -2032,14 +2118,14 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\graph.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span>
-<span class="normal">212</span>
-<span class="normal">213</span>
-<span class="normal">214</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_append_str</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_append_str</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Refer to base class for more details.&quot;&quot;&quot;</span>
 
     <span class="n">polygon</span> <span class="o">=</span> <span class="n">shapely</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Polygon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">polygon</span><span class="p">)</span>
@@ -2138,10 +2224,12 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
       
     
   </body>

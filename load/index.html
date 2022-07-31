@@ -247,10 +247,43 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../tutorials/" class="md-nav__link">
-        Tutorials
+      <a href="../sample-1/" class="md-nav__link">
+        Synthetic Feeder, Chennai
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -886,7 +919,8 @@
 <a id="shift.load"></a>
   <div class="doc doc-contents first">
   
-      <p>This module contains classes for representing different type of power system loads. </p>
+      <p>This module contains classes for representing
+different type of power system loads.</p>
 
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">shift.load</span> <span class="kn">import</span> <span class="n">ConstantPowerLoad</span>
@@ -935,11 +969,7 @@
 
         <details class="quote">
           <summary>Source code in <code>shift\load.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">181</span>
-<span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
-<span class="normal">185</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">185</span>
 <span class="normal">186</span>
 <span class="normal">187</span>
 <span class="normal">188</span>
@@ -964,7 +994,15 @@
 <span class="normal">207</span>
 <span class="normal">208</span>
 <span class="normal">209</span>
-<span class="normal">210</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ConstantPowerFactorLoad</span><span class="p">(</span><span class="n">Load</span><span class="p">):</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ConstantPowerFactorLoad</span><span class="p">(</span><span class="n">Load</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Implementation for constant power factor load.&quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -991,8 +1029,12 @@
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;ConstantPowerFactorLoad(Name = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">, Latitude = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_latitude</span><span class="si">}</span><span class="s2">, Longitude = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_longitude</span><span class="si">}</span><span class="s2">, Phase = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_phase</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;NumPhase = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_phase</span><span class="si">}</span><span class="s2">, Connection Type = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_conn_type</span><span class="si">}</span><span class="s2">, kw = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kw</span><span class="si">}</span><span class="s2">, pf = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_pf</span><span class="si">}</span><span class="s2">, kv = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kv</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ConstantPowerFactorLoad(Name = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">,&quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; Latitude = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_latitude</span><span class="si">}</span><span class="s2">, Longitude = &quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_longitude</span><span class="si">}</span><span class="s2">, Phase = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_phase</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;NumPhase = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_phase</span><span class="si">}</span><span class="s2">, Connection Type =&quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_conn_type</span><span class="si">}</span><span class="s2">, kw = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kw</span><span class="si">}</span><span class="s2">,&quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; pf = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_pf</span><span class="si">}</span><span class="s2">, kv = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kv</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
@@ -1030,10 +1072,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">kw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;kw property of the load&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kw</span>
@@ -1064,10 +1106,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">pf</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;power factor setter method for the load&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pf</span>
@@ -1106,8 +1148,7 @@
 
         <details class="quote">
           <summary>Source code in <code>shift\load.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">151</span>
-<span class="normal">152</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">152</span>
 <span class="normal">153</span>
 <span class="normal">154</span>
 <span class="normal">155</span>
@@ -1133,7 +1174,11 @@
 <span class="normal">175</span>
 <span class="normal">176</span>
 <span class="normal">177</span>
-<span class="normal">178</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ConstantPowerLoad</span><span class="p">(</span><span class="n">Load</span><span class="p">):</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ConstantPowerLoad</span><span class="p">(</span><span class="n">Load</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Implementation for constant power load.&quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -1158,8 +1203,11 @@
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;ConstantPowerLoad(Name = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">, Latitude = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_latitude</span><span class="si">}</span><span class="s2">, Longitude = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_longitude</span><span class="si">}</span><span class="s2">, Phase = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_phase</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;NumPhase = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_phase</span><span class="si">}</span><span class="s2">, Connection Type = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_conn_type</span><span class="si">}</span><span class="s2">, kw = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kw</span><span class="si">}</span><span class="s2">, kvar = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kvar</span><span class="si">}</span><span class="s2">, kv = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kv</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ConstantPowerLoad(Name = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">, Latitude =&quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_latitude</span><span class="si">}</span><span class="s2">, Longitude = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_longitude</span><span class="si">}</span><span class="s2">,&quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; Phase = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_phase</span><span class="si">}</span><span class="s2"> NumPhase = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_phase</span><span class="si">}</span><span class="s2">,&quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; Connection Type = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_conn_type</span><span class="si">}</span><span class="s2">, kw = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kw</span><span class="si">}</span><span class="s2">,&quot;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; kvar = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kvar</span><span class="si">}</span><span class="s2">, kv = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_kv</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
@@ -1197,10 +1245,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">164</span>
-<span class="normal">165</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">165</span>
 <span class="normal">166</span>
-<span class="normal">167</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">167</span>
+<span class="normal">168</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">kvar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;kvar property of the load&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kvar</span>
@@ -1231,10 +1279,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
-<span class="normal">155</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">155</span>
 <span class="normal">156</span>
-<span class="normal">157</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">157</span>
+<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">kw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;kw property of the load&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kw</span>
@@ -1273,8 +1321,7 @@
 
         <details class="quote">
           <summary>Source code in <code>shift\load.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 69</span>
-<span class="normal"> 70</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 70</span>
 <span class="normal"> 71</span>
 <span class="normal"> 72</span>
 <span class="normal"> 73</span>
@@ -1352,7 +1399,8 @@
 <span class="normal">145</span>
 <span class="normal">146</span>
 <span class="normal">147</span>
-<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Load</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="normal">148</span>
+<span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Load</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Interface for single load point.&quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -1468,10 +1516,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">126</span>
-<span class="normal">127</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
 <span class="normal">128</span>
-<span class="normal">129</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">129</span>
+<span class="normal">130</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">conn_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LoadConnection</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Connection type property of the load&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn_type</span>
@@ -1502,10 +1550,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">136</span>
-<span class="normal">137</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">137</span>
 <span class="normal">138</span>
-<span class="normal">139</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">139</span>
+<span class="normal">140</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">kv</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;kv property of the load&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kv</span>
@@ -1536,10 +1584,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">82</span>
-<span class="normal">83</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">83</span>
 <span class="normal">84</span>
-<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">85</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">latitude</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Latitude property where load is located&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_latitude</span>
@@ -1570,10 +1618,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">94</span>
-<span class="normal">95</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">95</span>
 <span class="normal">96</span>
-<span class="normal">97</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">97</span>
+<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">longitude</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Longitude property where load is located&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_longitude</span>
@@ -1604,10 +1652,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
-<span class="normal">73</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">73</span>
 <span class="normal">74</span>
-<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">75</span>
+<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Name property of load&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
@@ -1638,10 +1686,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">116</span>
-<span class="normal">117</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">117</span>
 <span class="normal">118</span>
-<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">119</span>
+<span class="normal">120</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">num_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NumPhase</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Number of phase property of the load&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_phase</span>
@@ -1672,10 +1720,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\load.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
-<span class="normal">107</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">107</span>
 <span class="normal">108</span>
-<span class="normal">109</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">109</span>
+<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">phase</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Phase</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Phase property where load is connected&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_phase</span>
@@ -1770,10 +1818,12 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
       
     
   </body>

@@ -247,10 +247,43 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../tutorials/" class="md-nav__link">
-        Tutorials
+      <a href="../sample-1/" class="md-nav__link">
+        Synthetic Feeder, Chennai
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -727,7 +760,8 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\facade.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">253</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">252</span>
+<span class="normal">253</span>
 <span class="normal">254</span>
 <span class="normal">255</span>
 <span class="normal">256</span>
@@ -1063,8 +1097,8 @@
 <span class="sd">        &gt;&gt;&gt; generate_feeder_from_yaml(r&quot;sample-1.yaml&quot;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yaml_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yaml_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fpointer</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">fpointer</span><span class="p">)</span>
 
     <span class="c1"># Location config</span>
     <span class="n">location</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="p">{})</span>
@@ -1192,7 +1226,7 @@
 
         <span class="k">elif</span> <span class="n">primary_config</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;openstreet&quot;</span><span class="p">:</span>
             <span class="n">UnsupportedFeatureError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Road network from buildings locations</span><span class="se">\</span>
+                <span class="s2">&quot;Road network from buildings locations</span><span class="se">\</span>
 <span class="s2">                only is still need to be updated!&quot;</span>
             <span class="p">)</span>
 
@@ -1308,13 +1342,13 @@
             <span class="n">_develop_secondaries</span><span class="p">,</span>
             <span class="p">[</span>
                 <span class="p">[</span>
-                    <span class="nb">id</span><span class="p">,</span>
+                    <span class="n">sec_id</span><span class="p">,</span>
                     <span class="n">trans</span><span class="p">,</span>
                     <span class="n">transformers</span><span class="p">[</span><span class="n">trans</span><span class="p">],</span>
                     <span class="n">div_func_coeffs</span><span class="p">,</span>
                     <span class="n">secondary_config</span><span class="p">,</span>
                 <span class="p">]</span>
-                <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">trans</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transformers</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">sec_id</span><span class="p">,</span> <span class="n">trans</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transformers</span><span class="p">)</span>
             <span class="p">],</span>
         <span class="p">)</span>
 
@@ -1370,6 +1404,7 @@
                 <span class="n">config</span><span class="p">[</span><span class="s2">&quot;substation&quot;</span><span class="p">][</span><span class="s2">&quot;phase&quot;</span><span class="p">][</span><span class="s2">&quot;phase_type&quot;</span><span class="p">],</span>
             <span class="p">),</span>
             <span class="n">NUM_PHASE_MAPPER</span><span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;substation&quot;</span><span class="p">][</span><span class="s2">&quot;phase&quot;</span><span class="p">][</span><span class="s2">&quot;num_phase&quot;</span><span class="p">]],</span>
+            <span class="c1"># pylint: disable-next=line-too-long</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">substation_node</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">substation_node</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">_htnode&quot;</span><span class="p">,</span>
             <span class="n">config</span><span class="p">[</span><span class="s2">&quot;substation&quot;</span><span class="p">][</span><span class="s2">&quot;z1&quot;</span><span class="p">],</span>
             <span class="n">config</span><span class="p">[</span><span class="s2">&quot;substation&quot;</span><span class="p">][</span><span class="s2">&quot;z1&quot;</span><span class="p">],</span>
@@ -1458,10 +1493,12 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
       
     
   </body>

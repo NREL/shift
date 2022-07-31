@@ -247,10 +247,43 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../tutorials/" class="md-nav__link">
-        Tutorials
+      <a href="../sample-1/" class="md-nav__link">
+        Synthetic Feeder, Chennai
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -968,7 +1001,8 @@
 <a id="shift.primary_network_builder"></a>
   <div class="doc doc-contents first">
   
-      <p>This module contains classes for managing creation of primary network sections.</p>
+      <p>This module contains classes for managing creation
+of primary network sections.</p>
 
   
 
@@ -1014,7 +1048,8 @@
           <td>
                 <code><span title="typing.Callable">Callable</span>[[float], float]</code>
           </td>
-          <td><p>Diversity factor function coefficients</p></td>
+          <td><p>Diversity factor
+function coefficients</p></td>
         </tr>
         <tr>
           <td><code>kv_ll</code></td>
@@ -1028,7 +1063,8 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Maximum pole to pole distance in meter</p></td>
+          <td><p>Maximum pole to
+pole distance in meter</p></td>
         </tr>
         <tr>
           <td><code>power_factor</code></td>
@@ -1042,21 +1078,24 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Adjustment factor for adjusting kva</p></td>
+          <td><p>Adjustment factor for
+adjusting kva</p></td>
         </tr>
         <tr>
           <td><code>planned_avg_annual_growth</code></td>
           <td>
                 <code>float</code>
           </td>
-          <td><p>Planned average annual load growth rate in percentage</p></td>
+          <td><p>Planned average annual
+load growth rate in percentage</p></td>
         </tr>
         <tr>
           <td><code>actual_avg_annual_growth</code></td>
           <td>
                 <code>float</code>
           </td>
-          <td><p>Actual average annual load growth rate in percentage</p></td>
+          <td><p>Actual average annual
+load growth rate in percentage</p></td>
         </tr>
         <tr>
           <td><code>actual_years_in_operation</code></td>
@@ -1078,15 +1117,7 @@
 
         <details class="quote">
           <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">516</span>
-<span class="normal">517</span>
-<span class="normal">518</span>
-<span class="normal">519</span>
-<span class="normal">520</span>
-<span class="normal">521</span>
-<span class="normal">522</span>
-<span class="normal">523</span>
-<span class="normal">524</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">524</span>
 <span class="normal">525</span>
 <span class="normal">526</span>
 <span class="normal">527</span>
@@ -1223,17 +1254,42 @@
 <span class="normal">658</span>
 <span class="normal">659</span>
 <span class="normal">660</span>
-<span class="normal">661</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseNetworkBuilder</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="normal">661</span>
+<span class="normal">662</span>
+<span class="normal">663</span>
+<span class="normal">664</span>
+<span class="normal">665</span>
+<span class="normal">666</span>
+<span class="normal">667</span>
+<span class="normal">668</span>
+<span class="normal">669</span>
+<span class="normal">670</span>
+<span class="normal">671</span>
+<span class="normal">672</span>
+<span class="normal">673</span>
+<span class="normal">674</span>
+<span class="normal">675</span>
+<span class="normal">676</span>
+<span class="normal">677</span>
+<span class="normal">678</span>
+<span class="normal">679</span>
+<span class="normal">680</span>
+<span class="normal">681</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseNetworkBuilder</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Interface for building distribution network.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        div_func (Callable[[float], float]): Diversity factor function coefficients</span>
+<span class="sd">        div_func (Callable[[float], float]): Diversity factor</span>
+<span class="sd">            function coefficients</span>
 <span class="sd">        kv_ll (float): Line to line voltage in KV</span>
-<span class="sd">        max_pole_to_pole_distance (float): Maximum pole to pole distance in meter</span>
+<span class="sd">        max_pole_to_pole_distance (float): Maximum pole to</span>
+<span class="sd">            pole distance in meter</span>
 <span class="sd">        power_factor (float): Power factor used to compute kva</span>
-<span class="sd">        adjustment_factor (float): Adjustment factor for adjusting kva</span>
-<span class="sd">        planned_avg_annual_growth (float): Planned average annual load growth rate in percentage</span>
-<span class="sd">        actual_avg_annual_growth (float): Actual average annual load growth rate in percentage</span>
+<span class="sd">        adjustment_factor (float): Adjustment factor for</span>
+<span class="sd">            adjusting kva</span>
+<span class="sd">        planned_avg_annual_growth (float): Planned average annual</span>
+<span class="sd">            load growth rate in percentage</span>
+<span class="sd">        actual_avg_annual_growth (float): Actual average annual</span>
+<span class="sd">            load growth rate in percentage</span>
 <span class="sd">        actual_years_in_operation (float): Actual years in operation</span>
 <span class="sd">        planned_years_in_operation (float): Planned years in operation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1253,22 +1309,29 @@
         <span class="sd">&quot;&quot;&quot;Constructor for `BaseNetworkBuilder` class.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            div_func (Callable[[float], float]): Diversity factor function coefficients</span>
+<span class="sd">            div_func (Callable[[float], float]): Diversity factor</span>
+<span class="sd">                function coefficients</span>
 <span class="sd">            kv_ll (float): Line to line voltage in KV</span>
-<span class="sd">            max_pole_to_pole_distance (float): Maximum pole to pole distance in meter</span>
+<span class="sd">            max_pole_to_pole_distance (float): Maximum pole to</span>
+<span class="sd">                pole distance in meter</span>
 <span class="sd">            power_factor (float): Power factor used to compute kva</span>
-<span class="sd">            adjustment_factor (float): Adjustment factor for adjusting kva</span>
-<span class="sd">            planned_avg_annual_growth (float): Planned average annual load growth rate in percentage</span>
-<span class="sd">            actual_avg_annual_growth (float): Actual average annual load growth rate in percentage</span>
+<span class="sd">            adjustment_factor (float): Adjustment factor for</span>
+<span class="sd">                adjusting kva</span>
+<span class="sd">            planned_avg_annual_growth (float): Planned average annual</span>
+<span class="sd">                load growth rate in percentage</span>
+<span class="sd">            actual_avg_annual_growth (float): Actual average annual load</span>
+<span class="sd">                growth rate in percentage</span>
 <span class="sd">            actual_years_in_operation (float): Actual years in operation</span>
 <span class="sd">            planned_years_in_operation (float): Planned years in operation</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            NegativeKVError: If `kv_ll` is negative</span>
 <span class="sd">            ZeroKVError: If `kv_ll` is zero</span>
-<span class="sd">            AdjustmentFactorNotInRangeError: If invalid adjustement factor is passed</span>
+<span class="sd">            AdjustmentFactorNotInRangeError: If invalid adjustement</span>
+<span class="sd">                factor is passed</span>
 <span class="sd">            PowerFactorNotInRangeError: If power factor is not in valid range</span>
-<span class="sd">            PoleToPoleDistanceNotInRange: If pole to pole distance passed in invalid</span>
+<span class="sd">            PoleToPoleDistanceNotInRange: If pole to pole distance</span>
+<span class="sd">                passed in invalid</span>
 <span class="sd">            PercentageNotInRangeError: If percentages passed are not valid</span>
 <span class="sd">            OperationYearNotInRange: If operation year passed is invalid</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1414,7 +1477,8 @@
           <td>
                 <code><span title="typing.Callable">Callable</span>[[float], float]</code>
           </td>
-          <td><p>Diversity factor function coefficients</p></td>
+          <td><p>Diversity factor
+function coefficients</p></td>
           <td>
               <em>required</em>
           </td>
@@ -1434,7 +1498,8 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Maximum pole to pole distance in meter</p></td>
+          <td><p>Maximum pole to
+pole distance in meter</p></td>
           <td>
                 <code>100</code>
           </td>
@@ -1454,7 +1519,8 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Adjustment factor for adjusting kva</p></td>
+          <td><p>Adjustment factor for
+adjusting kva</p></td>
           <td>
                 <code>1.2</code>
           </td>
@@ -1464,7 +1530,8 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Planned average annual load growth rate in percentage</p></td>
+          <td><p>Planned average annual
+load growth rate in percentage</p></td>
           <td>
                 <code>2</code>
           </td>
@@ -1474,7 +1541,8 @@
           <td>
                 <code>float</code>
           </td>
-          <td><p>Actual average annual load growth rate in percentage</p></td>
+          <td><p>Actual average annual load
+growth rate in percentage</p></td>
           <td>
                 <code>4</code>
           </td>
@@ -1527,7 +1595,8 @@
           <td>
                 <code><a class="autorefs autorefs-internal" title="shift.exceptions.AdjustmentFactorNotInRangeError" href="../exceptions/#shift.exceptions.AdjustmentFactorNotInRangeError">AdjustmentFactorNotInRangeError</a></code>
           </td>
-          <td><p>If invalid adjustement factor is passed</p></td>
+          <td><p>If invalid adjustement
+factor is passed</p></td>
         </tr>
         <tr>
           <td>
@@ -1539,7 +1608,8 @@
           <td>
                 <code><a class="autorefs autorefs-internal" title="shift.exceptions.PoleToPoleDistanceNotInRange" href="../exceptions/#shift.exceptions.PoleToPoleDistanceNotInRange">PoleToPoleDistanceNotInRange</a></code>
           </td>
-          <td><p>If pole to pole distance passed in invalid</p></td>
+          <td><p>If pole to pole distance
+passed in invalid</p></td>
         </tr>
         <tr>
           <td>
@@ -1558,20 +1628,7 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">531</span>
-<span class="normal">532</span>
-<span class="normal">533</span>
-<span class="normal">534</span>
-<span class="normal">535</span>
-<span class="normal">536</span>
-<span class="normal">537</span>
-<span class="normal">538</span>
-<span class="normal">539</span>
-<span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">544</span>
 <span class="normal">545</span>
 <span class="normal">546</span>
 <span class="normal">547</span>
@@ -1650,7 +1707,27 @@
 <span class="normal">620</span>
 <span class="normal">621</span>
 <span class="normal">622</span>
-<span class="normal">623</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">623</span>
+<span class="normal">624</span>
+<span class="normal">625</span>
+<span class="normal">626</span>
+<span class="normal">627</span>
+<span class="normal">628</span>
+<span class="normal">629</span>
+<span class="normal">630</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span>
+<span class="normal">634</span>
+<span class="normal">635</span>
+<span class="normal">636</span>
+<span class="normal">637</span>
+<span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span>
+<span class="normal">641</span>
+<span class="normal">642</span>
+<span class="normal">643</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">div_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">kv_ll</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -1665,22 +1742,29 @@
     <span class="sd">&quot;&quot;&quot;Constructor for `BaseNetworkBuilder` class.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        div_func (Callable[[float], float]): Diversity factor function coefficients</span>
+<span class="sd">        div_func (Callable[[float], float]): Diversity factor</span>
+<span class="sd">            function coefficients</span>
 <span class="sd">        kv_ll (float): Line to line voltage in KV</span>
-<span class="sd">        max_pole_to_pole_distance (float): Maximum pole to pole distance in meter</span>
+<span class="sd">        max_pole_to_pole_distance (float): Maximum pole to</span>
+<span class="sd">            pole distance in meter</span>
 <span class="sd">        power_factor (float): Power factor used to compute kva</span>
-<span class="sd">        adjustment_factor (float): Adjustment factor for adjusting kva</span>
-<span class="sd">        planned_avg_annual_growth (float): Planned average annual load growth rate in percentage</span>
-<span class="sd">        actual_avg_annual_growth (float): Actual average annual load growth rate in percentage</span>
+<span class="sd">        adjustment_factor (float): Adjustment factor for</span>
+<span class="sd">            adjusting kva</span>
+<span class="sd">        planned_avg_annual_growth (float): Planned average annual</span>
+<span class="sd">            load growth rate in percentage</span>
+<span class="sd">        actual_avg_annual_growth (float): Actual average annual load</span>
+<span class="sd">            growth rate in percentage</span>
 <span class="sd">        actual_years_in_operation (float): Actual years in operation</span>
 <span class="sd">        planned_years_in_operation (float): Planned years in operation</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        NegativeKVError: If `kv_ll` is negative</span>
 <span class="sd">        ZeroKVError: If `kv_ll` is zero</span>
-<span class="sd">        AdjustmentFactorNotInRangeError: If invalid adjustement factor is passed</span>
+<span class="sd">        AdjustmentFactorNotInRangeError: If invalid adjustement</span>
+<span class="sd">            factor is passed</span>
 <span class="sd">        PowerFactorNotInRangeError: If power factor is not in valid range</span>
-<span class="sd">        PoleToPoleDistanceNotInRange: If pole to pole distance passed in invalid</span>
+<span class="sd">        PoleToPoleDistanceNotInRange: If pole to pole distance</span>
+<span class="sd">            passed in invalid</span>
 <span class="sd">        PercentageNotInRangeError: If percentages passed are not valid</span>
 <span class="sd">        OperationYearNotInRange: If operation year passed is invalid</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1769,10 +1853,10 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">658</span>
-<span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">678</span>
+<span class="normal">679</span>
+<span class="normal">680</span>
+<span class="normal">681</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">update_network_with_ampacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abstract method for updating ampacity for all line sections.&quot;&quot;&quot;</span>
     <span class="k">pass</span>
@@ -1870,23 +1954,24 @@
           <td>
                 <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
           </td>
-          <td><p>DataFrame containing catalogs for
-overhead conductors</p></td>
+          <td><p>DataFrame
+containing catalogs for overhead conductors</p></td>
         </tr>
         <tr>
           <td><code>concentric_cable_catalog</code></td>
           <td>
                 <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
           </td>
-          <td><p>DataFrame containing catalogs for
-concentric cables</p></td>
+          <td><p>DataFrame
+containing catalogs for concentric cables</p></td>
         </tr>
         <tr>
           <td><code>catalog_dict</code></td>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>Mapping between conductor type and conductor catalogs</p></td>
+          <td><p>Mapping between conductor
+type and conductor catalogs</p></td>
         </tr>
     </tbody>
   </table>
@@ -1894,14 +1979,7 @@ concentric cables</p></td>
 
         <details class="quote">
           <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">393</span>
-<span class="normal">394</span>
-<span class="normal">395</span>
-<span class="normal">396</span>
-<span class="normal">397</span>
-<span class="normal">398</span>
-<span class="normal">399</span>
-<span class="normal">400</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">400</span>
 <span class="normal">401</span>
 <span class="normal">402</span>
 <span class="normal">403</span>
@@ -1960,7 +2038,15 @@ concentric cables</p></td>
 <span class="normal">456</span>
 <span class="normal">457</span>
 <span class="normal">458</span>
-<span class="normal">459</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseSectionsBuilder</span><span class="p">:</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseSectionsBuilder</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Interface for sections builder.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1971,11 +2057,12 @@ concentric cables</p></td>
 <span class="sd">        phase (Phase): Phase instance</span>
 <span class="sd">        neutral_present (bool): Indicates whether neutral is present or not</span>
 <span class="sd">        material (str): Conductor material</span>
-<span class="sd">        overhead_conductor_catalog (pd.DataFrame): DataFrame containing catalogs for</span>
-<span class="sd">            overhead conductors</span>
-<span class="sd">        concentric_cable_catalog (pd.DataFrame): DataFrame containing catalogs for</span>
-<span class="sd">            concentric cables</span>
-<span class="sd">        catalog_dict (dict): Mapping between conductor type and conductor catalogs</span>
+<span class="sd">        overhead_conductor_catalog (pd.DataFrame): DataFrame</span>
+<span class="sd">            containing catalogs for overhead conductors</span>
+<span class="sd">        concentric_cable_catalog (pd.DataFrame): DataFrame</span>
+<span class="sd">            containing catalogs for concentric cables</span>
+<span class="sd">        catalog_dict (dict): Mapping between conductor</span>
+<span class="sd">            type and conductor catalogs</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -2142,15 +2229,7 @@ concentric cables</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">411</span>
-<span class="normal">412</span>
-<span class="normal">413</span>
-<span class="normal">414</span>
-<span class="normal">415</span>
-<span class="normal">416</span>
-<span class="normal">417</span>
-<span class="normal">418</span>
-<span class="normal">419</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">419</span>
 <span class="normal">420</span>
 <span class="normal">421</span>
 <span class="normal">422</span>
@@ -2190,7 +2269,15 @@ concentric cables</p></td>
 <span class="normal">456</span>
 <span class="normal">457</span>
 <span class="normal">458</span>
-<span class="normal">459</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">network</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span>
     <span class="n">conductor_type</span><span class="p">:</span> <span class="n">ConductorType</span><span class="p">,</span>
@@ -2294,14 +2381,16 @@ concentric cables</p></td>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>Mapping between <code>Transformer</code> object and list of <code>Load</code> objects</p></td>
+          <td><p>Mapping between <code>Transformer</code> object
+and list of <code>Load</code> objects</p></td>
         </tr>
         <tr>
           <td><code>node_append_str</code></td>
           <td>
                 <code><span title="typing.Union">Union</span>[str, None]</code>
           </td>
-          <td><p>Unique string to be appended to all primary nodes</p></td>
+          <td><p>Unique string to be
+appended to all primary nodes</p></td>
         </tr>
         <tr>
           <td><code>sliced_graph</code></td>
@@ -2337,27 +2426,7 @@ concentric cables</p></td>
 
         <details class="quote">
           <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">664</span>
-<span class="normal">665</span>
-<span class="normal">666</span>
-<span class="normal">667</span>
-<span class="normal">668</span>
-<span class="normal">669</span>
-<span class="normal">670</span>
-<span class="normal">671</span>
-<span class="normal">672</span>
-<span class="normal">673</span>
-<span class="normal">674</span>
-<span class="normal">675</span>
-<span class="normal">676</span>
-<span class="normal">677</span>
-<span class="normal">678</span>
-<span class="normal">679</span>
-<span class="normal">680</span>
-<span class="normal">681</span>
-<span class="normal">682</span>
-<span class="normal">683</span>
-<span class="normal">684</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">684</span>
 <span class="normal">685</span>
 <span class="normal">686</span>
 <span class="normal">687</span>
@@ -2539,15 +2608,44 @@ concentric cables</p></td>
 <span class="normal">863</span>
 <span class="normal">864</span>
 <span class="normal">865</span>
-<span class="normal">866</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PrimaryNetworkFromRoad</span><span class="p">(</span><span class="n">BaseNetworkBuilder</span><span class="p">):</span>
+<span class="normal">866</span>
+<span class="normal">867</span>
+<span class="normal">868</span>
+<span class="normal">869</span>
+<span class="normal">870</span>
+<span class="normal">871</span>
+<span class="normal">872</span>
+<span class="normal">873</span>
+<span class="normal">874</span>
+<span class="normal">875</span>
+<span class="normal">876</span>
+<span class="normal">877</span>
+<span class="normal">878</span>
+<span class="normal">879</span>
+<span class="normal">880</span>
+<span class="normal">881</span>
+<span class="normal">882</span>
+<span class="normal">883</span>
+<span class="normal">884</span>
+<span class="normal">885</span>
+<span class="normal">886</span>
+<span class="normal">887</span>
+<span class="normal">888</span>
+<span class="normal">889</span>
+<span class="normal">890</span>
+<span class="normal">891</span>
+<span class="normal">892</span>
+<span class="normal">893</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PrimaryNetworkFromRoad</span><span class="p">(</span><span class="n">BaseNetworkBuilder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Builds primary network from OpenStreet road data.</span>
 
 <span class="sd">    Refer to base class for base attributes.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        road_network (OpenStreetRoadNetwork): OpenStreetRoadNetwork instance</span>
-<span class="sd">        trans_cust_mapper (dict): Mapping between `Transformer` object and list of `Load` objects</span>
-<span class="sd">        node_append_str (Union[str, None]): Unique string to be appended to all primary nodes</span>
+<span class="sd">        trans_cust_mapper (dict): Mapping between `Transformer` object</span>
+<span class="sd">            and list of `Load` objects</span>
+<span class="sd">        node_append_str (Union[str, None]): Unique string to be</span>
+<span class="sd">            appended to all primary nodes</span>
 <span class="sd">        sliced_graph (nx.Graph): Sliced road network</span>
 <span class="sd">        substation_node (str): Node representing substation</span>
 <span class="sd">        substation_coords (Sequence): Actual substation coordinate</span>
@@ -2576,9 +2674,12 @@ concentric cables</p></td>
 
 <span class="sd">        Args:</span>
 <span class="sd">            road_network (OpenStreetRoadNetwork): OpenStreetRoadNetwork instance</span>
-<span class="sd">            trans_cust_mapper (dict): Mapping between `Transformer` object and list of `Load` objects</span>
-<span class="sd">            substation_loc (tuple): Tentative location for siting substation (longitude, latitude) pair</span>
-<span class="sd">            node_append_str (Union[str, None]): Unique string to be appended to all primary nodes</span>
+<span class="sd">            trans_cust_mapper (dict): Mapping between `Transformer` object</span>
+<span class="sd">                and list of `Load` objects</span>
+<span class="sd">            substation_loc (tuple): Tentative location for siting substation</span>
+<span class="sd">                (longitude, latitude) pair</span>
+<span class="sd">            node_append_str (Union[str, None]): Unique string to be</span>
+<span class="sd">                appended to all primary nodes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -2605,12 +2706,11 @@ concentric cables</p></td>
         <span class="p">)</span>
 
         <span class="c1"># Get substation node</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">substation_node</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">n</span>
-            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">get_nearest_points_in_the_network</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">substation_node</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="n">get_nearest_points_in_the_network</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">sliced_graph</span><span class="p">,</span> <span class="p">[</span><span class="n">substation_loc</span><span class="p">]</span>
             <span class="p">)</span>
-        <span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">substation_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliced_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">substation_node</span><span class="p">][</span>
             <span class="s2">&quot;pos&quot;</span>
         <span class="p">]</span>
@@ -2623,7 +2723,8 @@ concentric cables</p></td>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_primary_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Algorithm to convert road network into distribution system primary network&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Algorithm to convert road network into</span>
+<span class="sd">        distribution system primary network&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">ax</span><span class="o">.</span><span class="n">steinertree</span><span class="o">.</span><span class="n">steiner_tree</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sliced_graph</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="p">)</span>
@@ -2636,7 +2737,8 @@ concentric cables</p></td>
         <span class="sd">&quot;&quot;&quot;Returns a primary network with ampacity data.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            AttributeDoesNotExistError: If `update_network_with_ampacity` is not called</span>
+<span class="sd">            AttributeDoesNotExistError:</span>
+<span class="sd">                If `update_network_with_ampacity` is not called</span>
 <span class="sd">                first, absence of `network` attribute</span>
 
 <span class="sd">        Returns:</span>
@@ -2645,10 +2747,10 @@ concentric cables</p></td>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;network&quot;</span><span class="p">):</span>
             <span class="n">mapping_dict</span><span class="p">,</span> <span class="n">relabel_rnodes</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">node_val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">node_new_name</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;_htnode&quot;</span>
                 <span class="n">mapping_dict</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_new_name</span>
-                <span class="n">relabel_rnodes</span><span class="p">[</span><span class="n">node_new_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+                <span class="n">relabel_rnodes</span><span class="p">[</span><span class="n">node_new_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_val</span>
 
             <span class="n">relable_snode</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">substation_node</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;_ltnode&quot;</span>
@@ -2707,18 +2809,19 @@ concentric cables</p></td>
 
             <span class="c1"># Create a subgraph&quot;&quot;&quot;</span>
             <span class="n">nodes_to_retain</span> <span class="o">=</span> <span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dfs_successors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dfs_successors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">nodes_to_retain</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
             <span class="n">subgraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">nodes_to_retain</span><span class="p">)</span>
 
-            <span class="c1"># Let&#39;s compute maximum diversified kva demand downward of this edge&quot;&quot;&quot;</span>
+            <span class="c1"># Let&#39;s compute maximum diversified</span>
+            <span class="c1"># kva demand downward of this edge&quot;&quot;&quot;</span>
             <span class="n">noncoincident_kws</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">num_of_customers</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">subgraph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">transformer_nodes</span><span class="p">:</span>
                     <span class="n">num_of_customers</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">transformer_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
                     <span class="n">noncoincident_kws</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span>
-                        <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">kw</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">transformer_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">]]</span>
+                        <span class="n">l</span><span class="o">.</span><span class="n">kw</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">transformer_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
                     <span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s2">&quot;ampacity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_ampacity</span><span class="p">(</span>
@@ -2798,7 +2901,8 @@ concentric cables</p></td>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>Mapping between <code>Transformer</code> object and list of <code>Load</code> objects</p></td>
+          <td><p>Mapping between <code>Transformer</code> object
+and list of <code>Load</code> objects</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2808,7 +2912,8 @@ concentric cables</p></td>
           <td>
                 <code>tuple</code>
           </td>
-          <td><p>Tentative location for siting substation (longitude, latitude) pair</p></td>
+          <td><p>Tentative location for siting substation
+(longitude, latitude) pair</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2818,7 +2923,8 @@ concentric cables</p></td>
           <td>
                 <code><span title="typing.Union">Union</span>[str, None]</code>
           </td>
-          <td><p>Unique string to be appended to all primary nodes</p></td>
+          <td><p>Unique string to be
+appended to all primary nodes</p></td>
           <td>
                 <code>None</code>
           </td>
@@ -2828,29 +2934,7 @@ concentric cables</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">679</span>
-<span class="normal">680</span>
-<span class="normal">681</span>
-<span class="normal">682</span>
-<span class="normal">683</span>
-<span class="normal">684</span>
-<span class="normal">685</span>
-<span class="normal">686</span>
-<span class="normal">687</span>
-<span class="normal">688</span>
-<span class="normal">689</span>
-<span class="normal">690</span>
-<span class="normal">691</span>
-<span class="normal">692</span>
-<span class="normal">693</span>
-<span class="normal">694</span>
-<span class="normal">695</span>
-<span class="normal">696</span>
-<span class="normal">697</span>
-<span class="normal">698</span>
-<span class="normal">699</span>
-<span class="normal">700</span>
-<span class="normal">701</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">701</span>
 <span class="normal">702</span>
 <span class="normal">703</span>
 <span class="normal">704</span>
@@ -2894,7 +2978,31 @@ concentric cables</p></td>
 <span class="normal">742</span>
 <span class="normal">743</span>
 <span class="normal">744</span>
-<span class="normal">745</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">745</span>
+<span class="normal">746</span>
+<span class="normal">747</span>
+<span class="normal">748</span>
+<span class="normal">749</span>
+<span class="normal">750</span>
+<span class="normal">751</span>
+<span class="normal">752</span>
+<span class="normal">753</span>
+<span class="normal">754</span>
+<span class="normal">755</span>
+<span class="normal">756</span>
+<span class="normal">757</span>
+<span class="normal">758</span>
+<span class="normal">759</span>
+<span class="normal">760</span>
+<span class="normal">761</span>
+<span class="normal">762</span>
+<span class="normal">763</span>
+<span class="normal">764</span>
+<span class="normal">765</span>
+<span class="normal">766</span>
+<span class="normal">767</span>
+<span class="normal">768</span>
+<span class="normal">769</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">road_network</span><span class="p">:</span> <span class="n">OpenStreetRoadNetwork</span><span class="p">,</span>
     <span class="n">trans_cust_mapper</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
@@ -2916,9 +3024,12 @@ concentric cables</p></td>
 
 <span class="sd">    Args:</span>
 <span class="sd">        road_network (OpenStreetRoadNetwork): OpenStreetRoadNetwork instance</span>
-<span class="sd">        trans_cust_mapper (dict): Mapping between `Transformer` object and list of `Load` objects</span>
-<span class="sd">        substation_loc (tuple): Tentative location for siting substation (longitude, latitude) pair</span>
-<span class="sd">        node_append_str (Union[str, None]): Unique string to be appended to all primary nodes</span>
+<span class="sd">        trans_cust_mapper (dict): Mapping between `Transformer` object</span>
+<span class="sd">            and list of `Load` objects</span>
+<span class="sd">        substation_loc (tuple): Tentative location for siting substation</span>
+<span class="sd">            (longitude, latitude) pair</span>
+<span class="sd">        node_append_str (Union[str, None]): Unique string to be</span>
+<span class="sd">            appended to all primary nodes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -2945,12 +3056,11 @@ concentric cables</p></td>
     <span class="p">)</span>
 
     <span class="c1"># Get substation node</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">substation_node</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">n</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">get_nearest_points_in_the_network</span><span class="p">(</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">substation_node</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">get_nearest_points_in_the_network</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sliced_graph</span><span class="p">,</span> <span class="p">[</span><span class="n">substation_loc</span><span class="p">]</span>
         <span class="p">)</span>
-    <span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">substation_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliced_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">substation_node</span><span class="p">][</span>
         <span class="s2">&quot;pos&quot;</span>
     <span class="p">]</span>
@@ -2983,9 +3093,9 @@ concentric cables</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">796</span>
-<span class="normal">797</span>
-<span class="normal">798</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_longest_length_in_kvameter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">822</span>
+<span class="normal">823</span>
+<span class="normal">824</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_longest_length_in_kvameter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns longest length in kva meter&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">longest_length</span>
 </code></pre></div></td></tr></table></div>
@@ -3008,25 +3118,6 @@ concentric cables</p></td>
   
       <p>Returns a primary network with ampacity data.</p>
 
-  <p><strong>Raises:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="shift.exceptions.AttributeDoesNotExistError" href="../exceptions/#shift.exceptions.AttributeDoesNotExistError">AttributeDoesNotExistError</a></code>
-          </td>
-          <td><p>If <code>update_network_with_ampacity</code> is not called
-first, absence of <code>network</code> attribute</p></td>
-        </tr>
-    </tbody>
-  </table>
-
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -3047,32 +3138,7 @@ first, absence of <code>network</code> attribute</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">757</span>
-<span class="normal">758</span>
-<span class="normal">759</span>
-<span class="normal">760</span>
-<span class="normal">761</span>
-<span class="normal">762</span>
-<span class="normal">763</span>
-<span class="normal">764</span>
-<span class="normal">765</span>
-<span class="normal">766</span>
-<span class="normal">767</span>
-<span class="normal">768</span>
-<span class="normal">769</span>
-<span class="normal">770</span>
-<span class="normal">771</span>
-<span class="normal">772</span>
-<span class="normal">773</span>
-<span class="normal">774</span>
-<span class="normal">775</span>
-<span class="normal">776</span>
-<span class="normal">777</span>
-<span class="normal">778</span>
-<span class="normal">779</span>
-<span class="normal">780</span>
-<span class="normal">781</span>
-<span class="normal">782</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">782</span>
 <span class="normal">783</span>
 <span class="normal">784</span>
 <span class="normal">785</span>
@@ -3080,11 +3146,38 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="normal">787</span>
 <span class="normal">788</span>
 <span class="normal">789</span>
-<span class="normal">790</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="normal">790</span>
+<span class="normal">791</span>
+<span class="normal">792</span>
+<span class="normal">793</span>
+<span class="normal">794</span>
+<span class="normal">795</span>
+<span class="normal">796</span>
+<span class="normal">797</span>
+<span class="normal">798</span>
+<span class="normal">799</span>
+<span class="normal">800</span>
+<span class="normal">801</span>
+<span class="normal">802</span>
+<span class="normal">803</span>
+<span class="normal">804</span>
+<span class="normal">805</span>
+<span class="normal">806</span>
+<span class="normal">807</span>
+<span class="normal">808</span>
+<span class="normal">809</span>
+<span class="normal">810</span>
+<span class="normal">811</span>
+<span class="normal">812</span>
+<span class="normal">813</span>
+<span class="normal">814</span>
+<span class="normal">815</span>
+<span class="normal">816</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns a primary network with ampacity data.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        AttributeDoesNotExistError: If `update_network_with_ampacity` is not called</span>
+<span class="sd">        AttributeDoesNotExistError:</span>
+<span class="sd">            If `update_network_with_ampacity` is not called</span>
 <span class="sd">            first, absence of `network` attribute</span>
 
 <span class="sd">    Returns:</span>
@@ -3093,10 +3186,10 @@ first, absence of <code>network</code> attribute</p></td>
 
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;network&quot;</span><span class="p">):</span>
         <span class="n">mapping_dict</span><span class="p">,</span> <span class="n">relabel_rnodes</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">node_val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">node_new_name</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;_htnode&quot;</span>
             <span class="n">mapping_dict</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_new_name</span>
-            <span class="n">relabel_rnodes</span><span class="p">[</span><span class="n">node_new_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+            <span class="n">relabel_rnodes</span><span class="p">[</span><span class="n">node_new_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_val</span>
 
         <span class="n">relable_snode</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">substation_node</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;_ltnode&quot;</span>
@@ -3132,16 +3225,19 @@ first, absence of <code>network</code> attribute</p></td>
 
   <div class="doc doc-contents ">
   
-      <p>Algorithm to convert road network into distribution system primary network</p>
+      <p>Algorithm to convert road network into
+distribution system primary network</p>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">747</span>
-<span class="normal">748</span>
-<span class="normal">749</span>
-<span class="normal">750</span>
-<span class="normal">751</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_primary_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Algorithm to convert road network into distribution system primary network&quot;&quot;&quot;</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">771</span>
+<span class="normal">772</span>
+<span class="normal">773</span>
+<span class="normal">774</span>
+<span class="normal">775</span>
+<span class="normal">776</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_primary_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Algorithm to convert road network into</span>
+<span class="sd">    distribution system primary network&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">ax</span><span class="o">.</span><span class="n">steinertree</span><span class="o">.</span><span class="n">steiner_tree</span><span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sliced_graph</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="p">)</span>
@@ -3167,9 +3263,9 @@ first, absence of <code>network</code> attribute</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">753</span>
-<span class="normal">754</span>
-<span class="normal">755</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_sliced_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">778</span>
+<span class="normal">779</span>
+<span class="normal">780</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_sliced_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Return sliced graph&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliced_graph</span>
 </code></pre></div></td></tr></table></div>
@@ -3194,9 +3290,9 @@ first, absence of <code>network</code> attribute</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">792</span>
-<span class="normal">793</span>
-<span class="normal">794</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_trans_node_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">818</span>
+<span class="normal">819</span>
+<span class="normal">820</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_trans_node_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns transformer to primary node mapping&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span>
 </code></pre></div></td></tr></table></div>
@@ -3221,33 +3317,7 @@ first, absence of <code>network</code> attribute</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">800</span>
-<span class="normal">801</span>
-<span class="normal">802</span>
-<span class="normal">803</span>
-<span class="normal">804</span>
-<span class="normal">805</span>
-<span class="normal">806</span>
-<span class="normal">807</span>
-<span class="normal">808</span>
-<span class="normal">809</span>
-<span class="normal">810</span>
-<span class="normal">811</span>
-<span class="normal">812</span>
-<span class="normal">813</span>
-<span class="normal">814</span>
-<span class="normal">815</span>
-<span class="normal">816</span>
-<span class="normal">817</span>
-<span class="normal">818</span>
-<span class="normal">819</span>
-<span class="normal">820</span>
-<span class="normal">821</span>
-<span class="normal">822</span>
-<span class="normal">823</span>
-<span class="normal">824</span>
-<span class="normal">825</span>
-<span class="normal">826</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">826</span>
 <span class="normal">827</span>
 <span class="normal">828</span>
 <span class="normal">829</span>
@@ -3287,7 +3357,34 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="normal">863</span>
 <span class="normal">864</span>
 <span class="normal">865</span>
-<span class="normal">866</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_network_with_ampacity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">866</span>
+<span class="normal">867</span>
+<span class="normal">868</span>
+<span class="normal">869</span>
+<span class="normal">870</span>
+<span class="normal">871</span>
+<span class="normal">872</span>
+<span class="normal">873</span>
+<span class="normal">874</span>
+<span class="normal">875</span>
+<span class="normal">876</span>
+<span class="normal">877</span>
+<span class="normal">878</span>
+<span class="normal">879</span>
+<span class="normal">880</span>
+<span class="normal">881</span>
+<span class="normal">882</span>
+<span class="normal">883</span>
+<span class="normal">884</span>
+<span class="normal">885</span>
+<span class="normal">886</span>
+<span class="normal">887</span>
+<span class="normal">888</span>
+<span class="normal">889</span>
+<span class="normal">890</span>
+<span class="normal">891</span>
+<span class="normal">892</span>
+<span class="normal">893</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_network_with_ampacity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Method to update all line sections with ampacity&quot;&quot;&quot;</span>
 
     <span class="c1"># Get primary network tree</span>
@@ -3319,18 +3416,19 @@ first, absence of <code>network</code> attribute</p></td>
 
         <span class="c1"># Create a subgraph&quot;&quot;&quot;</span>
         <span class="n">nodes_to_retain</span> <span class="o">=</span> <span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dfs_successors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dfs_successors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">nodes_to_retain</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
         <span class="n">subgraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">nodes_to_retain</span><span class="p">)</span>
 
-        <span class="c1"># Let&#39;s compute maximum diversified kva demand downward of this edge&quot;&quot;&quot;</span>
+        <span class="c1"># Let&#39;s compute maximum diversified</span>
+        <span class="c1"># kva demand downward of this edge&quot;&quot;&quot;</span>
         <span class="n">noncoincident_kws</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">num_of_customers</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">subgraph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">transformer_nodes</span><span class="p">:</span>
                 <span class="n">num_of_customers</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">transformer_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
                 <span class="n">noncoincident_kws</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span>
-                    <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">kw</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">transformer_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">]]</span>
+                    <span class="n">l</span><span class="o">.</span><span class="n">kw</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">transformer_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
                 <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s2">&quot;ampacity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_ampacity</span><span class="p">(</span>
@@ -3389,15 +3487,7 @@ first, absence of <code>network</code> attribute</p></td>
 
         <details class="quote">
           <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">462</span>
-<span class="normal">463</span>
-<span class="normal">464</span>
-<span class="normal">465</span>
-<span class="normal">466</span>
-<span class="normal">467</span>
-<span class="normal">468</span>
-<span class="normal">469</span>
-<span class="normal">470</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">470</span>
 <span class="normal">471</span>
 <span class="normal">472</span>
 <span class="normal">473</span>
@@ -3440,7 +3530,15 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="normal">510</span>
 <span class="normal">511</span>
 <span class="normal">512</span>
-<span class="normal">513</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PrimarySectionsBuilder</span><span class="p">(</span><span class="n">BaseSectionsBuilder</span><span class="p">):</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PrimarySectionsBuilder</span><span class="p">(</span><span class="n">BaseSectionsBuilder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class handling generation of primary line sections.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">generate_primary_line_sections</span><span class="p">(</span>
@@ -3575,15 +3673,7 @@ first, absence of <code>network</code> attribute</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">465</span>
-<span class="normal">466</span>
-<span class="normal">467</span>
-<span class="normal">468</span>
-<span class="normal">469</span>
-<span class="normal">470</span>
-<span class="normal">471</span>
-<span class="normal">472</span>
-<span class="normal">473</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">473</span>
 <span class="normal">474</span>
 <span class="normal">475</span>
 <span class="normal">476</span>
@@ -3623,7 +3713,15 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="normal">510</span>
 <span class="normal">511</span>
 <span class="normal">512</span>
-<span class="normal">513</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_primary_line_sections</span><span class="p">(</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_primary_line_sections</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">k_drop</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kv_base</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Method for creating primary line sections.</span>
@@ -3798,7 +3896,7 @@ first, absence of <code>network</code> attribute</p></td>
           <td>
                 <code><a class="autorefs autorefs-internal" title="shift.exceptions.CatalogNotFoundError" href="../exceptions/#shift.exceptions.CatalogNotFoundError">CatalogNotFoundError</a></code>
           </td>
-          <td><p>If the catalog record is not found for given ampacity</p></td>
+          <td><p>If the catalog record is not</p></td>
         </tr>
     </tbody>
   </table>
@@ -3926,7 +4024,10 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="normal">195</span>
 <span class="normal">196</span>
 <span class="normal">197</span>
-<span class="normal">198</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">choose_conductor</span><span class="p">(</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">choose_conductor</span><span class="p">(</span>
     <span class="n">catalog</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="n">ampacity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">k_drop</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -3941,13 +4042,15 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="sd">        catalog (pd.DataFrame): Dataframe containing all the catalogs</span>
 <span class="sd">        ampacity (float): Minimum ampacity required</span>
 <span class="sd">        k_drop (float): Percentage drop per kva per miles expected</span>
-<span class="sd">        geometry_configuration (LineGeometryConfiguration): LineGeometryConfiguration instance</span>
+<span class="sd">        geometry_configuration (LineGeometryConfiguration):</span>
+<span class="sd">            LineGeometryConfiguration instance</span>
 <span class="sd">        num_of_phase (NumPhase): NumPhase Instance</span>
 <span class="sd">        kv_base (float): Line to line kv base to be used to compute kva</span>
 <span class="sd">        pf (float): Power factor to be used to compute kva</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        CatalogNotFoundError: If the catalog record is not found for given ampacity</span>
+<span class="sd">        CatalogNotFoundError: If the catalog record is not</span>
+<span class="sd">        found for given ampacity</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        dict: Catalog record in dict format</span>
@@ -4023,13 +4126,14 @@ first, absence of <code>network</code> attribute</p></td>
             <span class="n">ampacity</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">k_drop_computed</span> <span class="o">=</span> <span class="n">vdrop_pct</span> <span class="o">/</span> <span class="p">(</span><span class="n">ampacity</span> <span class="o">*</span> <span class="n">kv_base</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 
-        <span class="c1"># print(&#39;k_drop : &#39;, k_drop, k_drop_computed, record[&#39;name&#39;], record[&#39;ampacity&#39;])</span>
+        <span class="c1"># print(&#39;k_drop : &#39;, k_drop, k_drop_computed,</span>
+        <span class="c1"># record[&#39;name&#39;], record[&#39;ampacity&#39;])</span>
         <span class="k">if</span> <span class="n">k_drop_computed</span> <span class="o">&lt;=</span> <span class="n">k_drop</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">record</span>
 
     <span class="c1"># print(k_drop_computed, k_drop, ampacity, record)</span>
     <span class="c1"># raise ConductorNotFoundForKdrop(k_drop)</span>
-    <span class="k">return</span> <span class="n">record</span>
+    <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -4094,10 +4198,7 @@ first, absence of <code>network</code> attribute</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">204</span>
 <span class="normal">205</span>
 <span class="normal">206</span>
 <span class="normal">207</span>
@@ -4116,7 +4217,10 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="normal">220</span>
 <span class="normal">221</span>
 <span class="normal">222</span>
-<span class="normal">223</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">convert_oh_cond_info_to_wire</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Wire</span><span class="p">:</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">convert_oh_cond_info_to_wire</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Wire</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts catalog record into wire object.</span>
 
 <span class="sd">    Args:</span>
@@ -4203,10 +4307,7 @@ first, absence of <code>network</code> attribute</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">226</span>
-<span class="normal">227</span>
-<span class="normal">228</span>
-<span class="normal">229</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">229</span>
 <span class="normal">230</span>
 <span class="normal">231</span>
 <span class="normal">232</span>
@@ -4231,7 +4332,10 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="normal">251</span>
 <span class="normal">252</span>
 <span class="normal">253</span>
-<span class="normal">254</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">convert_ug_cond_info_to_cable</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cable</span><span class="p">:</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">convert_ug_cond_info_to_cable</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cable</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts catalog record into cable object.</span>
 
 <span class="sd">    Args:</span>
@@ -4482,10 +4586,7 @@ first, absence of <code>network</code> attribute</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span>
-<span class="normal">260</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">260</span>
 <span class="normal">261</span>
 <span class="normal">262</span>
 <span class="normal">263</span>
@@ -4615,7 +4716,14 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="normal">387</span>
 <span class="normal">388</span>
 <span class="normal">389</span>
-<span class="normal">390</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">geometry_based_line_section_builder</span><span class="p">(</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">geometry_based_line_section_builder</span><span class="p">(</span>
     <span class="n">from_node</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">to_node</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">num_phase</span><span class="p">:</span> <span class="n">NumPhase</span><span class="p">,</span>
@@ -4646,7 +4754,8 @@ first, absence of <code>network</code> attribute</p></td>
 <span class="sd">        catalog (pd.DataFrame): DataFrame containing all the catalaogs</span>
 <span class="sd">        neutral_present (bool): Indicates whether neutral is present or not</span>
 <span class="sd">        conductor_type (ConductorType): ConductorType instance</span>
-<span class="sd">        geometry_configuration (LineGeometryConfiguration): LineGeometryConfiguration instance</span>
+<span class="sd">        geometry_configuration (LineGeometryConfiguration):</span>
+<span class="sd">            LineGeometryConfiguration instance</span>
 <span class="sd">        k_drop (float): Expected percentage voltage drop per kva per mile</span>
 <span class="sd">        kv_base (float): kV base for computing kVA</span>
 <span class="sd">        material (str): Material for choosing conductor</span>
@@ -4687,12 +4796,15 @@ first, absence of <code>network</code> attribute</p></td>
                 <span class="n">num_phase</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                 <span class="n">kv_base</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="c1"># catalog.loc[catalog[catalog[&#39;ampacity&#39;]&gt;ampacity][&#39;ampacity&#39;].idxmin()].to_dict()</span>
+            <span class="c1"># catalog.loc[catalog[catalog[&#39;ampacity&#39;]&gt;ampacity]</span>
+            <span class="c1"># [&#39;ampacity&#39;].idxmin()].to_dict()</span>
             <span class="n">line_geometry</span><span class="o">.</span><span class="n">phase_wire</span> <span class="o">=</span> <span class="n">convert_oh_cond_info_to_wire</span><span class="p">(</span>
                 <span class="n">phase_cond_dict</span>
             <span class="p">)</span>
 
-            <span class="c1"># Assuming neutral conductor would be one third of phase conductor ampacity for multi phase else same as phase conductor</span>
+            <span class="c1"># Assuming neutral conductor would be one third of</span>
+            <span class="c1"># phase conductor ampacity for multi phase else</span>
+            <span class="c1"># same as phase conductor</span>
             <span class="n">neutral_cond_dict</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">phase_cond_dict</span>
                 <span class="k">if</span> <span class="n">num_phase</span> <span class="o">==</span> <span class="n">NumPhase</span><span class="o">.</span><span class="n">SINGLE</span>
@@ -4831,10 +4943,12 @@ first, absence of <code>network</code> attribute</p></td>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
       
     
   </body>

@@ -247,10 +247,43 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../tutorials/" class="md-nav__link">
-        Tutorials
+      <a href="../sample-1/" class="md-nav__link">
+        Synthetic Feeder, Chennai
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -862,7 +895,8 @@
           <td>
                 <code>tuple</code>
           </td>
-          <td><p>(longitude, latitude) representing upper right point</p></td>
+          <td><p>(longitude, latitude) representing
+upper right point</p></td>
           <td>
               <em>required</em>
           </td>
@@ -892,7 +926,8 @@
           <td>
                 <code><span title="typing.Union">Union</span>[str, None]</code>
           </td>
-          <td><p>Shp file representing forbidden polygons</p></td>
+          <td><p>Shp file representing
+forbidden polygons</p></td>
           <td>
                 <code>None</code>
           </td>
@@ -902,7 +937,8 @@
           <td>
                 <code><span title="typing.Union">Union</span>[str, None]</code>
           </td>
-          <td><p>String to be appended at the end of node name</p></td>
+          <td><p>String to be appended
+at the end of node name</p></td>
           <td>
                 <code>None</code>
           </td>
@@ -921,20 +957,17 @@
     <tbody>
         <tr>
           <td>
-                <code><span title="typing.Sequence">Sequence</span>[<span title="networkx">nx</span>.<span title="networkx.Graph">Graph</span>, dict]</code>
+                <code><span title="typing.Sequence">Sequence</span>[tuple[<span title="networkx">nx</span>.<span title="networkx.Graph">Graph</span>, dict]]</code>
           </td>
-          <td><p>Sequence[nx.Graph, dict]: Graph and mapping between nodes and coordinates</p></td>
+          <td><p>Sequence[tuple[nx.Graph, dict]]: Graph and mapping between
+nodes and coordinates</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">264</span>
-<span class="normal">265</span>
-<span class="normal">266</span>
-<span class="normal">267</span>
-<span class="normal">268</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
 <span class="normal">269</span>
 <span class="normal">270</span>
 <span class="normal">271</span>
@@ -1122,26 +1155,42 @@
 <span class="normal">453</span>
 <span class="normal">454</span>
 <span class="normal">455</span>
-<span class="normal">456</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_rectangular_mesh_network</span><span class="p">(</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_rectangular_mesh_network</span><span class="p">(</span>
     <span class="n">lower_left</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
     <span class="n">upper_right</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
     <span class="n">vertical_space_meter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
     <span class="n">horizontal_space_meter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
     <span class="n">forbidden_areas</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">node_append_str</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Creates a rectangular mesh network from a given set of points.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        lower_left (tuple): (longitude, latitude) representing lower left point</span>
-<span class="sd">        upper_right (tuple): (longitude, latitude) representing upper right point</span>
+<span class="sd">        upper_right (tuple): (longitude, latitude) representing</span>
+<span class="sd">            upper right point</span>
 <span class="sd">        vertical_space_meter (float): Vertical spacing in meter</span>
 <span class="sd">        horizontal_space_meter (float): Horizontal spacing in meter</span>
-<span class="sd">        forbidden_areas (Union[str, None]): Shp file representing forbidden polygons</span>
-<span class="sd">        node_append_str (Union[str, None]): String to be appended at the end of node name</span>
+<span class="sd">        forbidden_areas (Union[str, None]): Shp file representing</span>
+<span class="sd">            forbidden polygons</span>
+<span class="sd">        node_append_str (Union[str, None]): String to be appended</span>
+<span class="sd">            at the end of node name</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Sequence[nx.Graph, dict]: Graph and mapping between nodes and coordinates</span>
+<span class="sd">        Sequence[tuple[nx.Graph, dict]]: Graph and mapping between</span>
+<span class="sd">            nodes and coordinates</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Assuming tuples first element is longitude and second element is latitude</span>
@@ -1160,16 +1209,19 @@
     <span class="n">horizontal_distance</span> <span class="o">=</span> <span class="n">get_distance</span><span class="p">(</span><span class="n">south_west</span><span class="p">,</span> <span class="n">south_east</span><span class="p">)</span>
     <span class="n">vertical_distance</span> <span class="o">=</span> <span class="n">get_distance</span><span class="p">(</span><span class="n">south_west</span><span class="p">,</span> <span class="n">north_west</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Vertical distance </span><span class="si">{</span><span class="n">vertical_distance</span><span class="si">}</span><span class="s2">m, Horizontal distance </span><span class="si">{</span><span class="n">horizontal_distance</span><span class="si">}</span><span class="s2">m&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Vertical distance </span><span class="si">{</span><span class="n">vertical_distance</span><span class="si">}</span><span class="s2">m,&quot;</span>
+        <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; Horizontal distance </span><span class="si">{</span><span class="n">horizontal_distance</span><span class="si">}</span><span class="s2">m&quot;</span>
     <span class="p">)</span>
 
-    <span class="c1"># Compute number of sections required in horizontal (wet-east) and vertical (north-south) direction</span>
+    <span class="c1"># Compute number of sections required in horizontal</span>
+    <span class="c1"># (wet-east) and vertical (north-south) direction</span>
     <span class="n">horizontal_sections</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
         <span class="nb">int</span><span class="p">(</span><span class="n">horizontal_distance</span> <span class="o">/</span> <span class="n">horizontal_space_meter</span><span class="p">),</span> <span class="mi">1</span>
     <span class="p">)</span>
     <span class="n">vertical_sections</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">vertical_distance</span> <span class="o">/</span> <span class="n">vertical_space_meter</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Vertical sections: </span><span class="si">{</span><span class="n">vertical_sections</span><span class="si">}</span><span class="s2">, horizontal sections: </span><span class="si">{</span><span class="n">horizontal_sections</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Vertical sections: </span><span class="si">{</span><span class="n">vertical_sections</span><span class="si">}</span><span class="s2">,&quot;</span>
+        <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;horizontal sections: </span><span class="si">{</span><span class="n">horizontal_sections</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="p">)</span>
 
     <span class="c1"># Let&#39;s create node and edges for the rectangular mesh</span>
@@ -1228,7 +1280,7 @@
             <span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="n">sliced_road</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="p">}</span>
-        <span class="k">for</span> <span class="n">road_node</span><span class="p">,</span> <span class="n">road_node_coords</span> <span class="ow">in</span> <span class="n">sliced_road_nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">road_node_coords</span> <span class="ow">in</span> <span class="n">sliced_road_nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">node_coords</span> <span class="ow">in</span> <span class="n">points</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">get_distance</span><span class="p">(</span><span class="n">node_coords</span><span class="p">,</span> <span class="n">road_node_coords</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">d_threshold</span><span class="p">:</span>
 
@@ -1236,11 +1288,12 @@
                         <span class="n">graph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
                         <span class="c1"># print(f&quot;{node} node removed&quot;)</span>
                     <span class="k">except</span> <span class="n">nx</span><span class="o">.</span><span class="n">NetworkXError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                        <span class="c1"># print(e)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
                         <span class="k">pass</span>
 
         <span class="c1"># Now let&#39;s connect the sliced road netowork to truncated mesh network</span>
-        <span class="c1"># First step is to find the nearest node for each of the sliced road nodes to truncated mesh network</span>
+        <span class="c1"># First step is to find the nearest node for each of the</span>
+        <span class="c1"># sliced road nodes to truncated mesh network</span>
 
         <span class="c1"># updated the node_coords</span>
         <span class="n">points</span> <span class="o">=</span> <span class="p">{</span>
@@ -1281,7 +1334,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
     <span class="c1"># Now let&#39;s try to fetch lakes and rives and try to a</span>
-    <span class="k">if</span> <span class="n">forbidden_areas</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">forbidden_areas</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 
         <span class="c1"># get all forbidden polygons</span>
         <span class="n">forbidden_polygons</span> <span class="o">=</span> <span class="n">get_forbidden_polygons</span><span class="p">(</span><span class="n">forbidden_areas</span><span class="p">)</span>
@@ -1470,7 +1523,8 @@ documentation for scheme.</p>
 
   <div class="doc doc-contents ">
   
-      <p>Returns distance between two geopoints in meter assuming eliposoidal earth model.</p>
+      <p>Returns distance between two geopoints in meter assuming
+    eliposoidal earth model.</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1508,7 +1562,8 @@ documentation for scheme.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>Specfies that latitude is first and longitude is second if true</p></td>
+          <td><p>Specfies that latitude is first and
+longitude is second if true</p></td>
           <td>
                 <code>False</code>
           </td>
@@ -1536,8 +1591,7 @@ documentation for scheme.</p>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">111</span>
-<span class="normal">112</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
@@ -1562,21 +1616,28 @@ documentation for scheme.</p>
 <span class="normal">134</span>
 <span class="normal">135</span>
 <span class="normal">136</span>
-<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_distance</span><span class="p">(</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_distance</span><span class="p">(</span>
     <span class="n">point1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">point2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">latlon</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Returns distance between two geopoints in meter assuming eliposoidal earth model.</span>
+    <span class="sd">&quot;&quot;&quot;Returns distance between two geopoints in meter assuming</span>
+<span class="sd">        eliposoidal earth model.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        point1 (List[float]): location coordinate for point 1</span>
 <span class="sd">        point2 (List[float]): location coordinate for point 2</span>
-<span class="sd">        latlon (bool): Specfies that latitude is first and longitude is second if true</span>
+<span class="sd">        latlon (bool): Specfies that latitude is first and</span>
+<span class="sd">            longitude is second if true</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        float: distance in meter</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># Assuming point1 and point2 are tuples with first element representing longitude and</span>
+    <span class="c1"># Assuming point1 and point2 are tuples with</span>
+    <span class="c1"># first element representing longitude and</span>
     <span class="c1"># second element representing latitude</span>
 
     <span class="c1"># Geopy however requires (lat, lon) pair</span>
@@ -1653,11 +1714,7 @@ documentation for scheme.</p>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">235</span>
-<span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">239</span>
 <span class="normal">240</span>
 <span class="normal">241</span>
 <span class="normal">242</span>
@@ -1672,7 +1729,11 @@ documentation for scheme.</p>
 <span class="normal">251</span>
 <span class="normal">252</span>
 <span class="normal">253</span>
-<span class="normal">254</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_forbidden_polygons</span><span class="p">(</span><span class="n">shp_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">shapely</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Polygon</span><span class="p">]:</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_forbidden_polygons</span><span class="p">(</span><span class="n">shp_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">shapely</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Polygon</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Get all the polygons from a shape file.</span>
 
 <span class="sd">    Args:</span>
@@ -1773,11 +1834,7 @@ nodes are to be found</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">144</span>
 <span class="normal">145</span>
 <span class="normal">146</span>
 <span class="normal">147</span>
@@ -1814,7 +1871,11 @@ nodes are to be found</p></td>
 <span class="normal">178</span>
 <span class="normal">179</span>
 <span class="normal">180</span>
-<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_nearest_points_in_the_network</span><span class="p">(</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_nearest_points_in_the_network</span><span class="p">(</span>
     <span class="n">graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Retrieve nearest node from the graph for given points</span>
@@ -1874,7 +1935,8 @@ nodes are to be found</p></td>
 
   <div class="doc doc-contents ">
   
-      <p>Returns a y coordinate for a given x coordinate by following piecewise linear function.</p>
+      <p>Returns a y coordinate for a given x coordinate
+by following piecewise linear function.</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1957,8 +2019,10 @@ nodes are to be found</p></td>
 <span class="normal">105</span>
 <span class="normal">106</span>
 <span class="normal">107</span>
-<span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_point_from_curve</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Returns a y coordinate for a given x coordinate by following piecewise linear function.</span>
+<span class="normal">108</span>
+<span class="normal">109</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_point_from_curve</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns a y coordinate for a given x coordinate</span>
+<span class="sd">    by following piecewise linear function.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        curve (List[List[float]]): List of list containing two floats</span>
@@ -2007,11 +2071,11 @@ nodes are to be found</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span>
-<span class="normal">260</span>
-<span class="normal">261</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_slices</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_slices</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Get slices between two numbers&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span>
         <span class="n">start</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_steps</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -2081,28 +2145,17 @@ nodes are to be found</p></td>
     <tbody>
         <tr>
           <td>
-                <code><span title="typing.Sequence">Sequence</span>[<span title="networkx">nx</span>.<span title="networkx.Graph">Graph</span>, dict]</code>
+                <code><span title="typing.Sequence">Sequence</span>[tuple[<span title="networkx">nx</span>.<span title="networkx.Graph">Graph</span>, dict]]</code>
           </td>
-          <td><p>Sequence[nx.Graph, dict]: Pruned network and mapping between customer and node</p></td>
+          <td><p>Sequence[tuple[nx.Graph, dict]]: Pruned network and
+mapping between customer and node</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">459</span>
-<span class="normal">460</span>
-<span class="normal">461</span>
-<span class="normal">462</span>
-<span class="normal">463</span>
-<span class="normal">464</span>
-<span class="normal">465</span>
-<span class="normal">466</span>
-<span class="normal">467</span>
-<span class="normal">468</span>
-<span class="normal">469</span>
-<span class="normal">470</span>
-<span class="normal">471</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">471</span>
 <span class="normal">472</span>
 <span class="normal">473</span>
 <span class="normal">474</span>
@@ -2133,9 +2186,22 @@ nodes are to be found</p></td>
 <span class="normal">499</span>
 <span class="normal">500</span>
 <span class="normal">501</span>
-<span class="normal">502</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mesh_pruning</span><span class="p">(</span>
+<span class="normal">502</span>
+<span class="normal">503</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mesh_pruning</span><span class="p">(</span>
     <span class="n">mesh_graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">customers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Prunes the mesh graph by keeping the nodes specified.</span>
 
 <span class="sd">    Args:</span>
@@ -2143,7 +2209,8 @@ nodes are to be found</p></td>
 <span class="sd">        customers: List[List[float]]: List of points to be used for pruning</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Sequence[nx.Graph, dict]: Pruned network and mapping between customer and node</span>
+<span class="sd">        Sequence[tuple[nx.Graph, dict]]: Pruned network and</span>
+<span class="sd">            mapping between customer and node</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Let&#39;s find the nodes we absolutey need to keep</span>
@@ -2241,19 +2308,19 @@ nodes are to be found</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">539</span>
-<span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_node_edge_type</span><span class="p">(</span><span class="n">network</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">557</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span>
+<span class="normal">561</span>
+<span class="normal">562</span>
+<span class="normal">563</span>
+<span class="normal">564</span>
+<span class="normal">565</span>
+<span class="normal">566</span>
+<span class="normal">567</span>
+<span class="normal">568</span>
+<span class="normal">569</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_node_edge_type</span><span class="p">(</span><span class="n">network</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Sets the type to node and edge.</span>
 
 <span class="sd">    Args:</span>
@@ -2341,11 +2408,7 @@ use in slicing</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">188</span>
 <span class="normal">189</span>
 <span class="normal">190</span>
 <span class="normal">191</span>
@@ -2389,7 +2452,11 @@ use in slicing</p></td>
 <span class="normal">229</span>
 <span class="normal">230</span>
 <span class="normal">231</span>
-<span class="normal">232</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">slice_up_network_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">slice_in_meter</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">slice_up_network_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">slice_in_meter</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
 
     <span class="sd">&quot;&quot;&quot;Creates a new graph with edges sliced by given distance in meter.</span>
 
@@ -2422,8 +2489,8 @@ use in slicing</p></td>
         <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="p">(</span><span class="n">graph_nodes</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="n">graph_nodes</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="n">sliced_nodes</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="nb">slice</span> <span class="ow">in</span> <span class="n">edge_slices</span><span class="p">:</span>
-            <span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">slice</span><span class="p">,</span> <span class="n">y1</span> <span class="o">+</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">slice</span>
+        <span class="k">for</span> <span class="n">slice_</span> <span class="ow">in</span> <span class="n">edge_slices</span><span class="p">:</span>
+            <span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span> <span class="o">*</span> <span class="n">slice_</span><span class="p">,</span> <span class="n">y1</span> <span class="o">+</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">)</span> <span class="o">*</span> <span class="n">slice_</span>
             <span class="n">sliced_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">new_x</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">new_y</span><span class="si">}</span><span class="s2">_node&quot;</span><span class="p">,</span>
                 <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">),</span>
@@ -2456,7 +2523,8 @@ use in slicing</p></td>
 
   <div class="doc doc-contents ">
   
-      <p>Creates a minimum spanning graph connecting customers by avoiding forbidden region.</p>
+      <p>Creates a minimum spanning graph connecting
+customers by avoiding forbidden region.</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2474,7 +2542,8 @@ use in slicing</p></td>
           <td>
                 <code><span title="typing.List">List</span>[<span title="typing.List">List</span>[float]]</code>
           </td>
-          <td><p>List of points to be used to create graph</p></td>
+          <td><p>List of points to be used
+to create graph</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2494,7 +2563,8 @@ use in slicing</p></td>
           <td>
                 <code><span title="typing.Union">Union</span>[str, None]</code>
           </td>
-          <td><p>String to be appended to node name</p></td>
+          <td><p>String to be appended
+to node name</p></td>
           <td>
                 <code>None</code>
           </td>
@@ -2513,9 +2583,10 @@ use in slicing</p></td>
     <tbody>
         <tr>
           <td>
-                <code><span title="typing.Sequence">Sequence</span>[<span title="networkx">nx</span>.<span title="networkx.Graph">Graph</span>, dict, dict]</code>
+                <code><span title="typing.Sequence">Sequence</span>[tuple[<span title="networkx">nx</span>.<span title="networkx.Graph">Graph</span>, dict, dict]]</code>
           </td>
-          <td><p>Sequence[nx.Graph, dict, dict]: Minimum spannnig tree, mapping between point and coordinates
+          <td><p>Sequence[tuple[nx.Graph, dict, dict]]: Minimum spannnig tree,
+mapping between point and coordinates
 and customer to node mapping.</p></td>
         </tr>
     </tbody>
@@ -2523,20 +2594,7 @@ and customer to node mapping.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\utils.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">505</span>
-<span class="normal">506</span>
-<span class="normal">507</span>
-<span class="normal">508</span>
-<span class="normal">509</span>
-<span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span>
-<span class="normal">513</span>
-<span class="normal">514</span>
-<span class="normal">515</span>
-<span class="normal">516</span>
-<span class="normal">517</span>
-<span class="normal">518</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">518</span>
 <span class="normal">519</span>
 <span class="normal">520</span>
 <span class="normal">521</span>
@@ -2554,20 +2612,42 @@ and customer to node mapping.</p></td>
 <span class="normal">533</span>
 <span class="normal">534</span>
 <span class="normal">535</span>
-<span class="normal">536</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">triangulate_using_mesh</span><span class="p">(</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span>
+<span class="normal">542</span>
+<span class="normal">543</span>
+<span class="normal">544</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span>
+<span class="normal">551</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">triangulate_using_mesh</span><span class="p">(</span>
     <span class="n">customers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
     <span class="n">forbidden_areas</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">node_append_str</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Creates a minimum spanning graph connecting customers by avoiding forbidden region.</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Creates a minimum spanning graph connecting</span>
+<span class="sd">    customers by avoiding forbidden region.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        customers (List[List[float]]): List of points to be used to create graph</span>
+<span class="sd">        customers (List[List[float]]): List of points to be used</span>
+<span class="sd">            to create graph</span>
 <span class="sd">        forbidden_areas (Union[str, None]): Path to .shp file</span>
-<span class="sd">        node_append_str (Union[str, None]): String to be appended to node name</span>
+<span class="sd">        node_append_str (Union[str, None]): String to be appended</span>
+<span class="sd">            to node name</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Sequence[nx.Graph, dict, dict]: Minimum spannnig tree, mapping between point and coordinates</span>
+<span class="sd">        Sequence[tuple[nx.Graph, dict, dict]]: Minimum spannnig tree,</span>
+<span class="sd">            mapping between point and coordinates</span>
 <span class="sd">            and customer to node mapping.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -2583,7 +2663,8 @@ and customer to node mapping.</p></td>
         <span class="n">node_append_str</span><span class="o">=</span><span class="n">node_append_str</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">graph_mst</span><span class="p">,</span> <span class="n">customer_to_node_mapper</span> <span class="o">=</span> <span class="n">mesh_pruning</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">customers</span><span class="p">)</span>
-    <span class="c1"># graph, points = add_customer_nodes_and_edges(graph_mst, customer_to_node_mapper)</span>
+    <span class="c1"># graph, points = add_customer_nodes_and_edges(graph_mst,</span>
+    <span class="c1"># customer_to_node_mapper)</span>
 
     <span class="k">return</span> <span class="n">graph_mst</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">customer_to_node_mapper</span>
 </code></pre></div></td></tr></table></div>
@@ -2668,10 +2749,12 @@ and customer to node mapping.</p></td>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
       
     
   </body>

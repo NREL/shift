@@ -247,10 +247,43 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../tutorials/" class="md-nav__link">
-        Tutorials
+      <a href="../sample-1/" class="md-nav__link">
+        Synthetic Feeder, Chennai
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -928,7 +961,8 @@
 <a id="shift.feeder_network"></a>
   <div class="doc doc-contents first">
   
-      <p>This module manages connecting various power system components to build a network.</p>
+      <p>This module manages connecting various power system
+components to build a network.</p>
 
   
 
@@ -957,7 +991,8 @@
         Bases: <code><a class="autorefs autorefs-internal" title="shift.feeder_network.TwoLayerDistributionNetworkBuilder" href="#shift.feeder_network.TwoLayerDistributionNetworkBuilder">TwoLayerDistributionNetworkBuilder</a></code></p>
 
   
-      <p>Class for creating distribution assets for developing two layer distribution network.</p>
+      <p>Class for creating distribution assets for
+developing two layer distribution network.</p>
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -982,17 +1017,7 @@
 
         <details class="quote">
           <summary>Source code in <code>shift\feeder_network.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">161</span>
 <span class="normal">162</span>
 <span class="normal">163</span>
 <span class="normal">164</span>
@@ -1106,27 +1131,43 @@
 <span class="normal">272</span>
 <span class="normal">273</span>
 <span class="normal">274</span>
-<span class="normal">275</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SimpleTwoLayerDistributionNetworkBuilder</span><span class="p">(</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SimpleTwoLayerDistributionNetworkBuilder</span><span class="p">(</span>
     <span class="n">TwoLayerDistributionNetworkBuilder</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Class for creating distribution assets for developing two layer distribution network.</span>
+    <span class="sd">&quot;&quot;&quot;Class for creating distribution assets for</span>
+<span class="sd">    developing two layer distribution network.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        feeder (nx.Graph): Instance of networkx graph</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Constructor for SimpleTwoLayerDistributionNetworkBuilder class&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Constructor for SimpleTwoLayerDistributionNetworkBuilder class&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">feeder</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">add_load_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Add load nodes to the network.</span>
+        <span class="sd">&quot;&quot;&quot;Add load nodes to the network.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            loads (List[Load]): List of `Load` objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1">#Loop over all the load and add to the network</span>
+        <span class="c1"># Loop over all the load and add to the network</span>
         <span class="k">for</span> <span class="n">load</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">:</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">feeder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
@@ -1137,8 +1178,10 @@
                 <span class="nb">object</span><span class="o">=</span><span class="n">load</span><span class="p">,</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">add_distribution_transformers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Transformer</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Add transformer nodes to the network.</span>
+    <span class="k">def</span> <span class="nf">add_distribution_transformers</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">transformers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Transformer</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Add transformer nodes to the network.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            transformers (List[Transformer]): List of `Transformer` objects</span>
@@ -1154,7 +1197,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_low_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Add low tension line segments to the network.</span>
+        <span class="sd">&quot;&quot;&quot;Add low tension line segments to the network.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            edges (List[Line]): List of `Line` objects representing</span>
@@ -1192,7 +1235,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_high_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Add high tension line segments to the network.</span>
+        <span class="sd">&quot;&quot;&quot;Add high tension line segments to the network.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            edges (List[Line]): List of `Line` objects representing</span>
@@ -1229,7 +1272,7 @@
         <span class="c1"># Pull the transformer node to network node and convert to edge</span>
 
     <span class="k">def</span> <span class="nf">add_substation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Add substation &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Add substation&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
         </details>
@@ -1262,11 +1305,11 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; Constructor for SimpleTwoLayerDistributionNetworkBuilder class&quot;&quot;&quot;</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Constructor for SimpleTwoLayerDistributionNetworkBuilder class&quot;&quot;&quot;</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">feeder</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
@@ -1315,22 +1358,26 @@
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">194</span>
 <span class="normal">195</span>
-<span class="normal">196</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_distribution_transformers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Transformer</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; Add transformer nodes to the network.</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_distribution_transformers</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">transformers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Transformer</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Add transformer nodes to the network.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        transformers (List[Transformer]): List of `Transformer` objects</span>
@@ -1391,21 +1438,7 @@ primary line segments</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span>
-<span class="normal">240</span>
-<span class="normal">241</span>
-<span class="normal">242</span>
-<span class="normal">243</span>
-<span class="normal">244</span>
-<span class="normal">245</span>
-<span class="normal">246</span>
-<span class="normal">247</span>
-<span class="normal">248</span>
-<span class="normal">249</span>
-<span class="normal">250</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">250</span>
 <span class="normal">251</span>
 <span class="normal">252</span>
 <span class="normal">253</span>
@@ -1423,8 +1456,22 @@ primary line segments</p></td>
 <span class="normal">265</span>
 <span class="normal">266</span>
 <span class="normal">267</span>
-<span class="normal">268</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_high_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; Add high tension line segments to the network.</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_high_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Add high tension line segments to the network.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        edges (List[Line]): List of `Line` objects representing</span>
@@ -1502,30 +1549,30 @@ primary line segments</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
-<span class="normal">167</span>
-<span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">176</span>
 <span class="normal">177</span>
 <span class="normal">178</span>
 <span class="normal">179</span>
-<span class="normal">180</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_load_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; Add load nodes to the network.</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_load_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Add load nodes to the network.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loads (List[Load]): List of `Load` objects</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#Loop over all the load and add to the network</span>
+    <span class="c1"># Loop over all the load and add to the network</span>
     <span class="k">for</span> <span class="n">load</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">:</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">feeder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
@@ -1582,21 +1629,7 @@ secondary line segments</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span>
-<span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span>
-<span class="normal">212</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">212</span>
 <span class="normal">213</span>
 <span class="normal">214</span>
 <span class="normal">215</span>
@@ -1618,8 +1651,22 @@ secondary line segments</p></td>
 <span class="normal">231</span>
 <span class="normal">232</span>
 <span class="normal">233</span>
-<span class="normal">234</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_low_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; Add low tension line segments to the network.</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_low_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Add low tension line segments to the network.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        edges (List[Line]): List of `Line` objects representing</span>
@@ -1677,10 +1724,10 @@ secondary line segments</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">273</span>
-<span class="normal">274</span>
-<span class="normal">275</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_substation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Add substation &quot;&quot;&quot;</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_substation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add substation&quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1712,16 +1759,13 @@ secondary line segments</p></td>
         Bases: <code><span title="abc.ABC">ABC</span></code></p>
 
   
-      <p>Interface to build two layer (low tension + high tension) distribution network</p>
+      <p>Interface to build two layer (low tension +
+high tension) distribution network</p>
 
 
         <details class="quote">
           <summary>Source code in <code>shift\feeder_network.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 88</span>
 <span class="normal"> 89</span>
 <span class="normal"> 90</span>
 <span class="normal"> 91</span>
@@ -1743,26 +1787,38 @@ secondary line segments</p></td>
 <span class="normal">107</span>
 <span class="normal">108</span>
 <span class="normal">109</span>
-<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TwoLayerDistributionNetworkBuilder</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Interface to build two layer (low tension + high tension) distribution network&quot;&quot;&quot;</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TwoLayerDistributionNetworkBuilder</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface to build two layer (low tension +</span>
+<span class="sd">    high tension) distribution network&quot;&quot;&quot;</span>
 
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">add_load_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Abstract method to add customer nodes to the distribution network&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">add_load_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Abstract method to add customer nodes</span>
+<span class="sd">        to the distribution network&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">add_distribution_transformers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="nf">add_distribution_transformers</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">transformers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Transformer</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Abstract method to add distribution transformer nodes&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">add_low_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_low_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Abstract method to add low tension network&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">add_high_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_high_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Abstract method to add high tension network&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
@@ -1790,7 +1846,7 @@ secondary line segments</p></td>
 
 
 <h3 id="shift.feeder_network.TwoLayerDistributionNetworkBuilder.add_distribution_transformers" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">add_distribution_transformers</span><span class="p">(</span><span class="n">loads</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">add_distribution_transformers</span><span class="p">(</span><span class="n">transformers</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
@@ -1805,11 +1861,15 @@ secondary line segments</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">add_distribution_transformers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">]):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">add_distribution_transformers</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">transformers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Transformer</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Abstract method to add distribution transformer nodes&quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
@@ -1823,7 +1883,7 @@ secondary line segments</p></td>
 
 
 <h3 id="shift.feeder_network.TwoLayerDistributionNetworkBuilder.add_high_tension_network" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">add_high_tension_network</span><span class="p">()</span></code>
+<code class="highlight language-python"><span class="n">add_high_tension_network</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
@@ -1838,11 +1898,11 @@ secondary line segments</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">add_high_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">add_high_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Abstract method to add high tension network&quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
@@ -1856,7 +1916,7 @@ secondary line segments</p></td>
 
 
 <h3 id="shift.feeder_network.TwoLayerDistributionNetworkBuilder.add_load_nodes" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">add_load_nodes</span><span class="p">()</span></code>
+<code class="highlight language-python"><span class="n">add_load_nodes</span><span class="p">(</span><span class="n">loads</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
@@ -1867,16 +1927,19 @@ secondary line segments</p></td>
 
   <div class="doc doc-contents ">
   
-      <p>Abstract method to add customer nodes to the distribution network</p>
+      <p>Abstract method to add customer nodes
+to the distribution network</p>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">add_load_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Abstract method to add customer nodes to the distribution network&quot;&quot;&quot;</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">add_load_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Abstract method to add customer nodes</span>
+<span class="sd">    to the distribution network&quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1889,7 +1952,7 @@ secondary line segments</p></td>
 
 
 <h3 id="shift.feeder_network.TwoLayerDistributionNetworkBuilder.add_low_tension_network" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">add_low_tension_network</span><span class="p">()</span></code>
+<code class="highlight language-python"><span class="n">add_low_tension_network</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
@@ -1904,11 +1967,11 @@ secondary line segments</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">add_low_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">add_low_tension_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Abstract method to add low tension network&quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
@@ -1937,10 +2000,10 @@ secondary line segments</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">add_substation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abstract method to add substation&quot;&quot;&quot;</span>
     <span class="k">pass</span>
@@ -1989,7 +2052,8 @@ secondary line segments</p></td>
           <td>
                 <code><a class="autorefs autorefs-internal" title="shift.feeder_network.TwoLayerDistributionNetworkBuilder" href="#shift.feeder_network.TwoLayerDistributionNetworkBuilder">TwoLayerDistributionNetworkBuilder</a></code>
           </td>
-          <td><p>Instance of <code>TwoLayerDistributionNetworkBuilder</code> class</p></td>
+          <td><p>Instance
+of <code>TwoLayerDistributionNetworkBuilder</code> class</p></td>
         </tr>
     </tbody>
   </table>
@@ -1997,15 +2061,7 @@ secondary line segments</p></td>
 
         <details class="quote">
           <summary>Source code in <code>shift\feeder_network.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">121</span>
 <span class="normal">122</span>
 <span class="normal">123</span>
 <span class="normal">124</span>
@@ -2032,12 +2088,24 @@ secondary line segments</p></td>
 <span class="normal">145</span>
 <span class="normal">146</span>
 <span class="normal">147</span>
-<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TwoLayerNetworkBuilderDirector</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; Builder for creating two layer distribution network.</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TwoLayerNetworkBuilderDirector</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Builder for creating two layer distribution network.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        builder (TwoLayerDistributionNetworkBuilder): Instance of `TwoLayerDistributionNetworkBuilder` class</span>
+<span class="sd">        builder (TwoLayerDistributionNetworkBuilder): Instance</span>
+<span class="sd">            of `TwoLayerDistributionNetworkBuilder` class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">],</span>
@@ -2045,17 +2113,17 @@ secondary line segments</p></td>
         <span class="n">primary_edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">],</span>
         <span class="n">secondary_edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">],</span>
         <span class="n">builder</span><span class="p">:</span> <span class="n">TwoLayerDistributionNetworkBuilder</span><span class="p">,</span>
-    <span class="p">)</span><span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Constructor method for TwoLayerNetworkBuilderDirector class.</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Constructor method for TwoLayerNetworkBuilderDirector class.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            loads (List[Load]): List of `Load` objects</span>
 <span class="sd">            transformers (List[Transformer]): List of `Transformer` objects</span>
-<span class="sd">            primary_edges (List[Line]): List of `Line` objects representing primary</span>
-<span class="sd">                sections</span>
-<span class="sd">            secondary_edges (List[Line]): List of `Line` objects representing </span>
+<span class="sd">            primary_edges (List[Line]): List of `Line` objects</span>
+<span class="sd">                representing primary sections</span>
+<span class="sd">            secondary_edges (List[Line]): List of `Line` objects representing</span>
 <span class="sd">                secondary sections</span>
-<span class="sd">            builder (TwoLayerDistributionNetworkBuilder): Instance of builder </span>
+<span class="sd">            builder (TwoLayerDistributionNetworkBuilder): Instance of builder</span>
 <span class="sd">                type `TwoLayerDistributionNetworkBuilder`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -2133,8 +2201,8 @@ secondary line segments</p></td>
           <td>
                 <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="shift.line_section.Line" href="../line_section/#shift.line_section.Line">Line</a>]</code>
           </td>
-          <td><p>List of <code>Line</code> objects representing primary
-sections</p></td>
+          <td><p>List of <code>Line</code> objects
+representing primary sections</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2144,7 +2212,7 @@ sections</p></td>
           <td>
                 <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="shift.line_section.Line" href="../line_section/#shift.line_section.Line">Line</a>]</code>
           </td>
-          <td><p>List of <code>Line</code> objects representing 
+          <td><p>List of <code>Line</code> objects representing
 secondary sections</p></td>
           <td>
               <em>required</em>
@@ -2155,7 +2223,7 @@ secondary sections</p></td>
           <td>
                 <code><a class="autorefs autorefs-internal" title="shift.feeder_network.TwoLayerDistributionNetworkBuilder" href="#shift.feeder_network.TwoLayerDistributionNetworkBuilder">TwoLayerDistributionNetworkBuilder</a></code>
           </td>
-          <td><p>Instance of builder 
+          <td><p>Instance of builder
 type <code>TwoLayerDistributionNetworkBuilder</code></p></td>
           <td>
               <em>required</em>
@@ -2166,17 +2234,7 @@ type <code>TwoLayerDistributionNetworkBuilder</code></p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">129</span>
 <span class="normal">130</span>
 <span class="normal">131</span>
 <span class="normal">132</span>
@@ -2191,24 +2249,34 @@ type <code>TwoLayerDistributionNetworkBuilder</code></p></td>
 <span class="normal">141</span>
 <span class="normal">142</span>
 <span class="normal">143</span>
-<span class="normal">144</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">loads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Load</span><span class="p">],</span>
     <span class="n">transformers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Transformer</span><span class="p">],</span>
     <span class="n">primary_edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">],</span>
     <span class="n">secondary_edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">],</span>
     <span class="n">builder</span><span class="p">:</span> <span class="n">TwoLayerDistributionNetworkBuilder</span><span class="p">,</span>
-<span class="p">)</span><span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; Constructor method for TwoLayerNetworkBuilderDirector class.</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Constructor method for TwoLayerNetworkBuilderDirector class.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loads (List[Load]): List of `Load` objects</span>
 <span class="sd">        transformers (List[Transformer]): List of `Transformer` objects</span>
-<span class="sd">        primary_edges (List[Line]): List of `Line` objects representing primary</span>
-<span class="sd">            sections</span>
-<span class="sd">        secondary_edges (List[Line]): List of `Line` objects representing </span>
+<span class="sd">        primary_edges (List[Line]): List of `Line` objects</span>
+<span class="sd">            representing primary sections</span>
+<span class="sd">        secondary_edges (List[Line]): List of `Line` objects representing</span>
 <span class="sd">            secondary sections</span>
-<span class="sd">        builder (TwoLayerDistributionNetworkBuilder): Instance of builder </span>
+<span class="sd">        builder (TwoLayerDistributionNetworkBuilder): Instance of builder</span>
 <span class="sd">            type `TwoLayerDistributionNetworkBuilder`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -2239,9 +2307,9 @@ type <code>TwoLayerDistributionNetworkBuilder</code></p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns a distribution network&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">feeder</span>
 </code></pre></div></td></tr></table></div>
@@ -2271,7 +2339,8 @@ type <code>TwoLayerDistributionNetworkBuilder</code></p></td>
 
   <div class="doc doc-contents ">
   
-      <p>Updated the location of transformers by connecting it to nearest primary node.</p>
+      <p>Updated the location of transformers by connecting it
+to nearest primary node.</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2299,8 +2368,9 @@ type <code>TwoLayerDistributionNetworkBuilder</code></p></td>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>A dictionary with key representing <code>Transformer</code> object
-values list of <code>Load</code> objects</p></td>
+          <td><p>A dictionary with key r
+epresenting <code>Transformer</code> object values
+list of <code>Load</code> objects</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2310,7 +2380,8 @@ values list of <code>Load</code> objects</p></td>
           <td>
                 <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="shift.line_section.Line" href="../line_section/#shift.line_section.Line">Line</a>]</code>
           </td>
-          <td><p>List of line objects representing primary line sections.</p></td>
+          <td><p>List of line objects
+representing primary line sections.</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2338,8 +2409,7 @@ values list of <code>Load</code> objects</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\feeder_network.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
-<span class="normal">45</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
 <span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
@@ -2375,18 +2445,25 @@ values list of <code>Load</code> objects</p></td>
 <span class="normal">78</span>
 <span class="normal">79</span>
 <span class="normal">80</span>
-<span class="normal">81</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_transformer_locations</span><span class="p">(</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_transformer_locations</span><span class="p">(</span>
     <span class="n">retain_nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">transformers_cust_mapper</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">primary_lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Updated the location of transformers by connecting it to nearest primary node.</span>
+    <span class="sd">&quot;&quot;&quot;Updated the location of transformers by connecting it</span>
+<span class="sd">    to nearest primary node.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        retain_nodes (List[str]): list of nodes to be retained</span>
-<span class="sd">        transformers_cust_mapper (dict): A dictionary with key representing `Transformer` object</span>
-<span class="sd">            values list of `Load` objects</span>
-<span class="sd">        primary_lines (List[Line]): List of line objects representing primary line sections.</span>
+<span class="sd">        transformers_cust_mapper (dict): A dictionary with key r</span>
+<span class="sd">            epresenting `Transformer` object values</span>
+<span class="sd">            list of `Load` objects</span>
+<span class="sd">        primary_lines (List[Line]): List of line objects</span>
+<span class="sd">            representing primary line sections.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        dict: New transformer to customer or loads mapping</span>
@@ -2495,10 +2572,12 @@ values list of <code>Load</code> objects</p></td>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "sarch.highlight", "content.tabs.link", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
       
     
   </body>
