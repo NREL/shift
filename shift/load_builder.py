@@ -28,11 +28,13 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module contains builder for building load models for distribution system.
+""" This module contains builder for building load models
+for distribution system.
 
 Examples
 
-    >>> from shift.load_builder import ConstantPowerFactorBuildingGeometryLoadBuilder
+    >>> from shift.load_builder import (
+        ConstantPowerFactorBuildingGeometryLoadBuilder)
     >>> from shift.geometry import BuildingGeometry
     >>> g1 = BuildingGeometry()
     >>> g1.latitude = 56.567
@@ -42,8 +44,11 @@ Examples
     >>> g2.latitude = 56.567
     >>> g2.longitude = 67.8889
     >>> g2.area = 2
-    >>> builder = ConstantPowerFactorBuildingGeometryLoadBuilder(g1, RandomPhaseAllocator(50, 0, 50, [g1,g2]),
-        ProportionalBuildingAreaToConsumptionConverter(2,5,0,10), SimpleVoltageSetter(13.2),DefaultConnSetter(),1.0)
+    >>> builder = ConstantPowerFactorBuildingGeometryLoadBuilder(g1,
+        RandomPhaseAllocator(50, 0, 50, [g1,g2]),
+        ProportionalBuildingAreaToConsumptionConverter(2,5,0,10),
+        SimpleVoltageSetter(13.2),DefaultConnSetter(),
+        1.0)
     >>> b = LoadBuilderEngineer(builder)
     >>> print(b.get_load())
 """
@@ -84,7 +89,8 @@ class BuildingAreaToConsumptionConverter(ABC):
 class PiecewiseBuildingAreaToConsumptionConverter(
     BuildingAreaToConsumptionConverter
 ):
-    """Class for handling computation of power consumption using piecewide linear function.
+    """Class for handling computation of power consumption
+    using piecewide linear function.
 
     Attributes:
         curve (List[list]): Piecewise linear function e.g. [[1,2], [3,4]]
@@ -94,7 +100,8 @@ class PiecewiseBuildingAreaToConsumptionConverter(
         """Constructor for `PiecewiseBuildingAreaToConsumptionConverter` class.
 
         Args:
-            area_to_kw_curve (List[list]): Piecewise linear function e.g. [[1,2], [3,4]]
+            area_to_kw_curve (List[list]): Piecewise linear
+                function e.g. [[1,2], [3,4]]
         """
         self.curve = area_to_kw_curve
 
@@ -106,7 +113,8 @@ class PiecewiseBuildingAreaToConsumptionConverter(
 class ProportionalBuildingAreaToConsumptionConverter(
     BuildingAreaToConsumptionConverter
 ):
-    """Class for handling computation of power consumption using proportional allocation method.
+    """Class for handling computation of power consumption
+    using proportional allocation method.
 
     Attributes:
         min_kw (float): Minimum kw to be assigned
@@ -118,7 +126,8 @@ class ProportionalBuildingAreaToConsumptionConverter(
     def __init__(
         self, min_kw: float, max_kw: float, max_area: float, min_area: float
     ) -> None:
-        """Constructor for  `ProportionalBuildingAreaToConsumptionConverter` class.
+        """Constructor for
+        `ProportionalBuildingAreaToConsumptionConverter` class.
 
         Args:
             min_kw (float): Minimum kw to be assigned
@@ -159,7 +168,8 @@ class PhaseAllocator(ABC):
         """Abstract method for getting a phase.
 
         Args:
-            geometry (Geometry): Geometry instance for which phase is to be determined
+            geometry (Geometry): Geometry instance for
+                which phase is to be determined
 
         Returns:
             Phase: Phase instance for the geometry
@@ -171,7 +181,8 @@ class PhaseAllocator(ABC):
         """Abstract method for getting number of phase.
 
         Args:
-            geometry (Geometry): Geometry instance for which num_phase is to be determined
+            geometry (Geometry): Geometry instance for
+                which num_phase is to be determined
 
         Returns:
             NumPhase: NumPhase instance for the geometry
@@ -427,13 +438,15 @@ class GeometryLoadBuilder(LoadBuilder):
 
 
 class ConstantPowerFactorBuildingGeometryLoadBuilder(GeometryLoadBuilder):
-    """Concerete implementation for building constant power factor type load from geometry object.
+    """Concerete implementation for building constant
+    power factor type load from geometry object.
 
     Refer to the base class for base attributes.
 
     Attributes:
         power_factor (float): Power factor
-        area_converter (BuildingAreaToConsumptionConverter): BuildingAreaToConsumptionConverter instance
+        area_converter (BuildingAreaToConsumptionConverter):
+            BuildingAreaToConsumptionConverter instance
     """
 
     def __init__(
@@ -445,12 +458,14 @@ class ConstantPowerFactorBuildingGeometryLoadBuilder(GeometryLoadBuilder):
         conn_setter: ConnSetter,
         power_factor: float,
     ) -> None:
-        """Constructor for `ConstantPowerFactorBuildingGeometryLoadBuilder` class.
+        """Constructor for
+        `ConstantPowerFactorBuildingGeometryLoadBuilder` class.
 
         Refer to base class for base arguments.
 
         Args:
-            area_converter (BuildingAreaToConsumptionConverter): BuildingAreaToConsumptionConverter instance
+            area_converter (BuildingAreaToConsumptionConverter):
+                BuildingAreaToConsumptionConverter instance
             power_factor (float): Power factor
         """
 
@@ -471,7 +486,8 @@ class ConstantPowerFactorBuildingGeometryLoadBuilder(GeometryLoadBuilder):
 
 
 class ConstantPowerFactorSimpleLoadGeometryLoadBuilder(GeometryLoadBuilder):
-    """Concerete implementation for building constant power factor type load from simple load point geometry object.
+    """Concerete implementation for building constant power
+    factor type load from simple load point geometry object.
 
     Refer to base class for base attributes.
 
@@ -487,7 +503,8 @@ class ConstantPowerFactorSimpleLoadGeometryLoadBuilder(GeometryLoadBuilder):
         conn_setter: ConnSetter,
         power_factor: float,
     ) -> None:
-        """Constructor for `ConstantPowerFactorSimpleLoadGeometryLoadBuilder` class.
+        """Constructor for
+        `ConstantPowerFactorSimpleLoadGeometryLoadBuilder` class.
 
         Refer to base class for base arguments.
 

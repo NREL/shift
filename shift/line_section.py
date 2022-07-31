@@ -28,7 +28,9 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module contains classes for representing different parts of distribution line segment. """
+""" This module contains classes for representing different
+parts of distribution line segment. """
+
 from abc import ABC, abstractmethod
 
 from shift.exceptions import (
@@ -154,13 +156,16 @@ class Wire:
             and self.normamps == other.normamps
         ):
             return True
-        else:
-            False
+
+        return False
 
     def __repr__(self):
         return (
-            f"{self.__class__.__name__}(Name = {self._name}, Resistance unit = {self._runits}, GMR unit = {self._gmrunits}, Radius unit = {self._radunits}"
-            + f", AC resistance (ohm per) = {self._rac}, Diameter = {self._diam}, GMR AC = {self._gmrac}, Ampacity = {self._normamps})"
+            f"{self.__class__.__name__}(Name = {self._name}, Resistance unit "
+            + f"= {self._runits}, GMR unit = {self._gmrunits},"
+            + f" Radius unit = {self._radunits}, AC resistance (ohm per)"
+            + f" = {self._rac}, Diameter = {self._diam},"
+            + f" GMR AC = {self._gmrac}, Ampacity = {self._normamps})"
         )
 
 
@@ -264,15 +269,19 @@ class Cable(Wire):
             and self.k == other.k
         ):
             return True
-        else:
-            False
+        return False
 
     def __repr__(self):
-        repr = super().__repr__()
+        repr_ = super().__repr__()
         return (
-            f"{self.__class__.__name__}({repr.split('(')[1].split(')')[0]}, Insulation thickness = {self._inslayer}, Diameter over insulation = {self._diains}"
-            + f" Diameter of cable = {self._diacable}, Neutral strand resistance (ohm per) = {self._rstrand}, Neutral strand GMR = {self._gmrstrand}"
-            + f"Neutral strand diameter = {self._diastrand}, Number of neutral strands = {self._k})"
+            f"{self.__class__.__name__}({repr_.split('(')[1].split(')')[0]}, "
+            + f"Insulation thickness = {self._inslayer}, "
+            + f"Diameter over insulation = {self._diains}"
+            + f" Diameter of cable = {self._diacable}, "
+            + "Neutral strand resistance (ohm per) = "
+            + f"{self._rstrand}, Neutral strand GMR = {self._gmrstrand}"
+            + f"Neutral strand diameter = {self._diastrand}, "
+            + f"Number of neutral strands = {self._k})"
         )
 
 
@@ -317,8 +326,7 @@ class LineGeometryConfiguration(ABC):
             and self.get_h_array() == other.get_h_array()
         ):
             return True
-        else:
-            return False
+        return False
 
 
 class HorizontalSinglePhaseConfiguration(LineGeometryConfiguration):
@@ -349,12 +357,14 @@ class HorizontalSinglePhaseConfiguration(LineGeometryConfiguration):
 
 
 class HorizontalSinglePhaseNeutralConfiguration(LineGeometryConfiguration):
-    """Concrete implementation for single phase horizontal configuration with neutral wire.
+    """Concrete implementation for single phase horizontal
+    configuration with neutral wire.
 
     Attributes:
         unit (str): Unit of height
         height_of_conductor (float): Height of conductor from ground
-        separation_between_conductor (float): Distance between phase and neutral wire
+        separation_between_conductor (float): Distance between
+            phase and neutral wire
     """
 
     def __init__(
@@ -367,7 +377,8 @@ class HorizontalSinglePhaseNeutralConfiguration(LineGeometryConfiguration):
 
         Args:
             height_of_conductor (float): Height of conductor from ground
-            separation_between_conductor (float): Distance between phase and neutral wire
+            separation_between_conductor (float): Distance between
+                phase and neutral wire
             unit (str): Unit of height
         """
 
@@ -393,7 +404,8 @@ class HorizontalThreePhaseConfiguration(LineGeometryConfiguration):
     Attributes:
         unit (str): Unit of height
         height_of_conductor (float): Height of conductor from ground
-        separation_between_conductor (float): Distance between phase and neutral wire
+        separation_between_conductor (float): Distance between
+            phase and neutral wire
     """
 
     def __init__(self, height_of_conductor, separation_between_conductor, unit):
@@ -401,7 +413,8 @@ class HorizontalThreePhaseConfiguration(LineGeometryConfiguration):
 
         Args:
             height_of_conductor (float): Height of conductor from ground
-            separation_between_conductor (float): Distance between phase and neutral wire
+            separation_between_conductor (float): Distance between
+                phase and neutral wire
             unit (str): Unit of height
         """
         self.unit = unit
@@ -426,12 +439,14 @@ class HorizontalThreePhaseConfiguration(LineGeometryConfiguration):
 
 
 class HorizontalThreePhaseNeutralConfiguration(LineGeometryConfiguration):
-    """Concrete implementation for three phase horizontal configuration with neutral.
+    """Concrete implementation for three phase horizontal
+    configuration with neutral.
 
     Attributes:
         unit (str): Unit of height
         height_of_conductor (float): Height of conductor from ground
-        separation_between_conductor (float): Distance between phase and neutral wire
+        separation_between_conductor (float): Distance between
+            phase and neutral wire
         height_of_neutral_conductor (float): Height of neutral conductor
     """
 
@@ -446,7 +461,8 @@ class HorizontalThreePhaseNeutralConfiguration(LineGeometryConfiguration):
 
         Args:
             height_of_conductor (float): Height of conductor from ground
-            separation_between_conductor (float): Distance between phase and neutral wire
+            separation_between_conductor (float): Distance between phase
+                and neutral wire
             height_of_neutral_conductor (float): Height of neutral conductor
             unit (str): Unit of height
         """
@@ -526,12 +542,15 @@ class LineGeometry(ABC):
             and self.configuration == other.configuration
         ):
             return True
-        else:
-            False
+        return False
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(Name = {self._name}, NumPhase = {self._num_phase}, \
-        Number of conductors = {self._num_conds}, Configuration = {self._configuration})"
+        return (
+            f"{self.__class__.__name__}(Name = {self._name}, "
+            + f"NumPhase = {self._num_phase},"
+            + f" Number of conductors = {self._num_conds},"
+            + f" Configuration = {self._configuration})"
+        )
 
 
 class OverheadLineGeometry(LineGeometry):
@@ -551,12 +570,14 @@ class OverheadLineGeometry(LineGeometry):
 
         if super().__eq__(other) and self.phase_wire == other.phase_wire:
             return True
-        else:
-            False
+        return False
 
     def __repr__(self):
-        repr = super().__repr__()
-        return f"{self.__class__.__name__}({repr.split('(')[1].split(')')[0]}, Phase wire = {self._phase_wire})"
+        repr_ = super().__repr__()
+        return (
+            f"{self.__class__.__name__}({repr_.split('(')[1].split(')')[0]},"
+            + f" Phase wire = {self._phase_wire})"
+        )
 
 
 class OverheadLinewithNeutralGeometry(OverheadLineGeometry):
@@ -576,12 +597,14 @@ class OverheadLinewithNeutralGeometry(OverheadLineGeometry):
 
         if super().__eq__(other) and self.neutral_wire == other.neutral_wire:
             return True
-        else:
-            False
+        return False
 
     def __repr__(self):
-        repr = super().__repr__()
-        return f"{self.__class__.__name__}({repr.split('(')[1].split(')')[0]}, Neutral wire = {self._neutral_wire})"
+        repr_ = super().__repr__()
+        return (
+            f"{self.__class__.__name__}({repr_.split('(')[1].split(')')[0]},"
+            + f" Neutral wire = {self._neutral_wire})"
+        )
 
 
 class UndergroundLineGeometry(LineGeometry):
@@ -601,12 +624,14 @@ class UndergroundLineGeometry(LineGeometry):
 
         if super().__eq__(other) and self.phase_cable == other.phase_cable:
             return True
-        else:
-            False
+        return False
 
     def __repr__(self):
-        repr = super().__repr__()
-        return f"{self.__class__.__name__}({repr.split('(')[1].split(')')[0]}, Phase cable = {self._phase_cable})"
+        repr_ = super().__repr__()
+        return (
+            f"{self.__class__.__name__}({repr_.split('(')[1].split(')')[0]},"
+            + f" Phase cable = {self._phase_cable})"
+        )
 
 
 class Line(ABC):
@@ -712,6 +737,9 @@ class GeometryBasedLine(Line):
 
     def __repr__(self):
         return (
-            f"{self.__class__.__name__}(Name = {self._name}, FromNode = {self._fromnode}, ToNode = {self._tonode}, Length = {self._length} "
-            + f"NumPhase = {self._num_phase}, Length unit = {self._length_unit}, Geometry = {self._geometry})"
+            f"{self.__class__.__name__}(Name = {self._name}, "
+            + f"FromNode = {self._fromnode}, ToNode = {self._tonode},"
+            + f" Length = {self._length} NumPhase = {self._num_phase},"
+            + f" Length unit = {self._length_unit}, "
+            + f" Geometry = {self._geometry})"
         )

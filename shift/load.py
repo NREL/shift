@@ -28,7 +28,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module contains classes for representing different type of power system loads. 
+""" This module contains classes for representing
+different type of power system loads.
 
 Examples:
 
@@ -173,8 +174,11 @@ class ConstantPowerLoad(Load):
 
     def __repr__(self):
         return (
-            f"ConstantPowerLoad(Name = {self._name}, Latitude = {self._latitude}, Longitude = {self._longitude}, Phase = {self._phase} "
-            + f"NumPhase = {self._num_phase}, Connection Type = {self._conn_type}, kw = {self._kw}, kvar = {self._kvar}, kv = {self._kv})"
+            f"ConstantPowerLoad(Name = {self._name}, Latitude ="
+            + f" {self._latitude}, Longitude = {self._longitude},"
+            + f" Phase = {self._phase} NumPhase = {self._num_phase},"
+            + f" Connection Type = {self._conn_type}, kw = {self._kw},"
+            + f" kvar = {self._kvar}, kv = {self._kv})"
         )
 
 
@@ -205,6 +209,10 @@ class ConstantPowerFactorLoad(Load):
 
     def __repr__(self):
         return (
-            f"ConstantPowerFactorLoad(Name = {self._name}, Latitude = {self._latitude}, Longitude = {self._longitude}, Phase = {self._phase} "
-            + f"NumPhase = {self._num_phase}, Connection Type = {self._conn_type}, kw = {self._kw}, pf = {self._pf}, kv = {self._kv})"
+            f"ConstantPowerFactorLoad(Name = {self._name},"
+            + f" Latitude = {self._latitude}, Longitude = "
+            + f"{self._longitude}, Phase = {self._phase} "
+            + f"NumPhase = {self._num_phase}, Connection Type ="
+            + f" {self._conn_type}, kw = {self._kw},"
+            + f" pf = {self._pf}, kv = {self._kv})"
         )

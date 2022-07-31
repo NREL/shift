@@ -28,14 +28,14 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module consists of class and helper functions to export distribution model in 
-opendss format.
+""" This module consists of class and helper functions
+to export distribution model in opendss format.
 """
 
 from typing import List
 import os
 
-from abc import ABC, abstractmethod
+from abc import ABC
 
 from shift.exporter.base import BaseExporter
 from shift.load import Load
@@ -44,6 +44,8 @@ from shift.line_section import Line
 from shift.exceptions import FolderNotFoundError
 from shift.enums import Phase, NumPhase
 from shift.constants import VALID_FREQUENCIES
+
+# pylint: disable=redefined-builtin
 from shift.exceptions import UnsupportedFrequencyError, NotImplementedError
 
 
@@ -144,6 +146,7 @@ class ConstantPowerFactorLoadWriter(LoadWriter):
 
         load_contents = []
         for load in self.loads:
+            # pylint: disable-next=line-too-long
             bus1 = f"{remove_invalid_chars(self.mapping_dict[load.name])}.{load.phase.value}"
             load_contents.append(
                 f"new load.{remove_invalid_chars(load.name)} "
@@ -206,9 +209,11 @@ class TwoWindingSimpleTransformerWriter(TransformerWriter):
             trans_contents.append(
                 f"new transformer.{remove_invalid_chars(trans.name)} "
                 + f"phases={trans.num_phase.value} buses=[{bus1}, {bus2}] "
+                # pylint: disable-next=line-too-long
                 + f"conns=[{trans.primary_con.value}, {trans.secondary_con.value}] "
                 + f"kvs=[{trans.primary_kv}, {trans.secondary_kv}] "
                 + f"kvas=[{trans.kva}, {trans.kva}] xhl={trans.xhl} "
+                # pylint: disable-next=line-too-long
                 + f"%noloadloss={trans.pct_noloadloss} %r={trans.pct_r} leadlag=lead\n\n"
             )
 
@@ -276,7 +281,8 @@ class GeometryBasedLineWriter(LineWriter):
         Refer to base class for base class arguments.
 
         Args:
-            geometry_file_name (str): OpenDSS file name for writing line geometries
+            geometry_file_name (str): OpenDSS file name
+                for writing line geometries
             wire_file_name (str): OpenDSS file name for writing wires
             cable_file_name (str): OpenDSS file name for writing cables
         """
@@ -319,6 +325,7 @@ class GeometryBasedLineWriter(LineWriter):
             else:
                 geom = geom_objects_dict[gk][geom_objects_dict[gk].index(geom)]
 
+            # pylint: disable-next=line-too-long
             bus1 = f"{remove_invalid_chars(line.fromnode)}.{line.fromnode_phase.value}"
             bus2 = (
                 f"{remove_invalid_chars(line.tonode)}.{line.tonode_phase.value}"
@@ -327,7 +334,8 @@ class GeometryBasedLineWriter(LineWriter):
                 f"new line.{remove_invalid_chars(line.name)} "
                 + f"bus1={bus1} "
                 + f"bus2={bus2} "
-                + f"length={line.length if line.length !=0 else 0.0001} geometry={geom.name} units={line.length_unit}\n\n"
+                + f"length={line.length if line.length !=0 else 0.0001}"
+                + f" geometry={geom.name} units={line.length_unit}\n\n"
             )
 
             self.coord_dict[bus1.split(".")[0]] = (
@@ -395,11 +403,13 @@ class GeometryBasedLineWriter(LineWriter):
                 ):
                     geom_content += (
                         f"~ cond={id+1} {wire_attr}={neutral_wire.name} "
+                        # pylint: disable-next=line-too-long
                         + f"x={items[0]} h={items[1]} units={geom.configuration.unit}\n"
                     )
                 else:
                     geom_content += (
                         f"~ cond={id+1} {wire_attr}={phase_cond.name} "
+                        # pylint: disable-next=line-too-long
                         + f"x={items[0]} h={items[1]} units={geom.configuration.unit}\n"
                     )
             geom_content += "\n"
@@ -422,10 +432,14 @@ class GeometryBasedLineWriter(LineWriter):
             if not hasattr(wire, "taplayer"):
                 cable_contents.append(
                     f"new CNData.{remove_invalid_chars(wire.name)}\n"
+                    # pylint: disable-next=line-too-long
                     f"~ runits={wire.runits} radunits={wire.radunits} gmrunits={wire.gmrunits}\n"
-                    + f"~ inslayer={wire.inslayer} diains={wire.diains} diacable={wire.diacable} epsr=2.3\n"
+                    + f"~ inslayer={wire.inslayer} diains={wire.diains}"
+                    + f" diacable={wire.diacable} epsr=2.3\n"
                     + f"~ rac={wire.rac} gmrac={wire.gmrac} diam={wire.diam}\n"
-                    + f"~ rstrand={wire.rstrand} gmrstrand={wire.gmrstrand} diastrand={wire.diastrand} k={wire.k} normamps={wire.normamps}\n\n"
+                    + f"~ rstrand={wire.rstrand} gmrstrand={wire.gmrstrand}"
+                    + f" diastrand={wire.diastrand} k={wire.k}"
+                    + f" normamps={wire.normamps}\n\n"
                 )
 
             else:
@@ -547,8 +561,10 @@ class OpenDSSExporter(BaseExporter):
         master_file_content = (
             "clear\n\n"
             + f"new circuit.{self.circuit_name} basekv={self.circuit_kv} "
+            # pylint: disable-next=line-too-long
             + f"basefreq={self.circuit_freq} pu=1.0 phases={self.circuit_num_phase.value} "
             + f"Z1={self.circuit_z1} Z0={self.circuit_z0} "
+            # pylint: disable-next=line-too-long
             + f"bus1={remove_invalid_chars(self.circuit_bus)}.{self.circuit_phase.value} \n\n"
         )
 

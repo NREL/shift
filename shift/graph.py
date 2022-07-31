@@ -28,7 +28,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module manages graph network representing roads from openstreet data. 
+""" This module manages graph network representing roads from openstreet data.
 
 Examples:
 
@@ -37,7 +37,7 @@ Examples:
     >>> graph.get_network()
 """
 
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import List, Union
 
 import osmnx as ox
@@ -61,7 +61,8 @@ class OpenStreetRoadNetwork(ABC):
         """Returns a minimum spanning tree with updated metadata.
 
         Args:
-            node_append_str (Union[str, None]): String to append in the name of all nodes
+            node_append_str (Union[str, None]): String to append in the
+                name of all nodes
         """
 
         if hasattr(self, "graph"):
@@ -92,7 +93,7 @@ class OpenStreetRoadNetwork(ABC):
             return self.updated_network
         else:
             raise AttributeDoesNotExistError(
-                f"'graph' attribute does not exist yet \
+                "'graph' attribute does not exist yet \
                 for OpenStreet type road netwwork!"
             )
 
@@ -101,10 +102,13 @@ class RoadNetworkFromPoint(OpenStreetRoadNetwork):
     """Getting road network from single point within bounding box.
 
     Attributes:
-        point (tuple): (longitude, latitude) pair representing point location
-        max_dist (float): Distance to be used to create bounding box around a point
+        point (tuple): (longitude, latitude) pair representing
+            point location
+        max_dist (float): Distance to be used to create bounding
+            box around a point
         dist_type (str): Type of region to be created around the point
-        network_type (str): Type of network to be retrived from openstreet data
+        network_type (str): Type of network to be retrived from
+            openstreet data
     """
 
     def __init__(
@@ -117,10 +121,14 @@ class RoadNetworkFromPoint(OpenStreetRoadNetwork):
         """Constructor for `RoadNetworkFromPoint` class.
 
         Args:
-            point (tuple): (longitude, latitude) pair representing point location
-            max_dist (float): Distance to be used to create bounding box around a point
-            dist_type (str): Type of region to be created around the point
-            network_type (str): Type of network to be retrived from openstreet data
+            point (tuple): (longitude, latitude) pair representing
+                point location
+            max_dist (float): Distance to be used to create
+                bounding box around a point
+            dist_type (str): Type of region to be created
+                around the point
+            network_type (str): Type of network to be retrived
+                from openstreet data
         """
 
         # e.g. (13.242134, 80.275948)
@@ -145,9 +153,12 @@ class RoadNetworkFromPlace(OpenStreetRoadNetwork):
 
     Attributes:
         place (str): string representing location
-        max_dist (float): Distance to be used to create bounding box around a point
-        dist_type (str): Type of region to be created around the point
-        network_type (str): Type of network to be retrived from openstreet data
+        max_dist (float): Distance to be used to create
+            bounding box around a point
+        dist_type (str): Type of region to be
+            created around the point
+        network_type (str): Type of network to be
+            retrived from openstreet data
     """
 
     def __init__(
@@ -161,9 +172,11 @@ class RoadNetworkFromPlace(OpenStreetRoadNetwork):
 
         Args:
             place (str): string representing location
-            max_dist (float): Distance to be used to create bounding box around a point
+            max_dist (float): Distance to be used to create
+                bounding box around a point
             dist_type (str): Type of region to be created around the point
-            network_type (str): Type of network to be retrived from openstreet data
+            network_type (str): Type of network to be retrived
+                from openstreet data
         """
         # e.g. Chennai, India
         self.place = place

@@ -1,3 +1,8 @@
+""" This module is intended to be used as example code. """
+import time
+
+import numpy as np
+
 from shift.geometry import BuildingsFromPlace
 from shift.load_builder import (
     RandomPhaseAllocator,
@@ -7,16 +12,8 @@ from shift.load_builder import (
     LoadBuilderEngineer,
 )
 from shift.load_builder import PiecewiseBuildingAreaToConsumptionConverter
-from shift.utils import get_nearest_points_in_the_network
 from shift.graph import RoadNetworkFromPlace
-from shift.utils import slice_up_network_edges
 from shift.clustering import KmeansClustering
-from shift.network_plots import PlotlyGISNetworkPlot
-from shift.constants import (
-    PLOTLY_FORMAT_CUSTOMERS_ONLY,
-    PLOTLY_FORMAT_CUSTOMERS_AND_DIST_TRANSFORMERS_ONLY,
-)
-import numpy as np
 from shift.transformer_builder import (
     ClusteringBasedTransformerLoadMapper,
     SingleTransformerBuilder,
@@ -26,8 +23,7 @@ from shift.secondary_network_builder import (
     SecondaryNetworkBuilder,
     SecondarySectionsBuilder,
 )
-from shift.constants import PLOTLY_FORMAT_SIMPLE_NETWORK
-from shift.enums import ConductorType, GeometryConfiguration
+from shift.enums import ConductorType
 from shift.line_section import (
     HorizontalThreePhaseConfiguration,
     HorizontalThreePhaseNeutralConfiguration,
@@ -37,16 +33,7 @@ from shift.primary_network_builder import (
     PrimaryNetworkFromRoad,
     PrimarySectionsBuilder,
 )
-from shift.graph import RoadNetworkFromPlace
-from shift.feeder_network import (
-    update_transformer_locations,
-    SimpleTwoLayerDistributionNetworkBuilder,
-    TwoLayerNetworkBuilderDirector,
-)
-from shift.constants import (
-    PLOTLY_FORMAT_CUSTOMERS_DIST_TRANSFORMERS_HT_LINE,
-    PLOTLY_FORMAT_ALL_ASSETS,
-)
+from shift.feeder_network import update_transformer_locations
 from shift.exporter.opendss import (
     ConstantPowerFactorLoadWriter,
     TwoWindingSimpleTransformerWriter,
@@ -54,7 +41,9 @@ from shift.exporter.opendss import (
     OpenDSSExporter,
 )
 
+# pylint: disable-next=line-too-long
 # g = SimpleLoadGeometriesFromCSV(r'C:\Users\KDUWADI\Desktop\NREL_Projects\ciff_track_2\data\grp_customers_reduced.csv')
+# pylint: enable-next=line-too-long
 g = BuildingsFromPlace("Chennai, India")
 geometries = g.get_geometries()
 rpa = RandomPhaseAllocator(100, 0, 0, geometries)
@@ -142,9 +131,9 @@ st = sub_trans_builder.get_transformer_load_mapping()
 
 
 s_sections = []
-id = 0
+counter = 0
 load_to_node_mapping_dict = {}
-import time
+
 
 print(len(t))
 for trans, cust_list in t.items():
@@ -181,7 +170,7 @@ for trans, cust_list in t.items():
     s_sections.extend(sc.generate_secondary_line_sections(k_drop, 0.4))
     end_time = time.time()
     print(f"Id: {id}, time spent {end_time - start_time} seconds")
-    id += 1
+    counter += 1
 
 
 lw = ConstantPowerFactorLoadWriter(
@@ -213,7 +202,6 @@ dw = OpenDSSExporter(
     [0.4, 11.0, 33.0],
 )
 dw.export()
-quit()
 # p = PlotlyGISNetworkPlot(
 # sn.G,
 # 'pk.eyJ1Ijoia2R1d2FkaSIsImEiOiJja3cweHpmM3YwYnk3MnVwamphNTd1ZG44In0.tsKgUvzpPVi4m1p3ekedaQ',

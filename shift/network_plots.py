@@ -249,7 +249,7 @@ class PlotlyGISNetworkPlot(NetworkPlot):
             line_color (str): Color for line plot
             size (int): Size for line plot
         """
-
+        del size
         self.data.append(
             go.Scattermapbox(
                 mode="markers+lines",

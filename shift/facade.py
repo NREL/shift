@@ -56,7 +56,7 @@ from shift.load_builder import (
     LoadBuilderEngineer,
 )
 from shift.load_builder import PiecewiseBuildingAreaToConsumptionConverter
-from graph import (
+from shift.graph import (
     RoadNetworkFromPlace,
     RoadNetworkFromPoint,
     RoadNetworkFromPolygon,
@@ -82,7 +82,6 @@ from shift.primary_network_builder import (
     PrimaryNetworkFromRoad,
     PrimarySectionsBuilder,
 )
-from shift.graph import RoadNetworkFromPlace
 from shift.exporter.opendss import (
     ConstantPowerFactorLoadWriter,
     TwoWindingSimpleTransformerWriter,
@@ -185,7 +184,7 @@ def _get_configuration(config: dict, neutral_present: bool) -> dict:
 
 
 def _develop_secondaries(
-    id: str,
+    sec_id: str,
     transformer: Transformer,
     customer_list: List[Load],
     div_coeff: List[float],
@@ -194,7 +193,7 @@ def _develop_secondaries(
     """Develops secondaries for a given transformer and list of customers.
 
     Args:
-        id (str): Unique id for secondary network
+        sec_id (str): Unique id for secondary network
         transformer (Transformer): Transformer object
         customer_list (List[Load]): List of load objects
         div_coeff (List[float]): Coefficients for diversity factor function
@@ -210,7 +209,7 @@ def _develop_secondaries(
         transformer,
         lambda x: div_coeff[0] * np.log(x) + div_coeff[1],
         config["kv"],
-        f"_secondary_{id}",
+        f"_secondary_{sec_id}",
     )
 
     sn.update_network_with_ampacity()
@@ -240,7 +239,7 @@ def _develop_secondaries(
     )
 
     end_time = time.time()
-    print(f"Id: {id}, time spent {end_time - start_time} seconds")
+    print(f"Id: {sec_id}, time spent {end_time - start_time} seconds")
     print(len(customer_list), transformer.name, len(load_to_node_mapping))
     return {
         "secondary_sections": sc.generate_secondary_line_sections(
@@ -262,8 +261,8 @@ def generate_feeder_from_yaml(yaml_file: str) -> None:
         >>> generate_feeder_from_yaml(r"sample-1.yaml")
     """
 
-    with open(yaml_file, "r") as f:
-        config = yaml.safe_load(f)
+    with open(yaml_file, "r", encoding="utf-8") as fpointer:
+        config = yaml.safe_load(fpointer)
 
     # Location config
     location = config.get("location", {})
@@ -391,7 +390,7 @@ def generate_feeder_from_yaml(yaml_file: str) -> None:
 
         elif primary_config["method"] == "openstreet":
             UnsupportedFeatureError(
-                f"Road network from buildings locations\
+                "Road network from buildings locations\
                 only is still need to be updated!"
             )
 
@@ -507,13 +506,13 @@ def generate_feeder_from_yaml(yaml_file: str) -> None:
             _develop_secondaries,
             [
                 [
-                    id,
+                    sec_id,
                     trans,
                     transformers[trans],
                     div_func_coeffs,
                     secondary_config,
                 ]
-                for id, trans in enumerate(transformers)
+                for sec_id, trans in enumerate(transformers)
             ],
         )
 
@@ -569,16 +568,10 @@ def generate_feeder_from_yaml(yaml_file: str) -> None:
                 config["substation"]["phase"]["phase_type"],
             ),
             NUM_PHASE_MAPPER[config["substation"]["phase"]["num_phase"]],
+            # pylint: disable-next=line-too-long
             f"{substation_node.split('_')[0]}_{substation_node.split('_')[1]}_htnode",
             config["substation"]["z1"],
             config["substation"]["z1"],
             config["substation"]["kv_levels"],
         )
         opendss_writer.export()
-
-
-if __name__ == "__main__":
-
-    generate_feeder_from_yaml(
-        r"C:\Users\KDUWADI\Desktop\NREL_Projects\ciff_track_2\seeds_new\src\examples\sample-1.yaml"
-    )

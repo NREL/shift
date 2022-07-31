@@ -28,7 +28,9 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module contains base classes for exporting distribution system models. """
+""" This module contains base classes for exporting distribution
+system models.
+"""
 
 from abc import ABC, abstractmethod
 

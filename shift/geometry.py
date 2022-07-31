@@ -31,12 +31,11 @@
 """ Handles creation and management of geometries.
 
 This module manages creation of geometries from csv file as well
-as openstreet data. Contains abstract as well as concrete classes 
+as openstreet data. Contains abstract as well as concrete classes
 for creating geometries.
 
 Examples:
     Get the buildings from chennai and prints one of the building geometry.
-    
     >>> from shift.geometry import BuildingsFromPlace
     >>> g = BuildingsFromPlace("Chennai, India")
     >>> geometries = g.get_geometries()
@@ -50,13 +49,13 @@ import os
 import osmnx as ox
 import pandas as pd
 
+# pylint: disable=redefined-builtin
 from shift.exceptions import (
     LatitudeNotInRangeError,
     LongitudeNotInRangeError,
     NegativeAreaError,
     FileNotFoundError,
     NotCompatibleFileError,
-    ValidationError,
 )
 from shift.constants import (
     MIN_LATITUDE,
@@ -121,7 +120,10 @@ class BuildingGeometry(Geometry):
         self._area = area
 
     def __repr__(self):
-        return f"Building( Latitude = {self.latitude}, Longitude = {self.longitude}, Area = {self.area})"
+        return (
+            f"Building( Latitude = {self.latitude}, "
+            + f" Longitude = {self.longitude}, Area = {self.area})"
+        )
 
 
 class SimpleLoadGeometry(Geometry):
@@ -138,7 +140,10 @@ class SimpleLoadGeometry(Geometry):
         self._kw = kw
 
     def __repr__(self):
-        return f"Building( Latitude = {self.latitude}, Longitude = {self.longitude}, kW = {self.kw})"
+        return (
+            f"Building( Latitude = {self.latitude}, "
+            + f"Longitude = {self.longitude}, kW = {self.kw})"
+        )
 
 
 class GeometriesFromCSV(ABC):
@@ -183,7 +188,8 @@ class GeometriesFromCSV(ABC):
 
 
 class SimpleLoadGeometriesFromCSV(GeometriesFromCSV):
-    """Concrete implementations for getting simple load geometries from CSV file.
+    """Concrete implementations for getting simple load
+    geometries from CSV file.
 
     Refer to the base class for more deatils on how to construct the
     object.
@@ -241,10 +247,12 @@ class OpenStreetBuildingGeometries(OpenStreetGeometries):
         # Create container for holding list of geometries
         concrete_geometries = []
 
-        # Get geo dataframe object implemented by child OpenStreet Geometries subclass
+        # Get geo dataframe object implemented by
+        # child OpenStreet Geometries subclass
         gdf_data = self.get_gdf().to_dict(orient="records")
 
-        # Loop through all the rows in geo dataframe to create list of concrete geometries
+        # Loop through all the rows in geo dataframe to
+        # create list of concrete geometries
         for row in gdf_data:
 
             # Looping through only either point or polygon geometries
@@ -258,8 +266,9 @@ class OpenStreetBuildingGeometries(OpenStreetGeometries):
                 else:
                     centre = list(row["geometry"].centroid.coords)[0]
                     # By default shapely gives area in square degrees
-                    # By assuming the earth to be a perfect square of 6370 meter square
-                    # area can be computed as below but it's not accurate however does the job for now
+                    # By assuming the earth to be a perfect square of
+                    # 6370 meter square area can be computed as below
+                    # but it's not accurate however does the job for now
                     area = row["geometry"].area * 6370**2
 
                 # Create individual geometry
@@ -279,7 +288,8 @@ class BuildingsFromPoint(OpenStreetBuildingGeometries):
 
     Attributes:
         point (Sequence): Point in (longitude, latitude) format
-        max_dist (float): Distance in meter from the point to create a bounding box
+        max_dist (float): Distance in meter from the point to
+            create a bounding box
     """
 
     def __init__(self, point: Sequence, max_dist: float = 1000) -> None:
@@ -288,7 +298,8 @@ class BuildingsFromPoint(OpenStreetBuildingGeometries):
 
         Args:
             point (Sequence): Point in (longitude, latitude) format
-            max_dist (float): Distance in meter from the point to create a bounding box
+            max_dist (float): Distance in meter from the point to
+                create a bounding box
         """
         # e.g. (13.242134, 80.275948)
         self.point = point
@@ -306,7 +317,8 @@ class BuildingsFromPlace(OpenStreetBuildingGeometries):
 
     Attributes:
         place (str): Any place in string format e.g. chennai, india
-        max_dist (float): Distance in meter from the point to create a bounding box
+        max_dist (float): Distance in meter from the point
+            to create a bounding box
     """
 
     def __init__(self, place: str, max_dist=1000) -> None:
@@ -315,7 +327,8 @@ class BuildingsFromPlace(OpenStreetBuildingGeometries):
 
         Args:
             place (str): Any place in string format e.g. chennai, india
-            max_dist (float): Distance in meter from the place to create a bounding box
+            max_dist (float): Distance in meter from the place
+                to create a bounding box
         """
 
         # e.g. Chennai, India
@@ -341,7 +354,8 @@ class BuildingsFromPolygon(OpenStreetBuildingGeometries):
         """Instantiating the class.
 
         Args:
-            polygon: List[list]: Polygon to be used e.g. [[13.242134, 80.275948]]
+            polygon: List[list]: Polygon to be used
+                e.g. [[13.242134, 80.275948]]
         """
         self.polygon = polygon
 

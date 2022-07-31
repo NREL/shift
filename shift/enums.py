@@ -61,21 +61,24 @@ class NumPhase(Enum):
 
 
 class LoadConnection(Enum):
-    """Enumeration class for representing load connection type in power system."""
+    """Enumeration class for representing load
+    connection type in power system."""
 
     STAR = "wye"
     DELTA = "delta"
 
 
 class TransformerConnection(Enum):
-    """Enumeration class for representing transformer connection type in power system."""
+    """Enumeration class for representing transformer
+    connection type in power system."""
 
     STAR = "Wye"
     DELTA = "Delta"
 
 
 class NetworkAsset(Enum):
-    """Enumeration class for representing different network assets in power system."""
+    """Enumeration class for representing different
+    network assets in power system."""
 
     LOAD = "load"
     LINE = "line"

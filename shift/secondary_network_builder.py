@@ -28,7 +28,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module contains classes for managing creation of secondary network sections. """
+""" This module contains classes for managing
+creation of secondary network sections. """
 
 # Manage python imports
 from typing import List, Union, Callable
@@ -46,6 +47,8 @@ from shift.utils import (
 from shift.primary_network_builder import BaseNetworkBuilder
 from shift.enums import ConductorType, NumPhase, Phase
 from shift.line_section import Line
+
+# pylint: disable=redefined-builtin
 from shift.exceptions import (
     CustomerInvalidPhase,
     PhaseMismatchError,
@@ -128,6 +131,8 @@ class SecondarySectionsBuilder(BaseSectionsBuilder):
 
                 load_node = 0 if "load" in self.network.nodes[edge[0]] else 1
                 load_obj = self.network.nodes[edge[load_node]]["object"]
+
+                # pylint: disable-next=line-too-long
                 # fromnode_phase = load_obj.phase if load_node == 0 else self.phase
                 # tonode_phase = load_obj.phase if load_node == 1 else self.phase
 
@@ -205,8 +210,10 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
 
     Attributes:
         transformer (Transformer): `Transformer` instance
-        load_to_node_mapping (dict): Mapping between load object and  secondary node
-        customer_to_node_mapping (dict): Mapping between load name and secondary node
+        load_to_node_mapping (dict): Mapping between load
+            object and  secondary node
+        customer_to_node_mapping (dict): Mapping between
+            load name and secondary node
         network (nx.Graph): Seondary network
         points (dict): Mapping between load and coordinates
         source_node (str): Source node for the secondary network
@@ -234,8 +241,10 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
         Args:
             load_list (List[Load]): List of `Load` instances
             transformer (Transformer): `Transformer` instance
-            node_append_str (str): Unique string to be appended to all primary nodes
-            forbidden_areas (Union[str, None]): Path to .shp file containing forbidden polygons
+            node_append_str (str): Unique string to be appended
+                to all primary nodes
+            forbidden_areas (Union[str, None]): Path to .shp
+                file containing forbidden polygons
 
         Raises:
             NotImplementedError: If transformer has 0 loads
@@ -262,13 +271,17 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
             if len(load_locations) == 1:
 
                 self.network = nx.Graph()
+
+                # pylint: disable-next=line-too-long
+                load_node = f"{load_locations[0][0]}_{load_locations[0][1]}_{node_append_str}_node"
                 self.network.add_node(
-                    f"{load_locations[0][0]}_{load_locations[0][1]}_{node_append_str}_node",
+                    load_node,
                     pos=(load_locations[0][0], load_locations[0][1]),
                 )
-                self.customer_to_node_mapping = {
-                    f"{load_locations[0][0]}_{load_locations[0][1]}_customer": f"{load_locations[0][0]}_{load_locations[0][1]}_{node_append_str}_node"
-                }
+                customer_node = (
+                    f"{load_locations[0][0]}_{load_locations[0][1]}_customer"
+                )
+                self.customer_to_node_mapping = {customer_node: load_node}
                 self.points = {
                     key: val["pos"]
                     for key, val in dict(self.network.nodes(data=True)).items()
@@ -290,13 +303,12 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
             if nx.is_frozen(self.network):
                 self.network = nx.Graph(self.network)
 
-            self.source_node = [
-                n
-                for n in get_nearest_points_in_the_network(
+            self.source_node = list(
+                get_nearest_points_in_the_network(
                     self.network,
                     [(self.transformer.longitude, self.transformer.latitude)],
                 )
-            ][0]
+            )[0]
 
             # Connect the customers as well
 
@@ -313,6 +325,7 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
                 self.network.add_edge(load.name, to_node, load_present=True)
                 self.load_to_node_mapping[load.name] = to_node
 
+            # pylint: disable-next=line-too-long
             self.tr_lt_node = f"{self.transformer.longitude}_{self.transformer.latitude}_ltnode"
             self.network.add_node(
                 self.tr_lt_node,
@@ -357,11 +370,12 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
 
             # Create a subgraph"""
             nodes_to_retain = [edge[1]]
-            for k, v in dfs_successors.items():
+            for _, v in dfs_successors.items():
                 nodes_to_retain.extend(v)
             subgraph = self.network.subgraph(nodes_to_retain)
 
-            # Let's compute maximum diversified kva demand downward of this edge"""
+            # Let's compute maximum diversified kva
+            # demand downward of this edge"""
             noncoincident_kws = 0
             num_of_customers = 0
             for node in subgraph.nodes():
@@ -390,6 +404,7 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
                     * 1.732
                     * self.kv_ll
                 )
+            # pylint: disable=broad-except
             except Exception as e:
                 print(e)
                 print("help")

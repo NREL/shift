@@ -28,7 +28,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module contains classes for managing creation of primary network sections. """
+""" This module contains classes for managing creation
+of primary network sections. """
 import math
 import copy
 from abc import ABC, abstractmethod
@@ -75,7 +76,6 @@ from shift.exceptions import (
     PercentageNotInRangeError,
     OperationYearNotInRange,
     EmptyCatalog,
-    ConductorNotFoundForKdrop,
     CatalogNotFoundError,
 )
 from shift.enums import ConductorType, NumPhase, Phase
@@ -107,13 +107,15 @@ def choose_conductor(
         catalog (pd.DataFrame): Dataframe containing all the catalogs
         ampacity (float): Minimum ampacity required
         k_drop (float): Percentage drop per kva per miles expected
-        geometry_configuration (LineGeometryConfiguration): LineGeometryConfiguration instance
+        geometry_configuration (LineGeometryConfiguration):
+            LineGeometryConfiguration instance
         num_of_phase (NumPhase): NumPhase Instance
         kv_base (float): Line to line kv base to be used to compute kva
         pf (float): Power factor to be used to compute kva
 
     Raises:
-        CatalogNotFoundError: If the catalog record is not found for given ampacity
+        CatalogNotFoundError: If the catalog record is not
+        found for given ampacity
 
     Returns:
         dict: Catalog record in dict format
@@ -189,13 +191,14 @@ def choose_conductor(
             ampacity = 1
         k_drop_computed = vdrop_pct / (ampacity * kv_base * math.sqrt(3))
 
-        # print('k_drop : ', k_drop, k_drop_computed, record['name'], record['ampacity'])
+        # print('k_drop : ', k_drop, k_drop_computed,
+        # record['name'], record['ampacity'])
         if k_drop_computed <= k_drop:
             return record
 
     # print(k_drop_computed, k_drop, ampacity, record)
     # raise ConductorNotFoundForKdrop(k_drop)
-    return record
+    return None
 
 
 def convert_oh_cond_info_to_wire(data: dict) -> Wire:
@@ -285,7 +288,8 @@ def geometry_based_line_section_builder(
         catalog (pd.DataFrame): DataFrame containing all the catalaogs
         neutral_present (bool): Indicates whether neutral is present or not
         conductor_type (ConductorType): ConductorType instance
-        geometry_configuration (LineGeometryConfiguration): LineGeometryConfiguration instance
+        geometry_configuration (LineGeometryConfiguration):
+            LineGeometryConfiguration instance
         k_drop (float): Expected percentage voltage drop per kva per mile
         kv_base (float): kV base for computing kVA
         material (str): Material for choosing conductor
@@ -326,12 +330,15 @@ def geometry_based_line_section_builder(
                 num_phase.value,
                 kv_base,
             )
-            # catalog.loc[catalog[catalog['ampacity']>ampacity]['ampacity'].idxmin()].to_dict()
+            # catalog.loc[catalog[catalog['ampacity']>ampacity]
+            # ['ampacity'].idxmin()].to_dict()
             line_geometry.phase_wire = convert_oh_cond_info_to_wire(
                 phase_cond_dict
             )
 
-            # Assuming neutral conductor would be one third of phase conductor ampacity for multi phase else same as phase conductor
+            # Assuming neutral conductor would be one third of
+            # phase conductor ampacity for multi phase else
+            # same as phase conductor
             neutral_cond_dict = (
                 phase_cond_dict
                 if num_phase == NumPhase.SINGLE
@@ -401,11 +408,12 @@ class BaseSectionsBuilder:
         phase (Phase): Phase instance
         neutral_present (bool): Indicates whether neutral is present or not
         material (str): Conductor material
-        overhead_conductor_catalog (pd.DataFrame): DataFrame containing catalogs for
-            overhead conductors
-        concentric_cable_catalog (pd.DataFrame): DataFrame containing catalogs for
-            concentric cables
-        catalog_dict (dict): Mapping between conductor type and conductor catalogs
+        overhead_conductor_catalog (pd.DataFrame): DataFrame
+            containing catalogs for overhead conductors
+        concentric_cable_catalog (pd.DataFrame): DataFrame
+            containing catalogs for concentric cables
+        catalog_dict (dict): Mapping between conductor
+            type and conductor catalogs
     """
 
     def __init__(
@@ -517,13 +525,18 @@ class BaseNetworkBuilder(ABC):
     """Interface for building distribution network.
 
     Attributes:
-        div_func (Callable[[float], float]): Diversity factor function coefficients
+        div_func (Callable[[float], float]): Diversity factor
+            function coefficients
         kv_ll (float): Line to line voltage in KV
-        max_pole_to_pole_distance (float): Maximum pole to pole distance in meter
+        max_pole_to_pole_distance (float): Maximum pole to
+            pole distance in meter
         power_factor (float): Power factor used to compute kva
-        adjustment_factor (float): Adjustment factor for adjusting kva
-        planned_avg_annual_growth (float): Planned average annual load growth rate in percentage
-        actual_avg_annual_growth (float): Actual average annual load growth rate in percentage
+        adjustment_factor (float): Adjustment factor for
+            adjusting kva
+        planned_avg_annual_growth (float): Planned average annual
+            load growth rate in percentage
+        actual_avg_annual_growth (float): Actual average annual
+            load growth rate in percentage
         actual_years_in_operation (float): Actual years in operation
         planned_years_in_operation (float): Planned years in operation
     """
@@ -543,22 +556,29 @@ class BaseNetworkBuilder(ABC):
         """Constructor for `BaseNetworkBuilder` class.
 
         Args:
-            div_func (Callable[[float], float]): Diversity factor function coefficients
+            div_func (Callable[[float], float]): Diversity factor
+                function coefficients
             kv_ll (float): Line to line voltage in KV
-            max_pole_to_pole_distance (float): Maximum pole to pole distance in meter
+            max_pole_to_pole_distance (float): Maximum pole to
+                pole distance in meter
             power_factor (float): Power factor used to compute kva
-            adjustment_factor (float): Adjustment factor for adjusting kva
-            planned_avg_annual_growth (float): Planned average annual load growth rate in percentage
-            actual_avg_annual_growth (float): Actual average annual load growth rate in percentage
+            adjustment_factor (float): Adjustment factor for
+                adjusting kva
+            planned_avg_annual_growth (float): Planned average annual
+                load growth rate in percentage
+            actual_avg_annual_growth (float): Actual average annual load
+                growth rate in percentage
             actual_years_in_operation (float): Actual years in operation
             planned_years_in_operation (float): Planned years in operation
 
         Raises:
             NegativeKVError: If `kv_ll` is negative
             ZeroKVError: If `kv_ll` is zero
-            AdjustmentFactorNotInRangeError: If invalid adjustement factor is passed
+            AdjustmentFactorNotInRangeError: If invalid adjustement
+                factor is passed
             PowerFactorNotInRangeError: If power factor is not in valid range
-            PoleToPoleDistanceNotInRange: If pole to pole distance passed in invalid
+            PoleToPoleDistanceNotInRange: If pole to pole distance
+                passed in invalid
             PercentageNotInRangeError: If percentages passed are not valid
             OperationYearNotInRange: If operation year passed is invalid
         """
@@ -668,8 +688,10 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
 
     Attributes:
         road_network (OpenStreetRoadNetwork): OpenStreetRoadNetwork instance
-        trans_cust_mapper (dict): Mapping between `Transformer` object and list of `Load` objects
-        node_append_str (Union[str, None]): Unique string to be appended to all primary nodes
+        trans_cust_mapper (dict): Mapping between `Transformer` object
+            and list of `Load` objects
+        node_append_str (Union[str, None]): Unique string to be
+            appended to all primary nodes
         sliced_graph (nx.Graph): Sliced road network
         substation_node (str): Node representing substation
         substation_coords (Sequence): Actual substation coordinate
@@ -698,9 +720,12 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
 
         Args:
             road_network (OpenStreetRoadNetwork): OpenStreetRoadNetwork instance
-            trans_cust_mapper (dict): Mapping between `Transformer` object and list of `Load` objects
-            substation_loc (tuple): Tentative location for siting substation (longitude, latitude) pair
-            node_append_str (Union[str, None]): Unique string to be appended to all primary nodes
+            trans_cust_mapper (dict): Mapping between `Transformer` object
+                and list of `Load` objects
+            substation_loc (tuple): Tentative location for siting substation
+                (longitude, latitude) pair
+            node_append_str (Union[str, None]): Unique string to be
+                appended to all primary nodes
         """
 
         super().__init__(
@@ -727,12 +752,11 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
         )
 
         # Get substation node
-        self.substation_node = [
-            n
-            for n in get_nearest_points_in_the_network(
+        self.substation_node = list(
+            get_nearest_points_in_the_network(
                 self.sliced_graph, [substation_loc]
             )
-        ][0]
+        )[0]
         self.substation_coords = self.sliced_graph.nodes[self.substation_node][
             "pos"
         ]
@@ -745,7 +769,8 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
         )
 
     def get_primary_network(self) -> nx.Graph:
-        """Algorithm to convert road network into distribution system primary network"""
+        """Algorithm to convert road network into
+        distribution system primary network"""
         return ax.steinertree.steiner_tree(
             self.sliced_graph, list(self.retain_nodes.keys())
         )
@@ -758,7 +783,8 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
         """Returns a primary network with ampacity data.
 
         Raises:
-            AttributeDoesNotExistError: If `update_network_with_ampacity` is not called
+            AttributeDoesNotExistError:
+                If `update_network_with_ampacity` is not called
                 first, absence of `network` attribute
 
         Returns:
@@ -767,10 +793,10 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
 
         if hasattr(self, "network"):
             mapping_dict, relabel_rnodes = {}, {}
-            for node in self.retain_nodes:
+            for node, node_val in self.retain_nodes.items():
                 node_new_name = "_".join(node.split("_")[:2]) + "_htnode"
                 mapping_dict[node] = node_new_name
-                relabel_rnodes[node_new_name] = self.retain_nodes[node]
+                relabel_rnodes[node_new_name] = node_val
 
             relable_snode = (
                 "_".join(self.substation_node.split("_")[:2]) + "_ltnode"
@@ -829,18 +855,19 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
 
             # Create a subgraph"""
             nodes_to_retain = [edge[1]]
-            for k, v in dfs_successors.items():
+            for _, v in dfs_successors.items():
                 nodes_to_retain.extend(v)
             subgraph = self.network.subgraph(nodes_to_retain)
 
-            # Let's compute maximum diversified kva demand downward of this edge"""
+            # Let's compute maximum diversified
+            # kva demand downward of this edge"""
             noncoincident_kws = 0
             num_of_customers = 0
             for node in subgraph.nodes():
                 if node in transformer_nodes:
                     num_of_customers += len(transformer_nodes[node])
                     noncoincident_kws += sum(
-                        [l.kw for l in transformer_nodes[node]]
+                        l.kw for l in transformer_nodes[node]
                     )
 
             self.network[edge[0]][edge[1]]["ampacity"] = self._compute_ampacity(

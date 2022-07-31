@@ -30,8 +30,9 @@
 
 """ Contains abstract and concrete classes for implementing clustering.
 
-This module contains classes for managing clustering of location pairs. The cluster center
-is used as reference location to figure out transformer siting. In the process mapping between 
+This module contains classes for managing clustering of location pairs.
+The cluster center is used as reference location to figure out
+transformer siting. In the process mapping between
 cluster center and locations is also created.
 
 Examples:
@@ -52,7 +53,6 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 import plotly.express as px
 import pandas as pd
-import numpy as np
 
 from shift.constants import MAX_KMEANS_LOOP, MIN_NUM_CLUSTER
 from shift.exceptions import (
@@ -77,7 +77,8 @@ class Clustering(ABC):
         ```
 
         Returns:
-            dict: A dictionary containing cluster labels and cluster centers
+            dict: A dictionary containing cluster labels
+                and cluster centers
         """
         pass
 
@@ -86,7 +87,8 @@ class Clustering(ABC):
         """Method to plot clusters
 
         Raises:
-            EarlyMethodCallError: If this method is called before calling `get_clusters` method.
+            EarlyMethodCallError: If this method is called before calling
+                `get_clusters` method.
         """
         pass
 
@@ -97,9 +99,12 @@ class KmeansClustering(Clustering):
     Attributes:
         num_of_clusters (Union[str, int]): Number of clusters to be used
         cluster_centers (List[Sequece]): List of cluster center
-        labels (list): Integer label for each location indicating which cluster they belong to
-        xarray (List[Sequece]): List of location pairs for which clustering is performed
-        optimal_clusters (int): Optimal number of clusters created if `num_of_clusters` passed is `optimal`
+        labels (list): Integer label for each location indicating which
+            cluster they belong to
+        xarray (List[Sequece]): List of location pairs for which
+            clustering is performed
+        optimal_clusters (int): Optimal number of clusters created if
+            `num_of_clusters` passed is `optimal`
     """
 
     def __init__(self, num_of_clusters: Union[str, int] = "optimal") -> None:
@@ -109,8 +114,8 @@ class KmeansClustering(Clustering):
             num_of_clusters (Union[str, int]): Number of clusters to be used
 
         Raises:
-            NumberOfClusterNotInRangeError: if `num_of_clusters` speecified is less than MIN_NUM_CLUSTER
-                constants module.
+            NumberOfClusterNotInRangeError: if `num_of_clusters` speecified is
+                less than MIN_NUM_CLUSTER constants module.
         """
         self.num_of_clusters = num_of_clusters
 
@@ -138,7 +143,8 @@ class KmeansClustering(Clustering):
 
         else:
             raise EarlyMethodCallError(
-                f"Call get_clusters() method first before calling plot clusters method!"
+                "Call get_clusters() method first before "
+                + "calling plot clusters method!"
             )
 
     def plot_scores(self):
@@ -148,7 +154,8 @@ class KmeansClustering(Clustering):
             Only use this method if `num_of_clusters` passed is `optimal`.
 
         Raises:
-            EarlyMethodCallError: If called before calling `get_clusters` method.
+            EarlyMethodCallError: If called before calling
+                `get_clusters` method.
         """
 
         if hasattr(self, "sil_scores"):
@@ -165,7 +172,8 @@ class KmeansClustering(Clustering):
 
         else:
             raise EarlyMethodCallError(
-                f"Call get_clusters() method first before calling plot scores method!"
+                "Call get_clusters() method first before calling "
+                + "plot scores method!"
             )
 
     def get_clusters(self, x_array: list) -> dict:
@@ -183,7 +191,7 @@ class KmeansClustering(Clustering):
 
         else:
             if self.num_of_clusters == "optimal":
-                """Let's try to find optimal number of clusters"""
+                # Let's try to find optimal number of clusters
                 self.sil_scores = []
 
                 for k in range(2, MAX_KMEANS_LOOP):
@@ -212,7 +220,9 @@ class KmeansClustering(Clustering):
                 self.optimal_clusters = k - 1
             else:
                 raise WrongInputUsed(
-                    f"For now  number of clusters can be either integer number or 'optimal' ! You provided {self.num_of_clusters}"
+                    "For now  number of clusters can be either integer "
+                    + "number or 'optimal'!"
+                    + f"You provided {self.num_of_clusters}"
                 )
         self.labels = kmeans.labels_
         self.cluster_centers = kmeans.cluster_centers_

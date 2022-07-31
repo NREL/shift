@@ -28,7 +28,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-""" This module manages connecting various power system components to build a network. """
+""" This module manages connecting various power system
+components to build a network. """
 
 from abc import ABC, abstractmethod
 from typing import List
@@ -46,13 +47,16 @@ def update_transformer_locations(
     transformers_cust_mapper: dict,
     primary_lines: List[Line],
 ) -> dict:
-    """Updated the location of transformers by connecting it to nearest primary node.
+    """Updated the location of transformers by connecting it
+    to nearest primary node.
 
     Args:
         retain_nodes (List[str]): list of nodes to be retained
-        transformers_cust_mapper (dict): A dictionary with key representing `Transformer` object
-            values list of `Load` objects
-        primary_lines (List[Line]): List of line objects representing primary line sections.
+        transformers_cust_mapper (dict): A dictionary with key r
+            epresenting `Transformer` object values
+            list of `Load` objects
+        primary_lines (List[Line]): List of line objects
+            representing primary line sections.
 
     Returns:
         dict: New transformer to customer or loads mapping
@@ -82,25 +86,29 @@ def update_transformer_locations(
 
 
 class TwoLayerDistributionNetworkBuilder(ABC):
-    """Interface to build two layer (low tension + high tension) distribution network"""
+    """Interface to build two layer (low tension +
+    high tension) distribution network"""
 
     @abstractmethod
-    def add_load_nodes(self):
-        """Abstract method to add customer nodes to the distribution network"""
+    def add_load_nodes(self, loads: List[Load]) -> None:
+        """Abstract method to add customer nodes
+        to the distribution network"""
         pass
 
     @abstractmethod
-    def add_distribution_transformers(self, loads: List[Load]):
+    def add_distribution_transformers(
+        self, transformers: List[Transformer]
+    ) -> None:
         """Abstract method to add distribution transformer nodes"""
         pass
 
     @abstractmethod
-    def add_low_tension_network(self):
+    def add_low_tension_network(self, edges: List[Line]) -> None:
         """Abstract method to add low tension network"""
         pass
 
     @abstractmethod
-    def add_high_tension_network(self):
+    def add_high_tension_network(self, edges: List[Line]) -> None:
         """Abstract method to add high tension network"""
         pass
 
@@ -114,7 +122,8 @@ class TwoLayerNetworkBuilderDirector:
     """Builder for creating two layer distribution network.
 
     Attributes:
-        builder (TwoLayerDistributionNetworkBuilder): Instance of `TwoLayerDistributionNetworkBuilder` class
+        builder (TwoLayerDistributionNetworkBuilder): Instance
+            of `TwoLayerDistributionNetworkBuilder` class
     """
 
     def __init__(
@@ -130,8 +139,8 @@ class TwoLayerNetworkBuilderDirector:
         Args:
             loads (List[Load]): List of `Load` objects
             transformers (List[Transformer]): List of `Transformer` objects
-            primary_edges (List[Line]): List of `Line` objects representing primary
-                sections
+            primary_edges (List[Line]): List of `Line` objects
+                representing primary sections
             secondary_edges (List[Line]): List of `Line` objects representing
                 secondary sections
             builder (TwoLayerDistributionNetworkBuilder): Instance of builder
@@ -152,7 +161,8 @@ class TwoLayerNetworkBuilderDirector:
 class SimpleTwoLayerDistributionNetworkBuilder(
     TwoLayerDistributionNetworkBuilder
 ):
-    """Class for creating distribution assets for developing two layer distribution network.
+    """Class for creating distribution assets for
+    developing two layer distribution network.
 
     Attributes:
         feeder (nx.Graph): Instance of networkx graph

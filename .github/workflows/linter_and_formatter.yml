@@ -21,6 +21,5 @@ jobs:
         pip install black
     - name: Analysing the code with pylint and black
       run: |
-        cd shift
-        pylint .
-        black --check --line-length 80 .
+        pylint shift
+        black --check --line-length 80 shift

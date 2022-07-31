@@ -49,7 +49,6 @@ from shift.constants import (
     MAX_PERCENTAGE,
 )
 from shift.enums import Phase, NumPhase, TransformerConnection
-from shift.exceptions import ZeroKVError
 
 
 class Transformer(ABC):
@@ -216,8 +215,14 @@ class Transformer(ABC):
 
     def __repr__(self):
         return (
-            f"{self.__class__.__name__}(Name = {self._name}, Latitude = {self._latitude}, Longitude = {self._longitude}, "
-            + f"NumPhase = {self._num_phase}, XHL = {self._xhl}, %R = {self._pct_r}, %no_load_loss = {self._pct_noloadloss}, "
-            + f"Primary Phase = {self._primary_phase}, Secondary Phase = {self._secondary_phase} "
-            + f"kVA = {self._kva}, Primary kV = {self._primary_kv}, Secondary kV = {self._secondary_kv}, Primary Conn = {self._primary_con}, Secondary Conn = {self._secondary_con}"
+            f"{self.__class__.__name__}(Name = {self._name}, "
+            + f"Latitude = {self._latitude}, Longitude = {self._longitude}, "
+            + f"NumPhase = {self._num_phase}, XHL = {self._xhl}, "
+            + f"%R = {self._pct_r}, "
+            + f"%no_load_loss = {self._pct_noloadloss}, "
+            + f"Primary Phase = {self._primary_phase}, Secondary Phase"
+            + f" = {self._secondary_phase} "
+            + f"kVA = {self._kva}, Primary kV = {self._primary_kv},"
+            + f"Secondary kV = {self._secondary_kv}, Primary Conn ="
+            + f" {self._primary_con}, Secondary Conn = {self._secondary_con}"
         )

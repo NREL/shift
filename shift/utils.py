@@ -79,7 +79,8 @@ def df_validator(schema: dict, df: pd.DataFrame) -> bool:
 
 
 def get_point_from_curve(curve: List[List[float]], x: float) -> float:
-    """Returns a y coordinate for a given x coordinate by following piecewise linear function.
+    """Returns a y coordinate for a given x coordinate
+    by following piecewise linear function.
 
     Args:
         curve (List[List[float]]): List of list containing two floats
@@ -111,18 +112,21 @@ def get_point_from_curve(curve: List[List[float]], x: float) -> float:
 def get_distance(
     point1: List[float], point2: List[float], latlon=False
 ) -> float:
-    """Returns distance between two geopoints in meter assuming eliposoidal earth model.
+    """Returns distance between two geopoints in meter assuming
+        eliposoidal earth model.
 
     Args:
         point1 (List[float]): location coordinate for point 1
         point2 (List[float]): location coordinate for point 2
-        latlon (bool): Specfies that latitude is first and longitude is second if true
+        latlon (bool): Specfies that latitude is first and
+            longitude is second if true
 
     Returns:
         float: distance in meter
     """
 
-    # Assuming point1 and point2 are tuples with first element representing longitude and
+    # Assuming point1 and point2 are tuples with
+    # first element representing longitude and
     # second element representing latitude
 
     # Geopy however requires (lat, lon) pair
@@ -214,8 +218,8 @@ def slice_up_network_edges(graph: nx.Graph, slice_in_meter: float) -> nx.Graph:
         x2, y2 = (graph_nodes[edge[1]][0], graph_nodes[edge[1]][1])
 
         sliced_nodes = []
-        for slice in edge_slices:
-            new_x, new_y = x1 + (x2 - x1) * slice, y1 + (y2 - y1) * slice
+        for slice_ in edge_slices:
+            new_x, new_y = x1 + (x2 - x1) * slice_, y1 + (y2 - y1) * slice_
             sliced_graph.add_node(
                 f"{new_x}_{new_y}_node",
                 pos=(new_x, new_y),
@@ -273,14 +277,18 @@ def create_rectangular_mesh_network(
 
     Args:
         lower_left (tuple): (longitude, latitude) representing lower left point
-        upper_right (tuple): (longitude, latitude) representing upper right point
+        upper_right (tuple): (longitude, latitude) representing
+            upper right point
         vertical_space_meter (float): Vertical spacing in meter
         horizontal_space_meter (float): Horizontal spacing in meter
-        forbidden_areas (Union[str, None]): Shp file representing forbidden polygons
-        node_append_str (Union[str, None]): String to be appended at the end of node name
+        forbidden_areas (Union[str, None]): Shp file representing
+            forbidden polygons
+        node_append_str (Union[str, None]): String to be appended
+            at the end of node name
 
     Returns:
-        Sequence[nx.Graph, dict]: Graph and mapping between nodes and coordinates
+        Sequence[nx.Graph, dict]: Graph and mapping between
+            nodes and coordinates
     """
 
     # Assuming tuples first element is longitude and second element is latitude
@@ -299,16 +307,19 @@ def create_rectangular_mesh_network(
     horizontal_distance = get_distance(south_west, south_east)
     vertical_distance = get_distance(south_west, north_west)
     print(
-        f"Vertical distance {vertical_distance}m, Horizontal distance {horizontal_distance}m"
+        f"Vertical distance {vertical_distance}m,"
+        + f" Horizontal distance {horizontal_distance}m"
     )
 
-    # Compute number of sections required in horizontal (wet-east) and vertical (north-south) direction
+    # Compute number of sections required in horizontal
+    # (wet-east) and vertical (north-south) direction
     horizontal_sections = max(
         int(horizontal_distance / horizontal_space_meter), 1
     )
     vertical_sections = max(int(vertical_distance / vertical_space_meter), 1)
     print(
-        f"Vertical sections: {vertical_sections}, horizontal sections: {horizontal_sections}"
+        f"Vertical sections: {vertical_sections},"
+        + f"horizontal sections: {horizontal_sections}"
     )
 
     # Let's create node and edges for the rectangular mesh
@@ -367,7 +378,7 @@ def create_rectangular_mesh_network(
             key: val["pos"]
             for key, val in dict(sliced_road.nodes(data=True)).items()
         }
-        for road_node, road_node_coords in sliced_road_nodes.items():
+        for _, road_node_coords in sliced_road_nodes.items():
             for node, node_coords in points.items():
                 if get_distance(node_coords, road_node_coords) < d_threshold:
 
@@ -375,11 +386,12 @@ def create_rectangular_mesh_network(
                         graph.remove_node(node)
                         # print(f"{node} node removed")
                     except nx.NetworkXError as e:
-                        # print(e)
+                        print(e)
                         pass
 
         # Now let's connect the sliced road netowork to truncated mesh network
-        # First step is to find the nearest node for each of the sliced road nodes to truncated mesh network
+        # First step is to find the nearest node for each of the
+        # sliced road nodes to truncated mesh network
 
         # updated the node_coords
         points = {
@@ -420,7 +432,7 @@ def create_rectangular_mesh_network(
         print(e)
 
     # Now let's try to fetch lakes and rives and try to a
-    if forbidden_areas != None:
+    if forbidden_areas is not None:
 
         # get all forbidden polygons
         forbidden_polygons = get_forbidden_polygons(forbidden_areas)
@@ -466,7 +478,8 @@ def mesh_pruning(
         customers: List[List[float]]: List of points to be used for pruning
 
     Returns:
-        Sequence[nx.Graph, dict]: Pruned network and mapping between customer and node
+        Sequence[nx.Graph, dict]: Pruned network and
+            mapping between customer and node
 
     """
     # Let's find the nodes we absolutey need to keep
@@ -507,15 +520,19 @@ def triangulate_using_mesh(
     forbidden_areas: Union[str, None] = None,
     node_append_str: Union[str, None] = None,
 ) -> Sequence[nx.Graph, dict, dict]:
-    """Creates a minimum spanning graph connecting customers by avoiding forbidden region.
+    """Creates a minimum spanning graph connecting
+    customers by avoiding forbidden region.
 
     Args:
-        customers (List[List[float]]): List of points to be used to create graph
+        customers (List[List[float]]): List of points to be used
+            to create graph
         forbidden_areas (Union[str, None]): Path to .shp file
-        node_append_str (Union[str, None]): String to be appended to node name
+        node_append_str (Union[str, None]): String to be appended
+            to node name
 
     Returns:
-        Sequence[nx.Graph, dict, dict]: Minimum spannnig tree, mapping between point and coordinates
+        Sequence[nx.Graph, dict, dict]: Minimum spannnig tree,
+            mapping between point and coordinates
             and customer to node mapping.
     """
 
@@ -531,7 +548,8 @@ def triangulate_using_mesh(
         node_append_str=node_append_str,
     )
     graph_mst, customer_to_node_mapper = mesh_pruning(graph, customers)
-    # graph, points = add_customer_nodes_and_edges(graph_mst, customer_to_node_mapper)
+    # graph, points = add_customer_nodes_and_edges(graph_mst,
+    # customer_to_node_mapper)
 
     return graph_mst, points, customer_to_node_mapper
 

@@ -61,7 +61,6 @@ from shift.exceptions import (
     NegativeKVError,
     HTkVlowerthanLTkVError,
     EmptyCatalog,
-    MultipleCatalogFoundError,
     PercentageNotInRangeError,
     OperationYearNotInRange,
 )
@@ -74,8 +73,10 @@ class TransformerLoadMapper(ABC):
         loads (List[Load]): List of loads
         diversity_factor_func (Callable): Callable to compute diversity factor
         adjustment_factor (float): Adjustment factor for adjusting kva
-        planned_avg_annual_growth (float): Planned average annual load growth rate in percentage
-        actual_avg_annual_growth (float): Actual average annual load growth rate in percentage
+        planned_avg_annual_growth (float): Planned average annual load
+            growth rate in percentage
+        actual_avg_annual_growth (float): Actual average annual load
+            growth rate in percentage
         actual_years_in_operation (float): Actual years in operation
         planned_years_in_operation (float): Planned years in operation
         power_factor (float): Power factor used to compute kva
@@ -99,10 +100,13 @@ class TransformerLoadMapper(ABC):
 
         Args:
             loads (List[Load]): List of loads
-            diversity_factor_func (Callable[[float], float]): Callable to compute diversity factor
+            diversity_factor_func (Callable[[float], float]): Callable to
+                compute diversity factor
             adjustment_factor (float): Adjustment factor for adjusting kva
-            planned_avg_annual_growth (float): Planned average annual load growth rate in percentage
-            actual_avg_annual_growth (float): Actual average annual load growth rate in percentage
+            planned_avg_annual_growth (float): Planned average annual load
+                growth rate in percentage
+            actual_avg_annual_growth (float): Actual average annual load
+                growth rate in percentage
             actual_years_in_operation (float): Actual years in operation
             planned_years_in_operation (float): Planned years in operation
             power_factor (float): Power factor used to compute kva
@@ -111,7 +115,8 @@ class TransformerLoadMapper(ABC):
         Raises:
             PercentageNotInRangeError: If invalid percentage is used
             OperationYearNotInRange: If invalid operation year is used
-            AdjustmentFactorNotInRangeError: If invalid adjustment factor is used
+            AdjustmentFactorNotInRangeError: If invalid adjustment
+                factor is used
             PowerFactorNotInRangeError: If invalid power factor is used
             EmptyCatalog: If catalog is empty for given type
         """
@@ -230,7 +235,7 @@ class TransformerLoadMapper(ABC):
         """
 
         # Get maximum diversified demand (kW) and adjusted kW
-        sum_of_noncoincident_peaks = sum([l.kw for l in t_loads])
+        sum_of_noncoincident_peaks = sum(l.kw for l in t_loads)
         kva = self.compute_transformer_kva_capacity(
             sum_of_noncoincident_peaks, len(t_loads)
         )
@@ -252,27 +257,33 @@ class TransformerLoadMapper(ABC):
                     ].to_dict()
                 else:
                     raise EmptyCatalog(
-                        f"Catalog does not exist for transformer of capacity above or equal to \
-                        {kva} kVA with high tension voltage above or equal to {ht_kv} and \
-                        above or equal to low tension voltage{lt_kv}"
+                        "Catalog does not exist for transformer of"
+                        + " capacity above or equal to"
+                        + f"{kva} kVA with high tension voltage above or "
+                        + f"equal to {ht_kv} and "
+                        + f"above or equal to low tension voltage{lt_kv}"
                     )
 
             else:
                 raise EmptyCatalog(
-                    f"Catalog does not exist for transformer of capacity greater than \
-                    {kva} kVA with high tension voltage greater than or equal to {ht_kv}"
+                    "Catalog does not exist for transformer of "
+                    + "capacity greater than "
+                    + f"{kva} kVA with high tension voltage greater "
+                    + f"than or equal to {ht_kv}"
                 )
 
         else:
             raise EmptyCatalog(
-                "Catalog does not exist for transformer of capacity above or equal to {kva} kVA"
+                "Catalog does not exist for transformer"
+                + "of capacity above or equal to {kva} kVA"
             )
 
         return catalog_used
 
 
 class SingleTransformerBuilder(TransformerLoadMapper):
-    """Class for managing building of single transformer used to build substation transformer.
+    """Class for managing building of single transformer
+    used to build substation transformer.
 
     Refer to base class for attributes passed to base class.
 
@@ -280,8 +291,10 @@ class SingleTransformerBuilder(TransformerLoadMapper):
         ht_kv (float): High tension side kV
         lt_kv (float): Low tension side kV
         num_phase (NumPhase): NumPhase instance
-        ht_conn (TransformerConnection): TransformerConnection instance for high tension side
-        lt_conn (TransformerConnection): TransformerConnection instance for low tension side
+        ht_conn (TransformerConnection): TransformerConnection
+            instance for high tension side
+        lt_conn (TransformerConnection): TransformerConnection
+            instance for low tension side
         ht_phase (Phase): Phase instance for high tension side
         lt_phase (Phase): Phase instance for low tension side
         longitude (float): Longitude property of transformer
@@ -315,8 +328,10 @@ class SingleTransformerBuilder(TransformerLoadMapper):
             ht_kv (float): High tension side kV
             lt_kv (float): Low tension side kV
             num_phase (NumPhase): NumPhase instance
-            ht_conn (TransformerConnection): TransformerConnection instance for high tension side
-            lt_conn (TransformerConnection): TransformerConnection instance for low tension side
+            ht_conn (TransformerConnection): TransformerConnection
+                instance for high tension side
+            lt_conn (TransformerConnection): TransformerConnection
+                instance for low tension side
             ht_phase (Phase): Phase instance for high tension side
             lt_phase (Phase): Phase instance for low tension side
             longitude (float): Longitude property of transformer
@@ -325,7 +340,8 @@ class SingleTransformerBuilder(TransformerLoadMapper):
         Raises:
             ZeroKVError: If kv specified is zero
             NegativeKVError: If kv specified is negative
-            HTkVlowerthanLTkVError: If high tension kv used is less than low tension kv
+            HTkVlowerthanLTkVError: If high tension kv used
+                is less than low tension kv
         """
 
         super().__init__(
@@ -395,8 +411,10 @@ class ClusteringBasedTransformerLoadMapper(TransformerLoadMapper):
         ht_kv (float): High tension side kV
         lt_kv (float): Low tension side kV
         num_phase (NumPhase): NumPhase instance
-        ht_conn (TransformerConnection): TransformerConnection instance for high tension side
-        lt_conn (TransformerConnection): TransformerConnection instance for low tension side
+        ht_conn (TransformerConnection): TransformerConnection
+            instance for high tension side
+        lt_conn (TransformerConnection): TransformerConnection
+            instance for low tension side
         ht_phase (Phase): Phase instance for high tension side
         lt_phase (Phase): Phase instance for low tension side
         clustering_object (Clustering): Clustering instance
@@ -429,8 +447,10 @@ class ClusteringBasedTransformerLoadMapper(TransformerLoadMapper):
             ht_kv (float): High tension side kV
             lt_kv (float): Low tension side kV
             num_phase (NumPhase): NumPhase instance
-            ht_conn (TransformerConnection): TransformerConnection instance for high tension side
-            lt_conn (TransformerConnection): TransformerConnection instance for low tension side
+            ht_conn (TransformerConnection): TransformerConnection
+                instance for high tension side
+            lt_conn (TransformerConnection): TransformerConnection
+                instance for low tension side
             ht_phase (Phase): Phase instance for high tension side
             lt_phase (Phase): Phase instance for low tension side
             clustering_object (Clustering): Clustering instance
@@ -438,7 +458,8 @@ class ClusteringBasedTransformerLoadMapper(TransformerLoadMapper):
         Raises:
             ZeroKVError: If kv specified is zero
             NegativeKVError: If kv specified is negative
-            HTkVlowerthanLTkVError: If high tension kv used is less than low tension kv
+            HTkVlowerthanLTkVError: If high tension kv used
+                is less than low tension kv
         """
 
         super().__init__(
