@@ -13,7 +13,7 @@
     
     
       
-        <title>Getting started - Shift</title>
+        <title>Synthetic Feeder, Chennai - Shift</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#getting-started" class="md-skip">
+        <a href="#generating-synthetic-feeder-using-openstreet-data" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Getting started
+              Synthetic Feeder, Chennai
             
           </span>
         </div>
@@ -246,12 +246,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       
       
@@ -272,11 +274,82 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../sample-1/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Synthetic Feeder, Chennai
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Synthetic Feeder, Chennai
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-synthetic-feeder-using-openstreet-data" class="md-nav__link">
+    Generating synthetic feeder using OpenStreet data
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating synthetic feeder using OpenStreet data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-preparing-sandbox-environment" class="md-nav__link">
+    1. Preparing sandbox environment 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-get-all-the-buildings-data-and-create-geometry-object-for-all-buildings" class="md-nav__link">
+     2. Get all the buildings data and create geometry object for all buildings. 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-convert-building-geometries-into-load-objects" class="md-nav__link">
+     3. Convert building geometries into load objects 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-use-clustering-algorithm-to-cluster-loads" class="md-nav__link">
+     4. Use clustering algorithm to cluster loads 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -608,8 +681,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -646,6 +717,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#4-use-clustering-algorithm-to-cluster-loads" class="md-nav__link">
+     4. Use clustering algorithm to cluster loads 
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -663,14 +741,16 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/nrel/shift/edit/master/docs/tutorials.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/nrel/shift/edit/master/docs/chennai.md" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-<h1 id="getting-started">Getting started</h1>
+  <h1>Synthetic Feeder, Chennai</h1>
+
 <h2 id="generating-synthetic-feeder-using-openstreet-data">Generating synthetic feeder using OpenStreet data</h2>
+<p><strong>Developed by: <a href="https://github.com/KapilDuwadi">Kapil Duwadi</a>, 2022-07-31</strong></p>
 <p>In this tutorial you will build synthetic feeder for Chennai, India. You will perform following tasks to achieve final goal.</p>
 <h3 id="1-preparing-sandbox-environment"><p style="color:green">1. Preparing sandbox environment </p></h3>
 <p>To proceed with this tutorial, let's create a <code>sandbox</code> environment. 
@@ -719,7 +799,9 @@ jupyter lab
 <code>python 3.9 or greater</code> installed in your system.</p>
 </div>
 <p>Click on <code>+</code> symbol or Python Kernel to create a Jupyter Notebook.</p>
-<p><img alt="🔥" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f525.svg" title=":fire:" /> You have sucessfully created an environment. </p>
+<div class="admonition success">
+<p class="admonition-title">You have sucessfully created an environment.</p>
+</div>
 <hr />
 <h3 id="2-get-all-the-buildings-data-and-create-geometry-object-for-all-buildings"><p style="color:green"> 2. Get all the buildings data and create geometry object for all buildings. </p></h3>
 <p>Let's get all the geometries from Chennai, India. Copy and paste the following code 
@@ -739,8 +821,104 @@ in your jupyter notebook.</p>
 </div>
 <hr />
 <h3 id="3-convert-building-geometries-into-load-objects"><p style="color:green"> 3. Convert building geometries into load objects </p></h3>
+<p>In order to create power system loads from geometries we need to tell how to assign phases, voltages and connection type for loads. In this case let's use <code>RandomPhaseAllocator</code> class to allocate phases to all geometries. Here we are saying all geometries are of single phase type and there are no two phase and three phase loads and finally pass all the geometries.</p>
+<p>Similarly we initialize simple voltage setter by passing line to line voltage of 13.2 kV. <code>DefaultConnSetter</code> class is created which will set the connection type to <code>wye</code> for all geometries.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">shift.load_builder</span> <span class="kn">import</span> <span class="p">(</span><span class="n">RandomPhaseAllocator</span><span class="p">,</span> 
+                                <span class="n">SimpleVoltageSetter</span><span class="p">,</span> <span class="n">DefaultConnSetter</span><span class="p">)</span>
+<span class="n">rpa</span> <span class="o">=</span> <span class="n">RandomPhaseAllocator</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">geometries</span><span class="p">)</span>
+<span class="n">svs</span> <span class="o">=</span> <span class="n">SimpleVoltageSetter</span><span class="p">(</span><span class="mf">13.2</span><span class="p">)</span>
+<span class="n">dcs</span> <span class="o">=</span> <span class="n">DefaultConnSetter</span><span class="p">()</span>
+</code></pre></div>
+<p>But wait how do we get power consumption data for the load. In order get consumption let's use building area info to get the kw. Let's say we know there is a piecewise linear function that relates building area with peak kW consumption.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">area_to_kw_curve</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Area in meter square&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">area_to_kw_curve</span><span class="p">],</span>
+    <span class="s1">&#39;Peak consumption in kW&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">area_to_kw_curve</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Area in meter square&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Peak consumption in kW&quot;</span><span class="p">)</span> 
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<details>
+<summary>Verify the output you are seeing.</summary>
+<p><img alt="" src="../images/tutorial_1_piecewiselinear.png" /></p>
+</details>
+<p>In order to use this piecewise linear function we can invoke <code>PiecewiseBuildingAreaToConsumptionConverter</code> class from load_builder and pass it as an argument to build the load. Let's see this class in action.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">shift.load_builder</span> <span class="kn">import</span> <span class="n">PiecewiseBuildingAreaToConsumptionConverter</span>
+<span class="n">pbacc</span> <span class="o">=</span> <span class="n">PiecewiseBuildingAreaToConsumptionConverter</span><span class="p">(</span><span class="n">area_to_kw_curve</span><span class="p">)</span>
+<span class="n">area</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;For area of </span><span class="si">{</span><span class="n">area</span><span class="si">}</span><span class="s2"> m^2 the consumption would be </span><span class="si">{</span><span class="n">pbacc</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">area</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<details>
+<summary>Verify the output you are seeing.</summary>
+<div class="highlight"><pre><span></span><code>For area of 15 m^2 the consumption would be 11.5
+</code></pre></div>
+</details>
+<p>Let's build the loads from the geometries and print one them. Here let's try to build constant power factor of 1.0 type loads for simplicity.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">shift.load_builder</span> <span class="kn">import</span> <span class="n">ConstantPowerFactorBuildingGeometryLoadBuilder</span>
+<span class="kn">from</span> <span class="nn">shift.load_builder</span> <span class="kn">import</span> <span class="n">LoadBuilderEngineer</span>
+<span class="n">loads</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">geometries</span><span class="p">:</span>
+    <span class="n">builder</span> <span class="o">=</span> <span class="n">ConstantPowerFactorBuildingGeometryLoadBuilder</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> 
+                            <span class="n">rpa</span><span class="p">,</span> <span class="n">pbacc</span><span class="p">,</span> <span class="n">svs</span><span class="p">,</span> <span class="n">dcs</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">LoadBuilderEngineer</span><span class="p">(</span><span class="n">builder</span><span class="p">)</span>
+    <span class="n">loads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">get_load</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">loads</span><span class="p">),</span> <span class="n">loads</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">loads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div>
+<details>
+<summary>Verify the output you are seeing.</summary>
+<div class="highlight"><pre><span></span><code>49 ConstantPowerFactorLoad(Name = 80.2700197_13.083833949999997_load, Latitude = 13.083833949999997, Longitude = 80.2700197, Phase = Phase.AN NumPhase = NumPhase.SINGLE, Connection Type = LoadConnection.STAR, kw = 5.0, pf = 1.0, kv = 7.621) ConstantPowerFactorLoad(Name = 80.26948865_13.08433095_load, Latitude = 13.08433095, Longitude = 80.26948865, Phase = Phase.AN NumPhase = NumPhase.SINGLE, Connection Type = LoadConnection.STAR, kw = 5.0, pf = 1.0, kv = 7.621)
+</code></pre></div>
+</details>
+<p>Let's visualize these loads on top of GIS map. That would be cool right ?. In order to do that let's invoke two layer distribution network first.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">shift.feeder_network</span> <span class="kn">import</span> <span class="p">(</span><span class="n">SimpleTwoLayerDistributionNetworkBuilder</span><span class="p">,</span> 
+                                  <span class="n">TwoLayerNetworkBuilderDirector</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">shift.network_plots</span> <span class="kn">import</span> <span class="n">PlotlyGISNetworkPlot</span>
+<span class="kn">from</span> <span class="nn">shift.constants</span> <span class="kn">import</span> <span class="n">PLOTLY_FORMAT_CUSTOMERS_ONLY</span>
+
+<span class="n">network_builder</span> <span class="o">=</span> <span class="n">SimpleTwoLayerDistributionNetworkBuilder</span><span class="p">()</span>
+<span class="n">network</span> <span class="o">=</span> <span class="n">TwoLayerNetworkBuilderDirector</span><span class="p">(</span><span class="n">loads</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="n">network_builder</span><span class="p">)</span>
+
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PlotlyGISNetworkPlot</span><span class="p">(</span>
+        <span class="n">network</span><span class="o">.</span><span class="n">get_network</span><span class="p">(),</span>
+        <span class="n">API_KEY</span><span class="p">,</span>
+        <span class="s1">&#39;carto-darkmatter&#39;</span><span class="p">,</span>
+        <span class="n">asset_specific_style</span><span class="o">=</span><span class="n">PLOTLY_FORMAT_CUSTOMERS_ONLY</span>
+    <span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<details>
+<summary>Verify the output you are seeing.</summary>
+<p><img alt="" src="../images/tutorial_1_loads.png" /></p>
+</details>
+<div class="admonition success">
+<p class="admonition-title">You have sucessfully converted buildings to power system loads.</p>
+</div>
+<hr />
+<h3 id="4-use-clustering-algorithm-to-cluster-loads"><p style="color:green"> 4. Use clustering algorithm to cluster loads </p></h3>
+<p>Next step is to use clustering algorithm to figure out best location for positioning distribution transformers. Kmeans clustering is one way of doing this. Let's say we want to have 20 disribution transformers for this feeder.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">shift.clustering</span> <span class="kn">import</span> <span class="n">KmeansClustering</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">load</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">load</span><span class="o">.</span><span class="n">latitude</span><span class="p">]</span> 
+                    <span class="k">for</span> <span class="n">load</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">])</span>
+<span class="n">cluster_</span> <span class="o">=</span> <span class="n">KmeansClustering</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">clusters</span> <span class="o">=</span> <span class="n">cluster_</span><span class="o">.</span><span class="n">get_clusters</span><span class="p">(</span><span class="n">x_array</span><span class="p">)</span>
+<span class="n">cluster_</span><span class="o">.</span><span class="n">plot_clusters</span><span class="p">()</span>
+</code></pre></div>
+<details>
+<summary>Verify the output you are seeing.</summary>
+<p><img alt="" src="../images/tutorial_1_cluster.png" /></p>
+</details>
+<div class="admonition success">
+<p class="admonition-title">You have sucessfully clustered the load objects.</p>
+</div>
 <ul>
-<li>Use clustering algorithm to cluster loads</li>
 <li>Convert cluster center into distribution transformer objects</li>
 <li>Get road network and create primary network</li>
 <li>Convert primary network into list of primary line sections</li>
@@ -763,6 +941,42 @@ in your jupyter notebook.</p>
       </main>
       
         <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Welcome" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Welcome
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../how-to-guides/" class="md-footer__link md-footer__link--next" aria-label="Next: How to Guides" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              How to Guides
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
