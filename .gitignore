@@ -5,6 +5,7 @@
 .vagrant/
 
 docs/cache/**
+demos/cache/**
 
 # Mac/OSX
 .DS_Store
