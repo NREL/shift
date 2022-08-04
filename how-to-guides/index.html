@@ -65,6 +65,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#list-of-commands-available" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -298,9 +303,52 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          How to Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         How to Guides
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-commands-available" class="md-nav__link">
+    List of commands available
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-yaml-file-to-generate-the-feeder" class="md-nav__link">
+    Use yaml file to generate the feeder
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-and-updating-yaml-file" class="md-nav__link">
+    Understanding and updating yaml file
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -572,21 +620,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../explanation/" class="md-nav__link">
-        Theoritical Explanation
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../developers-guide/" class="md-nav__link">
         Guide to Developers
       </a>
@@ -612,6 +645,35 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-commands-available" class="md-nav__link">
+    List of commands available
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-yaml-file-to-generate-the-feeder" class="md-nav__link">
+    Use yaml file to generate the feeder
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-and-updating-yaml-file" class="md-nav__link">
+    Understanding and updating yaml file
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -630,7 +692,304 @@
 
   <h1>How to Guides</h1>
 
+<h2 id="list-of-commands-available">List of commands available</h2>
+<p>Use command <code>shift-internal --help</code> to view all the commands available.</p>
+<ul>
+<li><code>create-config-file</code> : Creates a default config yaml file</li>
+<li><code>create-feeder</code>: Uses the config yaml file to create synthetic feeder</li>
+</ul>
+<h2 id="use-yaml-file-to-generate-the-feeder">Use yaml file to generate the feeder</h2>
+<p>Use the following commands to create the feeder from yaml file.</p>
+<div class="highlight"><pre><span></span><code>shift-internal create-config-file -c config.yaml
+shift-internal create-feeder -c config.yaml
+</code></pre></div>
+<h2 id="understanding-and-updating-yaml-file">Understanding and updating yaml file</h2>
+<div class="highlight"><pre><span></span><code><span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># can be string or tuple with lat lon pair</span><span class="w"></span>
+<span class="w">  </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;chennai,</span><span class="nv"> </span><span class="s">india&quot;</span><span class="w"> </span>
+<span class="w">  </span><span class="c1"># distance must be in m, represents a bounding box distance form the address</span><span class="w"></span>
+<span class="w">  </span><span class="nt">distance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span><span class="w"></span>
 
+
+<span class="c1"># Coefficients for defining diversity factor: x[0]*log(num_cust) + x[1]</span><span class="w"></span>
+<span class="nt">div_func_coeff</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.3908524</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.65180707</span><span class="p p-Indicator">]</span><span class="w"></span>
+
+<span class="nt">substation</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Substation must be (lon, lat) pair </span><span class="w"></span>
+<span class="w">  </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">80.2786311</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">13.091658</span><span class="p p-Indicator">]</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Name of the circuit</span><span class="w"></span>
+<span class="w">  </span><span class="nt">circuit_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;chennai&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># kV for circuit</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kv</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">33.0</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Frequency in Hz</span><span class="w"></span>
+<span class="w">  </span><span class="nt">freq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Initial pu voltage for circuit</span><span class="w"></span>
+<span class="w">  </span><span class="nt">pu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Phase info for building substation</span><span class="w"></span>
+<span class="w">  </span><span class="nt">phase</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">neutral_present</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">num_phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="w">    </span><span class="nt">phase_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Sequence impedances</span><span class="w"></span>
+<span class="w">  </span><span class="nt">z1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.001</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.001</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">z0</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.001</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.001</span><span class="p p-Indicator">]</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># kv voltage levels</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kv_levels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.415</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">11.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">33.0</span><span class="p p-Indicator">]</span><span class="w"></span>
+
+<span class="nt">substation_xfmr</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># voltage levels for dist xfmrs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kv</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">ht</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">33.0</span><span class="w"> </span><span class="c1"># High tension kv</span><span class="w"></span>
+<span class="w">    </span><span class="nt">lt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">11.0</span><span class="w"> </span><span class="c1"># Low tension kv</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Phase for dist xfmrs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">phase</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">num_phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="w">    </span><span class="nt">phase_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Connection type for dist xfmrs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">conn</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">ht</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;delta&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">lt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;star_grounded&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Design factors</span><span class="w"></span>
+<span class="w">  </span><span class="nt">design_factors</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Adjustment factor</span><span class="w"></span>
+<span class="w">    </span><span class="nt">adj_factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.25</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># planned growth rate in percentage</span><span class="w"></span>
+<span class="w">    </span><span class="nt">planned_avg_annual_growth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># actual growth rate</span><span class="w"></span>
+<span class="w">    </span><span class="nt">actual_avg_annual_growth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># actual years in operation</span><span class="w"></span>
+<span class="w">    </span><span class="nt">actual_years_in_operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># planned years in operation:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">planned_years_in_operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Catalog type to select type of catalog used</span><span class="w"></span>
+<span class="w">    </span><span class="nt">catalog_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;all&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Power factor used to compute kva for transformer</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.9</span><span class="w"> </span>
+
+
+<span class="c1"># Settings for loads</span><span class="w"></span>
+<span class="nt">loads</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Decided how to assign phases to loads</span><span class="w"></span>
+<span class="w">  </span><span class="nt">phase</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="c1"># Method for allocating phase</span><span class="w"></span>
+<span class="w">    </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;random&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pct_single_phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pct_two_phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pct_three_phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Deciding voltage level for loads</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kv</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Method for setting voltage to loads</span><span class="w"></span>
+<span class="w">    </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;simple&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kv</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.415</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Deciding connection type for loads</span><span class="w"></span>
+<span class="w">  </span><span class="nt">conn</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Method for setting connection type to loads</span><span class="w"></span>
+<span class="w">    </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Deciding kw for loads</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kw</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Method for setting kw for loads</span><span class="w"></span>
+<span class="w">    </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;piecewiselinear&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Tuple must be in this format (area in m^2, non coincident kw)</span><span class="w"></span>
+<span class="w">    </span><span class="nt">curve</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[[</span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="nv">0</span><span class="p p-Indicator">],</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15.0</span><span class="p p-Indicator">],</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">20</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">35</span><span class="p p-Indicator">],</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">50</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">80</span><span class="p p-Indicator">]]</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Load type</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># load type</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constantpowerfactor&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w"></span>
+
+<span class="c1"># Setting for distribution transformers</span><span class="w"></span>
+<span class="nt">dist_xfmrs</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Decide how to to come up with distribution transformers</span><span class="w"></span>
+<span class="w">  </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;clustering&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Decide cluster method</span><span class="w"></span>
+<span class="w">    </span><span class="nt">cluster_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;location_kmeans&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Number of clusters is required for kmeans</span><span class="w"></span>
+<span class="w">    </span><span class="nt">estimated_customers_per_transformer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># voltage levels for dist xfmrs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kv</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">ht</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">11.0</span><span class="w"> </span><span class="c1"># High tension kv</span><span class="w"></span>
+<span class="w">    </span><span class="nt">lt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.415</span><span class="w"> </span><span class="c1"># Low tension kv</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Phase for dist xfmrs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">phase</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">num_phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="w">    </span><span class="nt">phase_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Connection type for dist xfmrs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">conn</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">ht</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;delta&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">lt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;star_grounded&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Design factors</span><span class="w"></span>
+<span class="w">  </span><span class="nt">design_factors</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Adjustment factor</span><span class="w"></span>
+<span class="w">    </span><span class="nt">adj_factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.25</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># planned growth rate in percentage</span><span class="w"></span>
+<span class="w">    </span><span class="nt">planned_avg_annual_growth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># actual growth rate</span><span class="w"></span>
+<span class="w">    </span><span class="nt">actual_avg_annual_growth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># actual years in operation</span><span class="w"></span>
+<span class="w">    </span><span class="nt">actual_years_in_operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># planned years in operation:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">planned_years_in_operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Catalog type to select type of catalog used</span><span class="w"></span>
+<span class="w">    </span><span class="nt">catalog_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;all&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Power factor used to compute kva for transformer</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.9</span><span class="w"> </span>
+
+<span class="c1"># Settings for primary/HT conductors</span><span class="w"></span>
+<span class="nt">primary_network</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Voltage level for primary network</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kv</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">11.0</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Maximum pole to pole distance in meter</span><span class="w"></span>
+<span class="w">  </span><span class="nt">max_pp_distance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Conductor type used</span><span class="w"></span>
+<span class="w">  </span><span class="nt">cond_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;overhead&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Phase settings</span><span class="w"></span>
+<span class="w">  </span><span class="nt">phase</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">num_phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="w">    </span><span class="nt">neutral_present</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">phase_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Conductor configuration</span><span class="w"></span>
+<span class="w">  </span><span class="nt">configuration</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Configuration for three phase conductors</span><span class="w"></span>
+<span class="w">    </span><span class="nt">three_phase</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">height_of_top_conductor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">space_between_conductors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.4</span><span class="w"></span>
+<span class="w">      </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;m&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;horizontal&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Design factors</span><span class="w"></span>
+<span class="w">  </span><span class="nt">design_factors</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Adjustment factor</span><span class="w"></span>
+<span class="w">    </span><span class="nt">adj_factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.25</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># planned growth rate in percentage</span><span class="w"></span>
+<span class="w">    </span><span class="nt">planned_avg_annual_growth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># actual growth rate</span><span class="w"></span>
+<span class="w">    </span><span class="nt">actual_avg_annual_growth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># actual years in operation</span><span class="w"></span>
+<span class="w">    </span><span class="nt">actual_years_in_operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># planned years in operation:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">planned_years_in_operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Allowed voltage drop used in drop estimation to find conductor</span><span class="w"></span>
+<span class="w">    </span><span class="nt">voltage_drop</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Catalog type to select type of catalog used</span><span class="w"></span>
+<span class="w">    </span><span class="nt">catalog_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ACSR&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Power factor</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.9</span><span class="w"></span>
+
+<span class="c1"># Settings for primary/HT conductors</span><span class="w"></span>
+<span class="nt">secondary_network</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Voltage level for primary network</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kv</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.415</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Maximum pole to pole distance in meter</span><span class="w"></span>
+<span class="w">  </span><span class="nt">max_pp_distance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Conductor type used</span><span class="w"></span>
+<span class="w">  </span><span class="nt">cond_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;overhead&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Phase settings</span><span class="w"></span>
+<span class="w">  </span><span class="nt">phase</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">num_phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="w">    </span><span class="nt">neutral_present</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">phase_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<span class="w">    </span><span class="nt">service_drop_neutral</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Conductor configuration</span><span class="w"></span>
+<span class="w">  </span><span class="nt">configuration</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Configuration for three phase conductors</span><span class="w"></span>
+<span class="w">    </span><span class="nt">three_phase</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">height_of_top_conductor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">height_of_neutral_conductor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9.4</span><span class="w"></span>
+<span class="w">      </span><span class="nt">space_between_conductors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.4</span><span class="w"></span>
+<span class="w">      </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;m&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;horizontal&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Configuration for single phase conductors</span><span class="w"></span>
+<span class="w">    </span><span class="nt">single_phase</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">height_of_top_conductor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;m&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;horizontal&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># Design factors</span><span class="w"></span>
+<span class="w">  </span><span class="nt">design_factors</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Adjustment factor</span><span class="w"></span>
+<span class="w">    </span><span class="nt">adj_factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.25</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># planned growth rate in percentage</span><span class="w"></span>
+<span class="w">    </span><span class="nt">planned_avg_annual_growth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># actual growth rate</span><span class="w"></span>
+<span class="w">    </span><span class="nt">actual_avg_annual_growth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># actual years in operation</span><span class="w"></span>
+<span class="w">    </span><span class="nt">actual_years_in_operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># planned years in operation:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">planned_years_in_operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Allowed voltage drop used in drop estimation to find conductor</span><span class="w"></span>
+<span class="w">    </span><span class="nt">voltage_drop</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Catalog type to select type of catalog used</span><span class="w"></span>
+<span class="w">    </span><span class="nt">catalog_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ACSR&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Catalog type to be used for lateral</span><span class="w"></span>
+<span class="w">    </span><span class="nt">catalog_type_lateral</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Power factor</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.9</span><span class="w"></span>
+
+<span class="nt">exporter</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;opendss&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;.&quot;</span><span class="w"></span>
+</code></pre></div>
 
               
             </article>

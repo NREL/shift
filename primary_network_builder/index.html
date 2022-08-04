@@ -765,21 +765,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../explanation/" class="md-nav__link">
-        Theoritical Explanation
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../developers-guide/" class="md-nav__link">
         Guide to Developers
       </a>
@@ -2634,8 +2619,7 @@ appended to all primary nodes</p></td>
 <span class="normal">889</span>
 <span class="normal">890</span>
 <span class="normal">891</span>
-<span class="normal">892</span>
-<span class="normal">893</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PrimaryNetworkFromRoad</span><span class="p">(</span><span class="n">BaseNetworkBuilder</span><span class="p">):</span>
+<span class="normal">892</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PrimaryNetworkFromRoad</span><span class="p">(</span><span class="n">BaseNetworkBuilder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Builds primary network from OpenStreet road data.</span>
 
 <span class="sd">    Refer to base class for base attributes.</span>
@@ -2737,9 +2721,8 @@ appended to all primary nodes</p></td>
         <span class="sd">&quot;&quot;&quot;Returns a primary network with ampacity data.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            AttributeDoesNotExistError:</span>
-<span class="sd">                If `update_network_with_ampacity` is not called</span>
-<span class="sd">                first, absence of `network` attribute</span>
+<span class="sd">            AttributeDoesNotExistError: If `update_network_with_ampacity`</span>
+<span class="sd">                is not called first, absence of `network` attribute</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            nx.Graph: primary network with ampacity data</span>
@@ -3093,9 +3076,9 @@ appended to all primary nodes</p></td>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">822</span>
-<span class="normal">823</span>
-<span class="normal">824</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_longest_length_in_kvameter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">821</span>
+<span class="normal">822</span>
+<span class="normal">823</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_longest_length_in_kvameter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns longest length in kva meter&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">longest_length</span>
 </code></pre></div></td></tr></table></div>
@@ -3117,6 +3100,25 @@ appended to all primary nodes</p></td>
   <div class="doc doc-contents ">
   
       <p>Returns a primary network with ampacity data.</p>
+
+  <p><strong>Raises:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="shift.exceptions.AttributeDoesNotExistError" href="../exceptions/#shift.exceptions.AttributeDoesNotExistError">AttributeDoesNotExistError</a></code>
+          </td>
+          <td><p>If <code>update_network_with_ampacity</code>
+is not called first, absence of <code>network</code> attribute</p></td>
+        </tr>
+    </tbody>
+  </table>
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -3171,14 +3173,12 @@ appended to all primary nodes</p></td>
 <span class="normal">812</span>
 <span class="normal">813</span>
 <span class="normal">814</span>
-<span class="normal">815</span>
-<span class="normal">816</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="normal">815</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns a primary network with ampacity data.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        AttributeDoesNotExistError:</span>
-<span class="sd">            If `update_network_with_ampacity` is not called</span>
-<span class="sd">            first, absence of `network` attribute</span>
+<span class="sd">        AttributeDoesNotExistError: If `update_network_with_ampacity`</span>
+<span class="sd">            is not called first, absence of `network` attribute</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        nx.Graph: primary network with ampacity data</span>
@@ -3290,9 +3290,9 @@ distribution system primary network</p>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">818</span>
-<span class="normal">819</span>
-<span class="normal">820</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_trans_node_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">817</span>
+<span class="normal">818</span>
+<span class="normal">819</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_trans_node_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns transformer to primary node mapping&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain_nodes</span>
 </code></pre></div></td></tr></table></div>
@@ -3317,7 +3317,8 @@ distribution system primary network</p>
 
       <details class="quote">
         <summary>Source code in <code>shift\primary_network_builder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">826</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">825</span>
+<span class="normal">826</span>
 <span class="normal">827</span>
 <span class="normal">828</span>
 <span class="normal">829</span>
@@ -3383,8 +3384,7 @@ distribution system primary network</p>
 <span class="normal">889</span>
 <span class="normal">890</span>
 <span class="normal">891</span>
-<span class="normal">892</span>
-<span class="normal">893</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_network_with_ampacity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">892</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_network_with_ampacity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Method to update all line sections with ampacity&quot;&quot;&quot;</span>
 
     <span class="c1"># Get primary network tree</span>
@@ -3896,7 +3896,8 @@ distribution system primary network</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="shift.exceptions.CatalogNotFoundError" href="../exceptions/#shift.exceptions.CatalogNotFoundError">CatalogNotFoundError</a></code>
           </td>
-          <td><p>If the catalog record is not</p></td>
+          <td><p>If the catalog record is not
+found for given ampacity</p></td>
         </tr>
     </tbody>
   </table>
@@ -4050,7 +4051,7 @@ distribution system primary network</p>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        CatalogNotFoundError: If the catalog record is not</span>
-<span class="sd">        found for given ampacity</span>
+<span class="sd">            found for given ampacity</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        dict: Catalog record in dict format</span>
@@ -4133,7 +4134,7 @@ distribution system primary network</p>
 
     <span class="c1"># print(k_drop_computed, k_drop, ampacity, record)</span>
     <span class="c1"># raise ConductorNotFoundForKdrop(k_drop)</span>
-    <span class="k">return</span> <span class="n">record</span>
+    <span class="k">return</span> <span class="n">record</span>  <span class="c1"># pylint: disable=undefined-loop-variable</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
