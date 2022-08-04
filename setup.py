@@ -8,10 +8,10 @@ with open(os.path.join(os.path.dirname(__file__), "requirements.txt")) as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="shift",
+    name="NREL-shift",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    version="v0.0.0",
+    version="v0.1.0-alpha",
     description="Generate synthetic feeders using open street map data",
     author="Kapil Duwadi",
     author_email="kapil.duwadi@nrel.gov",
@@ -21,11 +21,7 @@ setup(
     install_requires=requirements,
     python_requires=">=3.9",
     package_dir={"shift": "shift"},
-    entry_points={
-        "console_scripts": [
-            "shift-internal=shift.cli.shift:cli"
-        ]
-    },
+    entry_points={"console_scripts": ["shift-internal=shift.cli.shift:cli"]},
     classifiers=[
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python :: 3.7",
