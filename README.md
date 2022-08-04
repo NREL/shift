@@ -1,4 +1,8 @@
-## [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/shift/4-feature-add-a-binder-notebook-to-allow-user-to-run-the-code) Simple Synthetic Distribution Feeder Generation Tool (SHIFT)
+
+Simple Synthetic Distribution Feeder Generation Tool (SHIFT)
+
+<img src="docs/images/shift.svg" width="400" style="display:block;margin:auto;">
+
 
 ![GitHub all releases](https://img.shields.io/github/downloads/NREL/shift/total?logo=Github&logoColor=%2300ff00&style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/nrel/shift?style=flat-square)
@@ -24,5 +28,3 @@ analysis, interconnection studies all require detailed distribution models.
 So what are you waiting for. We can't wait to see how you will use this tool for your as wells your organizations's benefit.
 
 Feel free to reach out to us or send us a comment using Github issue. We don't mind if you smash that starred icon motivating our developers and contributors.
-
-
