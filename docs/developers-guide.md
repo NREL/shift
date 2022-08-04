@@ -22,7 +22,7 @@
 
     ```python
     cd <cloned_repo>
-    pytest
+    pytest -p no:faulthandler
     ```
 
 8. Make sure your code has passed linting test and black test. Use the following commands for checking linting and formatting.

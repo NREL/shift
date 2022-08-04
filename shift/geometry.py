@@ -48,6 +48,7 @@ import os
 
 import osmnx as ox
 import pandas as pd
+import shapely
 
 # pylint: disable=redefined-builtin
 from shift.exceptions import (
@@ -287,7 +288,7 @@ class BuildingsFromPoint(OpenStreetBuildingGeometries):
     """Getting building geometries from single point within bounding box.
 
     Attributes:
-        point (Sequence): Point in (longitude, latitude) format
+        point (Sequence): Point in (latitude, longitude) format
         max_dist (float): Distance in meter from the point to
             create a bounding box
     """
@@ -297,7 +298,7 @@ class BuildingsFromPoint(OpenStreetBuildingGeometries):
         """Instantiating the class.
 
         Args:
-            point (Sequence): Point in (longitude, latitude) format
+            point (Sequence): Point in (latitude, longitude) format
             max_dist (float): Distance in meter from the point to
                 create a bounding box
         """
@@ -357,7 +358,7 @@ class BuildingsFromPolygon(OpenStreetBuildingGeometries):
             polygon: List[list]: Polygon to be used
                 e.g. [[13.242134, 80.275948]]
         """
-        self.polygon = polygon
+        self.polygon = shapely.geometry.Polygon(polygon)
 
     def get_gdf(self) -> pd.DataFrame:
         """Refer to base class for details."""
