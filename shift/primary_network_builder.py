@@ -115,7 +115,7 @@ def choose_conductor(
 
     Raises:
         CatalogNotFoundError: If the catalog record is not
-        found for given ampacity
+            found for given ampacity
 
     Returns:
         dict: Catalog record in dict format
@@ -198,7 +198,7 @@ def choose_conductor(
 
     # print(k_drop_computed, k_drop, ampacity, record)
     # raise ConductorNotFoundForKdrop(k_drop)
-    return None
+    return record  # pylint: disable=undefined-loop-variable
 
 
 def convert_oh_cond_info_to_wire(data: dict) -> Wire:
@@ -783,9 +783,8 @@ class PrimaryNetworkFromRoad(BaseNetworkBuilder):
         """Returns a primary network with ampacity data.
 
         Raises:
-            AttributeDoesNotExistError:
-                If `update_network_with_ampacity` is not called
-                first, absence of `network` attribute
+            AttributeDoesNotExistError: If `update_network_with_ampacity`
+                is not called first, absence of `network` attribute
 
         Returns:
             nx.Graph: primary network with ampacity data

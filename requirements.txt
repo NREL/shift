@@ -10,9 +10,9 @@ pandas
 sklearn
 pydantic
 click
+pytest
 openpyxl
 mkdocs
 mkdocstrings[python]
 mkdocs-material
 mkdocs-jupyter
-https://github.com/bmcorser/fontawesome-markdown/archive/master.zip

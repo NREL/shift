@@ -74,5 +74,5 @@ nav:
     - transformer: transformer.md
     - utils: utils.md
     - exporter.opendss: opendss.md
-  - Theoritical Explanation: explanation.md
+  # - Theoritical Explanation: explanation.md
   - Guide to Developers: developers-guide.md

@@ -96,6 +96,7 @@ TRANSFORMER_CONNECTION_MAPPER = {
     "delta": TransformerConnection.DELTA,
     "wye-grounded": TransformerConnection.STAR,
     "wye": TransformerConnection.STAR,
+    "star_grounded": TransformerConnection.STAR,
 }
 
 NUM_PHASE_MAPPER = {1: NumPhase.SINGLE, 2: NumPhase.TWO, 3: NumPhase.THREE}

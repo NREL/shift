@@ -6,6 +6,8 @@
 
 docs/cache/**
 demos/cache/**
+cache/**
+tests/cache
 
 # Mac/OSX
 .DS_Store

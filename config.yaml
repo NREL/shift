@@ -1,0 +1,134 @@
+div_func_coeff:
+  - 0.3908524
+  - 1.65180707
+dist_xfmrs:
+  conn:
+    ht: delta
+    lt: star_grounded
+  design_factors:
+    actual_avg_annual_growth: 4
+    actual_years_in_operation: 15
+    adj_factor: 1.25
+    catalog_type: all
+    planned_avg_annual_growth: 2
+    planned_years_in_operation: 10
+  div_func_coeff:
+  - 0.3908524
+  - 1.65180707
+  kv:
+    ht: 11.0
+    lt: 0.415
+  method:
+    cluster_method: location_kmeans
+    estimated_customers_per_transformer: 100
+    name: clustering
+  pf: 0.9
+  phase:
+    num_phase: 3
+exporter:
+  path: .
+  type: opendss
+loads:
+  conn:
+    method: default
+  kv:
+    kv: 0.415
+    method: simple
+  kw:
+    curve:
+    - - 0
+      - 0
+    - - 10
+      - 15.0
+    - - 20
+      - 35
+    - - 50
+      - 80
+    method: piecewiselinear
+  phase:
+    method: random
+    pct_single_phase: 100.0
+    pct_three_phase: 0
+    pct_two_phase: 0
+  type:
+    name: constantpowerfactor
+    pf: 1.0
+location:
+  address: chennai, india
+  distance: 1000.0
+primary_network:
+  PrimaryNetworkConfiguration:
+    three_phase:
+      height_of_top_conductor: 9
+      space_between_conductors: 0.4
+      type: horizontal
+      unit: m
+  cond_type: overhead
+  configuration:
+    three_phase:
+      height_of_top_conductor: 9
+      space_between_conductors: 0.4
+      type: horizontal
+      unit: m
+  design_factors:
+    actual_avg_annual_growth: 4
+    actual_years_in_operation: 15
+    adj_factor: 1.25
+    catalog_type: all
+    planned_avg_annual_growth: 2
+    planned_years_in_operation: 10
+  div_func_coeff:
+  - 0.3908524
+  - 1.65180707
+  kv: 11.0
+  max_pp_distance: 100
+  phase:
+    neutral_present: false
+    num_phase: 3
+secondary_network:
+  cond_type: overhead
+  configuration:
+    single_phase:
+      height_of_conductor: 9
+      type: horizontal
+      unit: m
+    three_phase:
+      height_of_top_conductor: 9
+      space_between_conductors: 0.4
+      type: horizontal
+      unit: m
+  design_factors:
+    actual_avg_annual_growth: 4
+    actual_years_in_operation: 15
+    adj_factor: 1.25
+    catalog_type: all
+    planned_avg_annual_growth: 2
+    planned_years_in_operation: 10
+  div_func_coeff:
+  - 0.3908524
+  - 1.65180707
+  kv: 0.415
+  max_pp_distance: 100
+  phase:
+    neutral_present: false
+    num_phase: 3
+substation:
+  conn:
+    ht: delta
+    lt: star_grounded
+  design_factors:
+    actual_avg_annual_growth: 4
+    actual_years_in_operation: 15
+    adj_factor: 1.25
+    catalog_type: all
+    planned_avg_annual_growth: 2
+    planned_years_in_operation: 10
+  div_func_coeff:
+  - 0.3908524
+  - 1.65180707
+  kv:
+    ht: 33.0
+    lt: 11.0
+  pf: 0.9
+  phase:
+    num_phase: 3

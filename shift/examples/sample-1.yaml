@@ -2,13 +2,16 @@ location:
   # can be string or tuple with lat lon pair
   address: "chennai, india" 
   # distance must be in m, represents a bounding box distance form the address
-  distance: 1000 
+  distance: 300
 
-# Substation can be tuple with lat lon pair for which
-# nearest node in the network is assigned substation or it can be
-# valid string
-substation: 
-  location: "top-right" 
+
+# Coefficients for defining diversity factor: x[0]*log(num_cust) + x[1]
+div_func_coeff: [0.3908524, 1.65180707]
+
+substation:
+  
+  # Substation must be (lon, lat) pair 
+  location: [80.2786311, 13.091658]
   
   # Name of the circuit
   circuit_name: "chennai"
@@ -16,14 +19,17 @@ substation:
   # kV for circuit
   kv: 33.0
 
-  # Frequency
+  # Frequency in Hz
   freq: 50
 
   # Initial pu voltage for circuit
   pu: 1.0
-
-  # Number of phase
-  num_phase: 3
+    
+  # Phase info for building substation
+  phase:
+    neutral_present: true
+    num_phase: 3
+    phase_type: null
 
   # Sequence impedances
   z1: [0.001, 0.001]
@@ -34,9 +40,6 @@ substation:
 
 substation_xfmr:
 
-  # Coefficients for defining diversity factor: x[0]*log(num_cust) + x[1]
-  div_func_coeff: [0.3908524, 1.65180707]
-
   # voltage levels for dist xfmrs
   kv:
     ht: 33.0 # High tension kv
@@ -45,14 +48,12 @@ substation_xfmr:
   # Phase for dist xfmrs
   phase:
     num_phase: 3
+    phase_type: null
   
   # Connection type for dist xfmrs
   conn:
     ht: "delta"
-    lt: "star-grounded"
-  
-  # Power factor used to compute kva for transformer
-  pf: 0.9 
+    lt: "star_grounded"
 
   # Design factors
   design_factors:
@@ -74,6 +75,9 @@ substation_xfmr:
 
     # Catalog type to select type of catalog used
     catalog_type: "all"
+
+    # Power factor used to compute kva for transformer
+    pf: 0.9 
 
 
 # Settings for loads
@@ -116,9 +120,6 @@ dist_xfmrs:
     # Number of clusters is required for kmeans
     estimated_customers_per_transformer: 100
 
-  # Coefficients for defining diversity factor: x[0]*log(num_cust) + x[1]
-  div_func_coeff: [0.3908524, 1.65180707]
-
   # voltage levels for dist xfmrs
   kv:
     ht: 11.0 # High tension kv
@@ -127,14 +128,12 @@ dist_xfmrs:
   # Phase for dist xfmrs
   phase:
     num_phase: 3
+    phase_type: null
   
   # Connection type for dist xfmrs
   conn:
     ht: "delta"
-    lt: "star-grounded"
-  
-  # Power factor used to compute kva for transformer
-  pf: 0.9 
+    lt: "star_grounded"
 
   # Design factors
   design_factors:
@@ -157,11 +156,11 @@ dist_xfmrs:
     # Catalog type to select type of catalog used
     catalog_type: "all"
 
+    # Power factor used to compute kva for transformer
+    pf: 0.9 
+
 # Settings for primary/HT conductors
 primary_network:
-  
-  # Coefficients for defining diversity factor: x[0]*log(num_cust) + x[1]
-  div_func_coeff: [0.3908524, 1.65180707]
 
   # Voltage level for primary network
   kv: 11.0
@@ -176,6 +175,7 @@ primary_network:
   phase:
     num_phase: 3
     neutral_present: false
+    phase_type: null
 
   # Conductor configuration
   configuration:
@@ -211,11 +211,11 @@ primary_network:
     # Catalog type to select type of catalog used
     catalog_type: "ACSR"
 
+    # Power factor
+    pf: 0.9
+
 # Settings for primary/HT conductors
 secondary_network:
-  
-  # Coefficients for defining diversity factor: x[0]*log(num_cust) + x[1]
-  div_func_coeff: [0.3908524, 1.65180707]
 
   # Voltage level for primary network
   kv: 0.415
@@ -230,6 +230,8 @@ secondary_network:
   phase:
     num_phase: 3
     neutral_present: false
+    phase_type: null
+    service_drop_neutral: false
 
   # Conductor configuration
   configuration:
@@ -244,7 +246,7 @@ secondary_network:
      
     # Configuration for single phase conductors
     single_phase:
-      height_of_conductor: 9 
+      height_of_top_conductor: 9 
       unit: "m"
       type: "horizontal"
 
@@ -267,10 +269,17 @@ secondary_network:
     planned_years_in_operation: 10
 
     # Allowed voltage drop used in drop estimation to find conductor
-    voltage_drop: 3
+    voltage_drop: 5
 
     # Catalog type to select type of catalog used
     catalog_type: "ACSR"
 
+    # Catalog type to be used for lateral
+    catalog_type_lateral: all
+
+    # Power factor
+    pf: 0.9
+
 exporter:
   type: "opendss"
+  path: "."

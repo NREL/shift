@@ -95,11 +95,21 @@ class ConductorGeometry(str, Enum):
     vertical = "vertical"
 
 
+class PrimaryNetworkMethod(str, Enum):
+    openstreet = "openstreet"
+
+
 class Location(BaseModel):
     address: Union[
         str, List[list[float, float]], tuple[float, float]
     ] = "chennai, india"
-    distance: confloat(ge=200.0, le=10000.0) = 1000.0
+    distance: confloat(ge=200.0, le=10000.0) = 300.0
+
+
+class TransformerPhase(BaseModel):
+    num_phase: conint(ge=1, le=3) = 3
+    phase_type: Union[None, str] = None
+    neutral_present: bool = True
 
 
 class Substation(BaseModel):
@@ -108,7 +118,7 @@ class Substation(BaseModel):
     kv: confloat(ge=KV_MIN, le=KV_MAX) = 33.0
     freq: int = 50.0
     pu: confloat(ge=0.9, le=1.1) = 1.0
-    num_phase: conint(ge=1, le=3) = 3
+    phase: TransformerPhase = TransformerPhase()
     z1: list[float, float] = [0.001, 0.001]
     z0: list[float, float] = [0.001, 0.001]
     kv_levels: List[float] = [0.415, 11.0, 33.0]
@@ -123,10 +133,6 @@ class Substation(BaseModel):
 class TransformerKV(BaseModel):
     ht: confloat(ge=KV_MIN, le=KV_MAX) = 33.0
     lt: confloat(ge=KV_MIN, le=KV_MAX) = 11.0
-
-
-class TransformerPhase(BaseModel):
-    num_phase: conint(ge=1, le=3) = 3
 
 
 class TransformerConnection(BaseModel):
@@ -148,7 +154,10 @@ class DesignFactors(BaseModel):
     planned_years_in_operation: confloat(
         ge=MIN_YEAR_OPERATION, le=MAX_YEAR_OPERATION
     ) = 10
-    catalog_type: str = "all"
+    catalog_type: str = "ACSR"
+    pf: confloat(le=MIN_POWER_FACTOR, ge=MAX_POWER_FACTOR) = 0.9
+    voltage_drop: Union[float, None] = None
+    catalog_type_lateral: Union[str, None] = "all"
 
 
 class SubstationTransformer(BaseModel):
@@ -156,7 +165,6 @@ class SubstationTransformer(BaseModel):
     kv: TransformerKV = TransformerKV()
     phase: TransformerPhase = TransformerPhase()
     conn: TransformerConnection = TransformerConnection()
-    pf: confloat(le=MIN_POWER_FACTOR, ge=MAX_POWER_FACTOR) = 0.9
     design_factors: DesignFactors = DesignFactors()
 
 
@@ -206,13 +214,20 @@ class DistributionTransformers(BaseModel):
     kv: TransformerKV = TransformerKV(ht=11.0, lt=0.415)
     phase: TransformerPhase = TransformerPhase()
     conn: TransformerConnection = TransformerConnection()
-    pf: confloat(ge=MIN_POWER_FACTOR, le=MAX_POWER_FACTOR) = 0.9
     design_factors: DesignFactors = DesignFactors()
 
 
 class ConductorPhase(BaseModel):
     num_phase: conint(ge=1, le=3) = 3
+    phase_type: Union[float, None] = None
     neutral_present: bool = False
+
+
+class SecondaryConductorPhase(BaseModel):
+    num_phase: conint(ge=1, le=3) = 3
+    phase_type: Union[float, None] = None
+    neutral_present: bool = False
+    service_drop_neutral: bool = False
 
 
 class ThreePhaseConductorConfiguration(BaseModel):
@@ -223,7 +238,7 @@ class ThreePhaseConductorConfiguration(BaseModel):
 
 
 class SinglePhaseConductorConfiguration(BaseModel):
-    height_of_conductor: confloat(ge=-9.0, le=20.0) = 9
+    height_of_top_conductor: confloat(ge=-9.0, le=20.0) = 9
     unit: str = "m"
     type: ConductorGeometry = ConductorGeometry.horizontal
 
@@ -244,38 +259,40 @@ class SecondaryNetworkConfiguration(BaseModel):
 
 
 class PrimaryNetwork(BaseModel):
-    div_func_coeff: list[float, float] = [0.3908524, 1.65180707]
+    method: PrimaryNetworkMethod = PrimaryNetworkMethod.openstreet
     kv: confloat(ge=KV_MIN, le=KV_MAX) = 11.0
     max_pp_distance: confloat(
         le=MIN_POLE_TO_POLE_DISTANCE, ge=MAX_POLE_TO_POLE_DISTANCE
     ) = 100
     cond_type: ConductorType = ConductorType.overhead
     phase: ConductorPhase = ConductorPhase()
-    configuration = PrimaryNetworkConfiguration = PrimaryNetworkConfiguration()
-    design_factors: DesignFactors = DesignFactors()
+    configuration: PrimaryNetworkConfiguration = PrimaryNetworkConfiguration()
+    design_factors: DesignFactors = DesignFactors(voltage_drop=2)
 
 
 class SecondaryNetwork(BaseModel):
-    div_func_coeff: list[float, float] = [0.3908524, 1.65180707]
     kv: confloat(ge=KV_MIN, le=KV_MAX) = 0.415
     max_pp_distance: confloat(
         le=MIN_POLE_TO_POLE_DISTANCE, ge=MAX_POLE_TO_POLE_DISTANCE
     ) = 100
     cond_type: ConductorType = ConductorType.overhead
-    phase: ConductorPhase = ConductorPhase()
+    phase: SecondaryConductorPhase = SecondaryConductorPhase()
     configuration: SecondaryNetworkConfiguration = (
         SecondaryNetworkConfiguration()
     )
-    design_factors: DesignFactors = DesignFactors()
+    design_factors: DesignFactors = DesignFactors(voltage_drop=5)
 
 
 class Exporter(BaseModel):
     type: str = "opendss"
+    path: str = "."
 
 
 class ConfigTemplate(BaseModel):
     location: Location = Location()
-    substation: SubstationTransformer = SubstationTransformer()
+    div_func_coeff: list[float, float] = [0.3908524, 1.65180707]
+    substation: Substation = Substation()
+    substation_xfmr: SubstationTransformer = SubstationTransformer()
     loads: Loads = Loads()
     dist_xfmrs: DistributionTransformers = DistributionTransformers()
     primary_network: PrimaryNetwork = PrimaryNetwork()

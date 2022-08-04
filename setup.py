@@ -15,17 +15,17 @@ setup(
     description="Generate synthetic feeders using open street map data",
     author="Kapil Duwadi",
     author_email="kapil.duwadi@nrel.gov",
-    packages=find_packages("."),
+    packages=find_packages(),
     url="https://github.com/nrel/shift",
     keywords="Synthetic feeder, Open steet data, OpenDSS",
     install_requires=requirements,
     python_requires=">=3.9",
     package_dir={"shift": "shift"},
-    # entry_points={
-    #     "console_scripts": [
-    #         "shift=cli.cli:run"
-    #     ]
-    # },
+    entry_points={
+        "console_scripts": [
+            "shift-internal=shift.cli.shift:cli"
+        ]
+    },
     classifiers=[
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python :: 3.7",
