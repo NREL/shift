@@ -332,6 +332,8 @@ class SecondaryNetworkBuilder(BaseNetworkBuilder):
                 pos=(self.transformer.longitude, self.transformer.latitude),
             )
             self.network.add_edge(self.tr_lt_node, self.source_node)
+            # update source node to be the transformer location
+            self.source_node = self.tr_lt_node
 
             self.network = set_node_edge_type(self.network)
         else:
