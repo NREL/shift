@@ -11,7 +11,7 @@ setup(
     name="NREL-shift",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    version="v0.1.0-alpha",
+    version="0.1",
     description="Generate synthetic feeders using open street map data",
     author="Kapil Duwadi",
     author_email="kapil.duwadi@nrel.gov",
