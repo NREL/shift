@@ -28,16 +28,13 @@ def get_polygon_from_locations(
     return [north_west, north_east, south_east, south_west, north_west]
 
 
-# bounding_polygon = _get_polygon_from_locations(
-#         [Location(latitude=b.latitude, longitude=b.longitude) \
-#          for b in buildings]
-#     )
 
 def secondary_backbone(
     buildings: List[Building],
     road_graph: nx.Graph,
     pole_to_pole_meter: 20
 ):
+
 
     road_network = slice_up_network_edges(road_graph, pole_to_pole_meter)
     nearest_nodes = get_nearest_nodes_in_the_network(

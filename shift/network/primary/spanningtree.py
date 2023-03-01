@@ -25,6 +25,7 @@ def get_primary_network(
                        for tr in transformers]
     )
     graph_mst = ax.steinertree.steiner_tree(road_network, nearest_nodes)
+    
     node_data = { node[0]: node[1] for node in road_network.nodes.data() }
     
     for edge in graph_mst.edges:
