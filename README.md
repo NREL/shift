@@ -1,3 +1,4 @@
+This repository is archived and read-only. Please [visit here](https://github.com/NREL-Distribution-Suites/shift) for latest version of this software package.
 
 Simple Synthetic Distribution Feeder Generation Tool (SHIFT)
 
